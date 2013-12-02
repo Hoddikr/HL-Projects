@@ -23,7 +23,7 @@ namespace ControlTester
             categoryCount++;
             string categoryKey = "Category " + categoryCount;
             categoryControl1.AddCategory(categoryKey, "Category: " + categoryCount);
-            categoryControl1.AddCategoryItem(categoryKey, "Test item 1", CategoryItemClicked);
+            categoryControl1.AddCategoryItem(categoryKey, "Test & item 1", CategoryItemClicked);
             categoryControl1.AddCategoryItem(categoryKey, "Test item 2", CategoryItemClicked);
             categoryControl1.AddCategoryItem(categoryKey, "Test item 3", CategoryItemClicked);
 
