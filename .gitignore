@@ -1,8 +1,13 @@
+# Visual Studio specific files and folders
+**/bin/**/Debug/
+**/bin/**/Release/
+**/obj/**/Debug/
+**/obj/**/Release/
 *.pdb
-**/bin/Debug/
-**/bin/Release/
-**/obj/Debug/
-**/obj/Release/
 *.csproj.user
 *.user
 *.suo
+**/_ReSharper.*
+
+# Other file types to ignore
+*.rar
