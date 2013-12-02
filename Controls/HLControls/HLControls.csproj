@@ -44,6 +44,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CategoryItem.cs" />
+    <Compile Include="EventArguments\SelectionChangedEventArgs.cs" />
     <Compile Include="NumeralTextbox.cs">
       <SubType>Component</SubType>
     </Compile>

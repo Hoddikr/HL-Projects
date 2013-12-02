@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using HL.Controls.HLControls.EventArguments;
 
 namespace HL.Controls.HLControls
 {
@@ -15,6 +16,10 @@ namespace HL.Controls.HLControls
         private const int categorySpacing = 5;
         private Dictionary<string, Category> categories;
         private bool mouseIsDown = false;
+
+        public delegate void SelectionChangedDelegate(object sender, SelectionChangedEventArgs args);
+
+        public event SelectionChangedDelegate SelectionChanged;
 
         public CategoryControl()
         {
