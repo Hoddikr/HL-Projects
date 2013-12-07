@@ -77,8 +77,7 @@ namespace HL.Controls.HLControls
                 
             }
             
-            Rectangle textPosition = new Rectangle(bounds.X + textIndent, bounds.Y, bounds.Width - textIndent, bounds.Height);
-            //TextRenderer.DrawText(g, Text, isPressed ? boldFont : font, textPosition, Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
+            Rectangle textPosition = new Rectangle(bounds.X + textIndent, bounds.Y, bounds.Width - textIndent, bounds.Height);          
             TextRenderer.DrawText(g, Text, font, textPosition, Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.NoPrefix);
             Size textSize = TextRenderer.MeasureText(Text, font, bounds.Size, TextFormatFlags.VerticalCenter | TextFormatFlags.Left);
             this.bounds = new Rectangle(bounds.X, bounds.Y, textSize.Width + textIndent, bounds.Height);

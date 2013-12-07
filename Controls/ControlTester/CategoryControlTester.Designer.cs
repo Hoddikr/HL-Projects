@@ -48,6 +48,7 @@
             this.categoryControl1.Name = "categoryControl1";
             this.categoryControl1.Size = new System.Drawing.Size(500, 532);
             this.categoryControl1.TabIndex = 0;
+            this.categoryControl1.SelectionChanged += new HL.Controls.HLControls.CategoryControl.SelectionChangedDelegate(this.categoryControl1_SelectionChanged);
             // 
             // CategoryControlTester
             // 

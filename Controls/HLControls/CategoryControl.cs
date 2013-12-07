@@ -16,18 +16,22 @@ namespace HL.Controls.HLControls
         private const int categorySpacing = 5;
         private Dictionary<string, Category> categories;
         private bool mouseIsDown = false;
+        private string lastSelectedCategoryItemDescription;
 
         public delegate void SelectionChangedDelegate(object sender, SelectionChangedEventArgs args);
 
         public event SelectionChangedDelegate SelectionChanged;
+
+        
 
         public CategoryControl()
         {
             DoubleBuffered = true;
 
             categoryFont = new Font(Font.FontFamily, 11f, FontStyle.Regular);            
-            categories = new Dictionary<string, Category>();            
-            
+            categories = new Dictionary<string, Category>();
+            lastSelectedCategoryItemDescription = "";
+
         }
 
         private RectangleF BoundsF
@@ -47,7 +51,7 @@ namespace HL.Controls.HLControls
         {
             if (!categories.ContainsKey(key))
             {
-                categories.Add(key, new Category(description));
+                categories.Add(key, new Category(description, key));
             }
 
             Invalidate();
@@ -80,8 +84,18 @@ namespace HL.Controls.HLControls
                 category.Draw(e.Graphics, categoryFont, BoundsF, currentCategoryLocation);
                 currentCategoryLocation.Y += category.Height + categorySpacing;
             }            
-        }        
-        
+        }
+
+        protected virtual void OnSelectionChanged(SelectionChangedEventArgs args)
+        {
+            SelectionChangedDelegate handler = SelectionChanged;
+
+            if (handler != null)
+            {
+                handler(this, args);
+            }
+        }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
             mouseIsDown = true;
@@ -95,18 +109,38 @@ namespace HL.Controls.HLControls
             if (mouseIsDown)
             {
                 bool needsRedraw = false;
+                string prevSelectedCategoryItemDescription = lastSelectedCategoryItemDescription;
+                string selectedCategoryDescription = "";
+                string selectedCategoryKey = "";
+
                 // hit test for each category header
                 foreach (Category category in categories.Values)
                 {
                     if (category.HeaderHitTest(e.Location))
                     {                        
                         needsRedraw = true;
+
+                        if (category.HasSelectedCategoryItem)
+                        {
+                            lastSelectedCategoryItemDescription = category.SelectedCategoryItemDescription;
+                            selectedCategoryDescription = category.Text;
+                            selectedCategoryKey = category.Key;
+                        }
                     }
                 }
 
                 if(needsRedraw)
                 {
                     Invalidate();
+                }
+
+                if (prevSelectedCategoryItemDescription != lastSelectedCategoryItemDescription)
+                {
+                    SelectionChangedEventArgs args = new SelectionChangedEventArgs();
+                    args.CategoryDescription = selectedCategoryDescription;
+                    args.CategoryKey = selectedCategoryKey;
+
+                    OnSelectionChanged(args);
                 }
             }
 

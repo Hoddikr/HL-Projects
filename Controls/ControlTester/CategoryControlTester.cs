@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HL.Controls.HLControls.EventArguments;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,7 @@ namespace ControlTester
         public CategoryControlTester()
         {
             InitializeComponent();
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -32,6 +34,11 @@ namespace ControlTester
         private void CategoryItemClicked(object sender, EventArgs args)
         {
             //MessageBox.Show("Item clicked");
+        }
+
+        private void categoryControl1_SelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            MessageBox.Show(args.CategoryKey + " " + args.CategoryDescription + " " + args.CategoryItemDescriptoin);
         }
     }
 }

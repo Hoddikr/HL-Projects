@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace HL.Controls.HLControls
@@ -13,7 +10,8 @@ namespace HL.Controls.HLControls
         private const int collapsedHeight = 28;
         private const int categoryItemHeight = 24;
         private bool collapsed;
-        private bool isHovering = false;
+        private bool isHovering;
+        private bool containsClickedCategoryItem;
         private RectangleF bounds;
 
         public Category()
@@ -23,16 +21,22 @@ namespace HL.Controls.HLControls
             collapsed = true;
         }
 
-        public Category(string text)
+        public Category(string text, string key)
             : this()
         {
             Text = text;
+            Key = key;
         }
 
         /// <summary>
         /// Gets or sets the text displayed on the category
         /// </summary>
         public string Text { get; set; }
+
+        /// <summary>
+        /// Gets or sets the key associated with this category
+        /// </summary>
+        public string Key { get; set; }
 
         /// <summary>
         /// Gets the height of the category
@@ -67,7 +71,16 @@ namespace HL.Controls.HLControls
                 collapsed = value;
             }
         }
-        
+
+        /// <summary>
+        /// Gets wether this category has a currently selected category item
+        /// </summary>
+        public bool HasSelectedCategoryItem { get; private set; }
+
+        /// <summary>
+        /// Gets the description of the currently selected category item. If no category item is currently selected an empty string is returned
+        /// </summary>
+        public string SelectedCategoryItemDescription { get; private set; }
 
         /// <summary>
         /// Gets or sets the list of category items belonging to this category
@@ -80,11 +93,9 @@ namespace HL.Controls.HLControls
         /// <param name="point">The point to check for</param>
         /// <returns></returns>
         public bool HeaderHitTest(Point point)
-        {    
-            bool headerResult = false;            
-
-            headerResult = point.X > bounds.X && point.X < (bounds.X + bounds.Width) &&
-                           point.Y > bounds.Y && point.Y < (bounds.Y + collapsedHeight);
+        {
+            bool headerResult = point.X > bounds.X && point.X < (bounds.X + bounds.Width) &&
+                                point.Y > bounds.Y && point.Y < (bounds.Y + collapsedHeight);
 
             if (headerResult)
             {
@@ -92,25 +103,20 @@ namespace HL.Controls.HLControls
                 return true;
             }
 
+            HasSelectedCategoryItem = false;
+            SelectedCategoryItemDescription = "";
+
             foreach (CategoryItem item in CategoryItems)
             {
                 if (item.HitTest(point))
                 {
                     headerResult = true;
+                    HasSelectedCategoryItem = true;
+                    SelectedCategoryItemDescription = item.Text;
                 }
             }
 
             return headerResult;
-        }
-
-        private GraphicsPath CreateExpandedCategoryPath()
-        {
-            return null;
-        }
-
-        private GraphicsPath CreateCategoryItemsAreaPath()
-        {
-            return null;
         }
 
         public void Draw(Graphics g, Font font, RectangleF parentBounds, PointF startingLocation)
