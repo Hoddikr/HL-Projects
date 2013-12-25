@@ -20,10 +20,11 @@ namespace HL.Controls.HLControls
 
         public delegate void SelectionChangedDelegate(object sender, SelectionChangedEventArgs args);
 
+        /// <summary>
+        /// Occurs when the currently selected category item is changed
+        /// </summary>
         public event SelectionChangedDelegate SelectionChanged;
-
         
-
         public CategoryControl()
         {
             DoubleBuffered = true;
@@ -107,8 +108,7 @@ namespace HL.Controls.HLControls
         {
             // Mouse was clicked
             if (mouseIsDown)
-            {
-                bool needsRedraw = false;
+            {                
                 string prevSelectedCategoryItemDescription = lastSelectedCategoryItemDescription;
                 string selectedCategoryDescription = "";
                 string selectedCategoryKey = "";
@@ -116,23 +116,17 @@ namespace HL.Controls.HLControls
                 // hit test for each category header
                 foreach (Category category in categories.Values)
                 {
-                    if (category.HeaderHitTest(e.Location))
-                    {                        
-                        needsRedraw = true;
+                    category.HeaderHitTest(e.Location);
 
-                        if (category.HasSelectedCategoryItem)
-                        {
-                            lastSelectedCategoryItemDescription = category.SelectedCategoryItemDescription;
-                            selectedCategoryDescription = category.Text;
-                            selectedCategoryKey = category.Key;
-                        }
+                    if (category.HasSelectedCategoryItem)
+                    {
+                        lastSelectedCategoryItemDescription = category.SelectedCategoryItemDescription;
+                        selectedCategoryDescription = category.Text;
+                        selectedCategoryKey = category.Key;
                     }
                 }
 
-                if(needsRedraw)
-                {
-                    Invalidate();
-                }
+                CheckForRedraw();
 
                 if (prevSelectedCategoryItemDescription != lastSelectedCategoryItemDescription)
                 {
@@ -150,23 +144,34 @@ namespace HL.Controls.HLControls
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
+        {            
+            foreach (Category category in categories.Values)
+            {
+                category.MouseHover(e.Location);                
+            }
+            
+            CheckForRedraw();
+
+            base.OnMouseMove(e);
+        }
+
+        private void CheckForRedraw()
         {
-            bool itemHover = false;;
+            bool redraw = false;
 
             foreach (Category category in categories.Values)
             {
-                if(category.MouseHover(e.Location))
+                if (category.NeedsRedraw)
                 {
-                    itemHover = true;
+                    redraw = true;
+                    break;
                 }
             }
 
-            if(itemHover)
+            if (redraw)
             {
                 Invalidate();
             }
-
-            base.OnMouseMove(e);
         }
     }
 }

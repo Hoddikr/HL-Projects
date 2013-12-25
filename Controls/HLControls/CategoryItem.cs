@@ -28,6 +28,11 @@ namespace HL.Controls.HLControls
         }
 
         /// <summary>
+        /// Indicates wether this category item needs to be redrawn
+        /// </summary>
+        public bool NeedsRedraw { get; set; }
+
+        /// <summary>
         /// Gets or sets the text on the category item
         /// </summary>
         public string Text { get; set; }
@@ -88,7 +93,7 @@ namespace HL.Controls.HLControls
         }
 
         public bool HitTest(Point point)
-        {                        
+        {            
             isPressed = false;
 
             if (bounds.Contains(point) && click != null)
@@ -101,10 +106,12 @@ namespace HL.Controls.HLControls
             return false;
         }
 
-        internal bool MouseHover(Point point)
-        {            
+        internal void MouseHover(Point point)
+        {
+            NeedsRedraw = false;
+            bool prevIsHovering = isHovering;
             isHovering = bounds.Contains(point);            
-            return isHovering;
+            NeedsRedraw = isHovering || (isHovering != prevIsHovering);
         }
     }
 }

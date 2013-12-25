@@ -12,7 +12,7 @@ namespace HL.Controls.HLControls
         private bool collapsed;
         private bool isHovering;
         private bool containsClickedCategoryItem;
-        private RectangleF bounds;
+        private RectangleF boundsF;
 
         public Category()
         {
@@ -27,6 +27,11 @@ namespace HL.Controls.HLControls
             Text = text;
             Key = key;
         }
+
+        /// <summary>
+        /// Indicates wether this category needs to be redrawn
+        /// </summary>
+        public bool NeedsRedraw { get; set; }
 
         /// <summary>
         /// Gets or sets the text displayed on the category
@@ -49,11 +54,25 @@ namespace HL.Controls.HLControls
             }
         }
 
-        public RectangleF Bounds
+        /// <summary>
+        /// Gets the current bounds of this category
+        /// </summary>
+        public RectangleF BoundsF
         {
             get
             {
-                return bounds;
+                return boundsF;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current bounds of this category
+        /// </summary>
+        public Rectangle Bounds
+        {
+            get
+            {
+                return new Rectangle((int)boundsF.X, (int)boundsF.Y, (int)boundsF.Width + 1, (int)boundsF.Height + 1);
             }
         }
 
@@ -92,16 +111,20 @@ namespace HL.Controls.HLControls
         /// </summary>
         /// <param name="point">The point to check for</param>
         /// <returns></returns>
-        public bool HeaderHitTest(Point point)
+        public void HeaderHitTest(Point point)
         {
-            bool headerResult = point.X > bounds.X && point.X < (bounds.X + bounds.Width) &&
-                                point.Y > bounds.Y && point.Y < (bounds.Y + collapsedHeight);
+            NeedsRedraw = false;
+
+            bool headerResult = point.X > boundsF.X && point.X < (boundsF.X + boundsF.Width) &&
+                                point.Y > boundsF.Y && point.Y < (boundsF.Y + collapsedHeight);
 
             if (headerResult)
             {
                 Collapsed = !Collapsed;
-                return true;
+                NeedsRedraw = true;
+                return;
             }
+
 
             HasSelectedCategoryItem = false;
             SelectedCategoryItemDescription = "";
@@ -116,44 +139,44 @@ namespace HL.Controls.HLControls
                 }
             }
 
-            return headerResult;
+            NeedsRedraw = headerResult;
         }
 
         public void Draw(Graphics g, Font font, RectangleF parentBounds, PointF startingLocation)
         {
             if (collapsed)
             {
-                bounds = new RectangleF(startingLocation.X, startingLocation.Y, parentBounds.Width - 1, collapsedHeight - 1);
+                boundsF = new RectangleF(startingLocation.X, startingLocation.Y, parentBounds.Width - 1, collapsedHeight - 1);
             }
             else
             {                
                 int totalCategoryItemHeight = CategoryItems.Count * categoryItemHeight + 10;
 
-                bounds = new RectangleF(startingLocation.X, startingLocation.Y, parentBounds.Width - 1, (collapsedHeight + totalCategoryItemHeight) - 1);
+                boundsF = new RectangleF(startingLocation.X, startingLocation.Y, parentBounds.Width - 1, (collapsedHeight + totalCategoryItemHeight) - 1);
                 
             }
 
-            GraphicsPath headerPath = Utilities.UI.GraphicsPaths.CreateRoundedRectangle(bounds, 10);            
+            GraphicsPath headerPath = Utilities.UI.GraphicsPaths.CreateRoundedRectangle(boundsF, 10);            
             
             // Draw the header            
             if (collapsed)
             {
-                Brush brush = new LinearGradientBrush(bounds, Color.WhiteSmoke, Color.LightGray, 90f);
+                Brush brush = new LinearGradientBrush(boundsF, Color.WhiteSmoke, Color.LightGray, 90f);
                 g.FillPath(brush, headerPath);
                 brush.Dispose();
             }
             else
             {
                 // Header
-                RectangleF headerRect = new RectangleF(bounds.X, bounds.Y, bounds.Width, collapsedHeight);
+                RectangleF headerRect = new RectangleF(boundsF.X, boundsF.Y, boundsF.Width, collapsedHeight);
                 GraphicsPath expandedHeaderPath = Utilities.UI.GraphicsPaths.CreateTopRoundedRectangle(headerRect, 10);
-                Brush headerBrush = new LinearGradientBrush(new Point((int)bounds.X, (int)bounds.Y),
-                                                            new Point((int)bounds.X, (int)bounds.Y + collapsedHeight), 
+                Brush headerBrush = new LinearGradientBrush(new Point((int)boundsF.X, (int)boundsF.Y),
+                                                            new Point((int)boundsF.X, (int)boundsF.Y + collapsedHeight), 
                                                             Color.WhiteSmoke, 
                                                             Color.LightGray);
 
                 // Category items
-                RectangleF categoryItemsRect = new RectangleF(bounds.X, bounds.Y + collapsedHeight, bounds.Width, bounds.Height - collapsedHeight - 1);
+                RectangleF categoryItemsRect = new RectangleF(boundsF.X, boundsF.Y + collapsedHeight, boundsF.Width, boundsF.Height - collapsedHeight - 1);
                 GraphicsPath categoryItemsPath = Utilities.UI.GraphicsPaths.CreateBottomRoundedRectangle(categoryItemsRect, 10);
                 //Brush categoryItemsBrush = new SolidBrush(Color.WhiteSmoke);
                 Brush categoryItemsBrush = new SolidBrush(Color.White);
@@ -165,19 +188,19 @@ namespace HL.Controls.HLControls
                 expandedHeaderPath.Dispose();
                 categoryItemsPath.Dispose();
 
-                float categoryItemYPosition = bounds.Y + collapsedHeight + 5;
+                float categoryItemYPosition = boundsF.Y + collapsedHeight + 5;
                 // Draw each category item
                 foreach (CategoryItem categoryItem in CategoryItems)
                 {
-                    //Rectangle categoryItemBounds = new Rectangle((int)bounds.X + 5, (int)categoryItemYPosition, (int)bounds.Width - 10, categoryItemHeight);
-                    Rectangle categoryItemBounds = new Rectangle((int)bounds.X + 3, (int)categoryItemYPosition, (int)bounds.Width - 6, categoryItemHeight);
+                    //Rectangle categoryItemBounds = new Rectangle((int)BoundsF.X + 5, (int)categoryItemYPosition, (int)BoundsF.Width - 10, categoryItemHeight);
+                    Rectangle categoryItemBounds = new Rectangle((int)boundsF.X + 3, (int)categoryItemYPosition, (int)boundsF.Width - 6, categoryItemHeight);
                     categoryItem.Draw(g, categoryItemBounds);
                     categoryItemYPosition += categoryItemHeight;
                 }
             }
 
             // Draw border around the control
-            GraphicsPath borderPath = Utilities.UI.GraphicsPaths.CreateRoundedRectangle(bounds, 10);
+            GraphicsPath borderPath = Utilities.UI.GraphicsPaths.CreateRoundedRectangle(boundsF, 10);
             Pen pen = new Pen(isHovering ? Color.DimGray : Color.DarkGray);
             g.DrawPath(pen, borderPath);
             borderPath.Dispose();
@@ -197,20 +220,29 @@ namespace HL.Controls.HLControls
             headerPath.Dispose();
         }
 
-        internal bool MouseHover(Point point)
+        internal void MouseHover(Point point)
         {
+            NeedsRedraw = false;
+
             bool itemHover = false;
-            isHovering = bounds.Contains(point);
+            bool prevHovering = isHovering;
+            isHovering = boundsF.Contains(point);
 
             foreach(CategoryItem item in CategoryItems)
             {
-                if (item.MouseHover(point))
+                item.MouseHover(point);                
+            }
+
+            foreach (CategoryItem item in CategoryItems)
+            {
+                if (item.NeedsRedraw)
                 {
                     itemHover = true;
+                    break;
                 }
             }
 
-            return itemHover || isHovering;
+            NeedsRedraw = itemHover || isHovering || (prevHovering != isHovering);
         }
     }
 }

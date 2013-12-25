@@ -38,7 +38,7 @@ namespace ControlTester
 
         private void categoryControl1_SelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            MessageBox.Show(args.CategoryKey + " " + args.CategoryDescription + " " + args.CategoryItemDescriptoin);
+            //MessageBox.Show(args.CategoryKey + " " + args.CategoryDescription + " " + args.CategoryItemDescriptoin);
         }
     }
 }
