@@ -17,6 +17,7 @@ namespace HL.Controls.HLControls
         private Dictionary<string, Category> categories;
         private bool mouseIsDown = false;
         private string lastSelectedCategoryItemDescription;
+        private CategorySelection selection;
 
         public delegate void SelectionChangedDelegate(object sender, SelectionChangedEventArgs args);
 
@@ -32,7 +33,7 @@ namespace HL.Controls.HLControls
             categoryFont = new Font(Font.FontFamily, 11f, FontStyle.Regular);            
             categories = new Dictionary<string, Category>();
             lastSelectedCategoryItemDescription = "";
-
+            selection = new CategorySelection();
         }
 
         private RectangleF BoundsF

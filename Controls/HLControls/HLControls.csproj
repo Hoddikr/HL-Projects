@@ -46,11 +46,16 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CategoryItem.cs" />
+    <Compile Include="CategorySelection.cs" />
     <Compile Include="EventArguments\SelectionChangedEventArgs.cs" />
+    <Compile Include="NotificationAreaButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="NumeralTextbox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransparentTextBox.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

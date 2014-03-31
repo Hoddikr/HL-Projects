@@ -29,8 +29,8 @@ namespace HLControls.UnitGridControl
             mouseDownPosition = Point.Empty;
             currentMousePosition = Point.Empty;
 
-            Rows = 20;
-            Columns = 20;
+            Rows = 30;
+            Columns = 30;
             grid = new GridCell[Rows][];
             existingRectangles = new List<GridRectangle>();
 

@@ -50,6 +50,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotificationAreaButtonTester.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotificationAreaButtonTester.Designer.cs">
+      <DependentUpon>NotificationAreaButtonTester.cs</DependentUpon>
+    </Compile>
     <Compile Include="NumeralTextBoxTester.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotificationAreaButtonTester.resx">
+      <DependentUpon>NotificationAreaButtonTester.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NumeralTextBoxTester.resx">
       <DependentUpon>NumeralTextBoxTester.cs</DependentUpon>
@@ -108,6 +117,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TestControls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addexisting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cavestoryouterwallpaperrt3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -125,6 +125,11 @@ namespace HL.Controls.HLControls
                 return;
             }
 
+            if (!boundsF.Contains(point))
+            {
+                return;
+            }
+
 
             HasSelectedCategoryItem = false;
             SelectedCategoryItemDescription = "";

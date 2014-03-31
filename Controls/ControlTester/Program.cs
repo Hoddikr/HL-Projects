@@ -17,7 +17,8 @@ namespace ControlTester
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
             //Application.Run(new NumeralTextBoxTester());
-            Application.Run(new CategoryControlTester());
+            //Application.Run(new CategoryControlTester());
+            Application.Run(new NotificationAreaButtonTester());
         }
     }
 }

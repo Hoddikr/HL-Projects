@@ -29,16 +29,9 @@ namespace ControlTester
         /// </summary>
         private void InitializeComponent()
         {
-            this.numeralTextbox1 = new HL.Controls.HLControls.NumeralTextbox();
             this.unitGridControl1 = new HLControls.UnitGridControl.UnitGridControl();
+            this.numeralTextbox1 = new HL.Controls.HLControls.NumeralTextbox();
             this.SuspendLayout();
-            // 
-            // numeralTextbox1
-            // 
-            this.numeralTextbox1.Location = new System.Drawing.Point(29, 30);
-            this.numeralTextbox1.Name = "numeralTextbox1";
-            this.numeralTextbox1.Size = new System.Drawing.Size(167, 20);
-            this.numeralTextbox1.TabIndex = 0;
             // 
             // unitGridControl1
             // 
@@ -46,12 +39,19 @@ namespace ControlTester
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.unitGridControl1.BackColor = System.Drawing.Color.Transparent;
-            this.unitGridControl1.Columns = 20;
+            this.unitGridControl1.Columns = 30;
             this.unitGridControl1.Location = new System.Drawing.Point(202, 30);
             this.unitGridControl1.Name = "unitGridControl1";
-            this.unitGridControl1.Rows = 20;
+            this.unitGridControl1.Rows = 30;
             this.unitGridControl1.Size = new System.Drawing.Size(747, 482);
             this.unitGridControl1.TabIndex = 1;
+            // 
+            // numeralTextbox1
+            // 
+            this.numeralTextbox1.Location = new System.Drawing.Point(29, 30);
+            this.numeralTextbox1.Name = "numeralTextbox1";
+            this.numeralTextbox1.Size = new System.Drawing.Size(167, 20);
+            this.numeralTextbox1.TabIndex = 0;
             // 
             // NumeralTextBoxTester
             // 
