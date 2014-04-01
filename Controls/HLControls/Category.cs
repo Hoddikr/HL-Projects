@@ -107,6 +107,35 @@ namespace HL.Controls.HLControls
         public List<CategoryItem> CategoryItems { get; set; }
 
         /// <summary>
+        /// Passes the point down to all items in this category and does a hit test on each one
+        /// </summary>
+        /// <param name="point"></param>
+        public void ItemHitTest(Point point)
+        {
+            bool itemResult = false;
+
+            if (!boundsF.Contains(point))
+            {
+                return;
+            }
+
+            HasSelectedCategoryItem = false;
+            SelectedCategoryItemDescription = "";
+
+            foreach (CategoryItem item in CategoryItems)
+            {
+                if (item.HitTest(point))
+                {
+                    itemResult = true;
+                    HasSelectedCategoryItem = true;
+                    SelectedCategoryItemDescription = item.Text;
+                }
+            }
+
+            NeedsRedraw = itemResult;
+        }
+
+        /// <summary>
         /// Checks if the point given is inside the categories header
         /// </summary>
         /// <param name="point">The point to check for</param>
@@ -116,35 +145,13 @@ namespace HL.Controls.HLControls
             NeedsRedraw = false;
 
             bool headerResult = point.X > boundsF.X && point.X < (boundsF.X + boundsF.Width) &&
-                                point.Y > boundsF.Y && point.Y < (boundsF.Y + collapsedHeight);
+                                point.Y > boundsF.Y && point.Y < (boundsF.Y + collapsedHeight);           
 
             if (headerResult)
             {
                 Collapsed = !Collapsed;
-                NeedsRedraw = true;
-                return;
-            }
-
-            if (!boundsF.Contains(point))
-            {
-                return;
-            }
-
-
-            HasSelectedCategoryItem = false;
-            SelectedCategoryItemDescription = "";
-
-            foreach (CategoryItem item in CategoryItems)
-            {
-                if (item.HitTest(point))
-                {
-                    headerResult = true;
-                    HasSelectedCategoryItem = true;
-                    SelectedCategoryItemDescription = item.Text;
-                }
-            }
-
-            NeedsRedraw = headerResult;
+                NeedsRedraw = true;                
+            }           
         }
 
         public void Draw(Graphics g, Font font, RectangleF parentBounds, PointF startingLocation)
@@ -182,8 +189,7 @@ namespace HL.Controls.HLControls
 
                 // Category items
                 RectangleF categoryItemsRect = new RectangleF(boundsF.X, boundsF.Y + collapsedHeight, boundsF.Width, boundsF.Height - collapsedHeight - 1);
-                GraphicsPath categoryItemsPath = Utilities.UI.GraphicsPaths.CreateBottomRoundedRectangle(categoryItemsRect, 10);
-                //Brush categoryItemsBrush = new SolidBrush(Color.WhiteSmoke);
+                GraphicsPath categoryItemsPath = Utilities.UI.GraphicsPaths.CreateBottomRoundedRectangle(categoryItemsRect, 10);                
                 Brush categoryItemsBrush = new SolidBrush(Color.White);
 
                 g.FillPath(headerBrush, expandedHeaderPath);
@@ -196,8 +202,7 @@ namespace HL.Controls.HLControls
                 float categoryItemYPosition = boundsF.Y + collapsedHeight + 5;
                 // Draw each category item
                 foreach (CategoryItem categoryItem in CategoryItems)
-                {
-                    //Rectangle categoryItemBounds = new Rectangle((int)BoundsF.X + 5, (int)categoryItemYPosition, (int)BoundsF.Width - 10, categoryItemHeight);
+                {                    
                     Rectangle categoryItemBounds = new Rectangle((int)boundsF.X + 3, (int)categoryItemYPosition, (int)boundsF.Width - 6, categoryItemHeight);
                     categoryItem.Draw(g, categoryItemBounds);
                     categoryItemYPosition += categoryItemHeight;
@@ -248,6 +253,17 @@ namespace HL.Controls.HLControls
             }
 
             NeedsRedraw = itemHover || isHovering || (prevHovering != isHovering);
+        }
+
+        public void ClearSelection()
+        {
+            SelectedCategoryItemDescription = "";
+            HasSelectedCategoryItem = false;
+
+            foreach (CategoryItem item in CategoryItems)
+            {
+                item.ClearSelection();
+            }
         }
     }
 }

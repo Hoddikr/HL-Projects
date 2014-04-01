@@ -12,12 +12,10 @@ namespace HL.Controls.HLControls
     public class CategoryControl : UserControl
     {
         Font categoryFont;
-        Font categoryItemFont;
         private const int categorySpacing = 5;
         private Dictionary<string, Category> categories;
-        private bool mouseIsDown = false;
+        private bool mouseIsDown;
         private string lastSelectedCategoryItemDescription;
-        private CategorySelection selection;
 
         public delegate void SelectionChangedDelegate(object sender, SelectionChangedEventArgs args);
 
@@ -33,7 +31,7 @@ namespace HL.Controls.HLControls
             categoryFont = new Font(Font.FontFamily, 11f, FontStyle.Regular);            
             categories = new Dictionary<string, Category>();
             lastSelectedCategoryItemDescription = "";
-            selection = new CategorySelection();
+            new CategorySelection();
         }
 
         private RectangleF BoundsF
@@ -75,7 +73,7 @@ namespace HL.Controls.HLControls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.SmoothingMode =  SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
 
@@ -114,16 +112,34 @@ namespace HL.Controls.HLControls
                 string selectedCategoryDescription = "";
                 string selectedCategoryKey = "";
 
-                // hit test for each category header
+                bool someCategoryExpanedCollapsed = false;
+
+                // First check if we are expanding/collapsing any categories
                 foreach (Category category in categories.Values)
                 {
+                    bool prevCategoryCollapsed = category.Collapsed;
                     category.HeaderHitTest(e.Location);
 
-                    if (category.HasSelectedCategoryItem)
+                    if (!someCategoryExpanedCollapsed)
                     {
-                        lastSelectedCategoryItemDescription = category.SelectedCategoryItemDescription;
-                        selectedCategoryDescription = category.Text;
-                        selectedCategoryKey = category.Key;
+                        someCategoryExpanedCollapsed = prevCategoryCollapsed != category.Collapsed;
+                    }
+                }
+
+                // hit test for each category item
+                if (!someCategoryExpanedCollapsed)
+                {
+                    foreach (Category category in categories.Values)
+                    {
+                        category.ClearSelection();
+                        category.ItemHitTest(e.Location);
+
+                        if (category.HasSelectedCategoryItem)
+                        {
+                            lastSelectedCategoryItemDescription = category.SelectedCategoryItemDescription;
+                            selectedCategoryDescription = category.Text;
+                            selectedCategoryKey = category.Key;
+                        }
                     }
                 }
 

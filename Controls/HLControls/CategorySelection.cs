@@ -28,5 +28,14 @@ namespace HL.Controls.HLControls
                 return !String.IsNullOrEmpty(CategoryKey) && !String.IsNullOrEmpty(CategoryItemKey);
             }
         }
+
+        public CategorySelection Clone()
+        {
+            CategorySelection cloneSelection = new CategorySelection();
+            cloneSelection.CategoryKey = CategoryKey;
+            cloneSelection.CategoryItemKey = CategoryItemKey;
+
+            return cloneSelection;
+        }
     }
 }
