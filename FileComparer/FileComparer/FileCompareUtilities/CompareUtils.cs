@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace HoddiLara.FileCompareUtilities
 {
@@ -11,6 +12,8 @@ namespace HoddiLara.FileCompareUtilities
     /// </summary>
     public class CompareUtils
     {
+        private static BackgroundWorker progressWorker;
+
         /// <summary>
         /// Occurs each time a file has been hashed
         /// </summary>
@@ -39,6 +42,23 @@ namespace HoddiLara.FileCompareUtilities
         }
 
         /// <summary>
+        /// Returns a combined list of all possible file matches in two folders. This function should be used
+        /// when a background worker is used to run the function. While the files are being processed the workers
+        /// ReportProgress function will be called so that a UI element can be updated with the current progress.
+        /// </summary>
+        /// <param name="pathToFirstFolder">The full path to the first folder to search</param>
+        /// <param name="pathToSecondFolder">The full path to the second folder to search</param>
+        /// <param name="patternToSearchFor">The file extension to search for</param>
+        /// <param name="worker">The BackgroundWorker that is running this function</param>
+        /// <returns></returns>
+        public static List<PossibleMatches> CompareFolders(string pathToFirstFolder, string pathToSecondFolder, string patternToSearchFor, BackgroundWorker worker)
+        {
+            progressWorker = worker;
+
+            return CompareFolders(pathToFirstFolder, pathToSecondFolder, patternToSearchFor);
+        }
+
+        /// <summary>
         /// Returns a list of all files in a folder and subfolders
         /// </summary>
         /// <param name="pathToFolder">Path to the folder to search</param>
@@ -60,6 +80,7 @@ namespace HoddiLara.FileCompareUtilities
         {
             List<PossibleMatches> possibleMatches = new List<PossibleMatches>();
             List<FileHashPair> fileHashPairs = new List<FileHashPair>();
+            ProgressInfo info = new ProgressInfo();
 
             // Calculate the hash value for each file
             foreach (string file in files)
@@ -70,7 +91,14 @@ namespace HoddiLara.FileCompareUtilities
 
                 if (HashProgressUpdate != null)
                 {
-                    HashProgressUpdate(fileHashPairs.Count, files.Count);
+                    HashProgressUpdate(fileHashPairs.Count, files.Count);                    
+                }
+
+                if (progressWorker != null && progressWorker.IsBusy && progressWorker.WorkerReportsProgress)
+                {
+                    info.FilesProcessed = fileHashPairs.Count;
+                    info.TotalNumberOfFiles = files.Count;
+                    progressWorker.ReportProgress((int)((fileHashPairs.Count / (double)files.Count) * 100), info);
                 }
             }
 

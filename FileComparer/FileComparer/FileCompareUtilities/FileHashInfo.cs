@@ -73,7 +73,7 @@ namespace HoddiLara.FileCompareUtilities
 
         public static bool operator ==(FileHashPair a, FileHashPair b)
         {
-            if (Object.ReferenceEquals(a, b))
+            if (ReferenceEquals(a, b))
             {
                 return true;
             }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
+using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
-using HoddiLara.FileCompareUtilities;
+using FileComparer.Properties;
 
-namespace FileCompareTester
+namespace FileComparer
 {
     static class Program
     {
@@ -14,10 +14,12 @@ namespace FileCompareTester
         /// </summary>
         [STAThread]
         static void Main()
-        {                        
+        {
+            Settings.LoadSettings();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestForm());
+            Application.Run(new MainForm());
         }
     }
 }
