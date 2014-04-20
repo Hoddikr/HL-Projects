@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HoddiLara.FileCompareUtilities
+﻿namespace HoddiLara.FileCompareUtilities
 {
     /// <summary>
     /// Stores the current progress of the CompareFolders function. This class is sent to the ReportProgress function of a 

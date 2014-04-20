@@ -59,7 +59,7 @@ namespace HoddiLara.FileCompareUtilities
         }
 
         /// <summary>
-        /// Returns a list of all files in a folder and subfolders
+        /// Returns a list of all files in a single folder and all of its subfolders
         /// </summary>
         /// <param name="pathToFolder">Path to the folder to search</param>
         /// <param name="patternToSearchFor">The pattern to search for</param>
@@ -69,6 +69,22 @@ namespace HoddiLara.FileCompareUtilities
             List<string> files = TraverseTreeByPattern(pathToFolder, patternToSearchFor);
 
             return GetMatchesFromFiles(files);
+        }
+
+        /// <summary>
+        /// Returns a list of all files in a single folder and all of its subfolders.This function should be used
+        /// when a background worker is used to run the function. While the files are being processed the workers
+        /// ReportProgress function will be called so that a UI element can be updated with the current progress.
+        /// </summary>
+        /// <param name="pathToFolder">Path to the folder to search</param>
+        /// <param name="patternToSearchFor">The pattern to search for</param>
+        /// <param name="worker">The BackgroundWorker that is running this function</param>
+        /// <returns></returns>
+        public static List<PossibleMatches> GetAllPossibleFileMatches(string pathToFolder, string patternToSearchFor, BackgroundWorker worker)
+        {
+            progressWorker = worker;
+
+            return GetAllPossibleFileMatches(pathToFolder, patternToSearchFor);
         }
 
         /// <summary>
@@ -99,6 +115,12 @@ namespace HoddiLara.FileCompareUtilities
                     info.FilesProcessed = fileHashPairs.Count;
                     info.TotalNumberOfFiles = files.Count;
                     progressWorker.ReportProgress((int)((fileHashPairs.Count / (double)files.Count) * 100), info);
+                }
+
+                if (progressWorker != null && progressWorker.WorkerSupportsCancellation && progressWorker.CancellationPending)
+                {                    
+                    possibleMatches.Clear();                    
+                    return possibleMatches;
                 }
             }
 

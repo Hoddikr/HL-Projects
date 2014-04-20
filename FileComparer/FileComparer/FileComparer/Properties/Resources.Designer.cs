@@ -61,6 +61,15 @@ namespace FileComparer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancelled.
+        /// </summary>
+        internal static string Cancelled {
+            get {
+                return ResourceManager.GetString("Cancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap folder_search_result {
@@ -71,11 +80,20 @@ namespace FileComparer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Processing file {0} / {1}:.
+        ///   Looks up a localized string similar to Processing file {0} / {1}.
         /// </summary>
         internal static string ProcessingFile {
             get {
                 return ResourceManager.GetString("ProcessingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for files....
+        /// </summary>
+        internal static string SearchingForFiles {
+            get {
+                return ResourceManager.GetString("SearchingForFiles", resourceCulture);
             }
         }
     }

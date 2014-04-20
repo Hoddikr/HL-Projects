@@ -15,12 +15,11 @@ namespace FileComparer
     {
         //C:\Users\hordur\Pictures
         //C:\Users\hordur\Pictures\Rússland\2011-08-30
-
-        private string path1 = "";
-        private string path2 = "";
-        private SearchPattern currentPattern;                
+              
         private List<PossibleMatches> possibleMatches;        
         private BackgroundWorker worker;
+        private SearchPattern selectedPattern;
+        private bool workerWasCancelled;
 
         public MainForm()
         {
@@ -30,26 +29,67 @@ namespace FileComparer
 
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;           
             worker.DoWork += worker_DoWork;
             worker.ProgressChanged += worker_ProgressChanged;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+
+            foreach (var pattern in Settings.SearchPatterns)
+            {
+                cmbFileTypes.Items.Add(pattern.Description + " " + pattern.Pattern);
+            }
+
+            cmbFileTypes.SelectedIndex = 0;
+        }        
+
+        private string Path1
+        {
+            get
+            {
+                return tbFolderPath1.Text.Trim();
+            }
+        }
+
+        private string Path2
+        {
+            get
+            {
+                return tbFolderPath2.Text.Trim();
+            }
         }
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            pbFilesProcessed.Value = 100;            
+            btnCancel.Enabled = false;
+            pbFilesProcessed.Value = 100;
+            CheckEnabled(this, EventArgs.Empty);            
+
+            if (workerWasCancelled)
+            {
+                workerWasCancelled = false;
+                lblProgress.Text = Properties.Resources.Cancelled;
+                return;
+            }
 
             string report = "";
 
-            foreach (PossibleMatches possibleMatch in possibleMatches)
+            if (possibleMatches.Count == 0)
             {
-                foreach (FileHashPair pair in possibleMatch.Files)
-                {
-                    report += pair.FileName + " ";
-                }
-                report += "\r\n\r\n";
+                report = "Nothing found";
+                lblProgress.Text = "";
             }
-
+            else
+            {
+                foreach (PossibleMatches possibleMatch in possibleMatches)
+                {
+                    foreach (FileHashPair pair in possibleMatch.Files)
+                    {
+                        report += pair.FileName + " ";
+                    }
+                    report += "\r\n\r\n";
+                }
+            }
+            
             richTextBox1.Text = report;
         }
 
@@ -61,30 +101,70 @@ namespace FileComparer
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
+        {            
             possibleMatches.Clear();
-            possibleMatches = CompareUtils.CompareFolders(path1, path2, currentPattern.Pattern, worker);
+
+            if (Path2 != "")
+            {
+                possibleMatches = CompareUtils.CompareFolders(Path1, Path2, selectedPattern.Pattern, worker);
+            }
+            else
+            {
+                possibleMatches = CompareUtils.GetAllPossibleFileMatches(Path1, selectedPattern.Pattern, worker);
+            }            
         }    
 
-        private void NewSearch()
+        private void btnStart_Click(object sender, EventArgs e)
         {
-            var dlg = new NewCompareDialog();
-
-            dlg.ShowDialog(this);
-
-            path1 = dlg.FolderPath1;
-            path2 = dlg.FolderPath2;
-            currentPattern = dlg.SelectedPattern;
-        }
-
-        private void MainForm_Shown(object sender, EventArgs e)
-        {
-            NewSearch();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {            
+            lblProgress.Text = Properties.Resources.SearchingForFiles;
+            pbFilesProcessed.Value = 1;
+            btnStart.Enabled = false;
+            btnCancel.Enabled = true;
             worker.RunWorkerAsync();
-        }        
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnCancel.Enabled = false;
+            workerWasCancelled = true;
+            worker.CancelAsync();
+        }
+
+        private void CheckEnabled(object sender, EventArgs e)
+        {
+            btnStart.Enabled = Path1 != "" ||
+                            (Path1 != "" && Path2 != "");
+        }
+
+        private void btnSelectFolder1_Click(object sender, EventArgs e)
+        {
+            if (Path1 != "")
+            {
+                fdbBrowseFolder.SelectedPath = Path1;
+            }
+
+            if (fdbBrowseFolder.ShowDialog() == DialogResult.OK)
+            {
+                tbFolderPath1.Text = fdbBrowseFolder.SelectedPath;
+            }
+        }
+
+        private void btnSelectFolder2_Click(object sender, EventArgs e)
+        {
+            if (Path2 != "")
+            {
+                fdbBrowseFolder.SelectedPath = Path2;
+            }
+
+            if (fdbBrowseFolder.ShowDialog() == DialogResult.OK)
+            {
+                tbFolderPath2.Text = fdbBrowseFolder.SelectedPath;
+            }
+        }
+
+        private void cmbFileTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedPattern = Settings.SearchPatterns[cmbFileTypes.SelectedIndex];
+        }
     }
 }
