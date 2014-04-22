@@ -51,6 +51,7 @@
     <Compile Include="UI\GraphicsPaths.cs" />
     <Compile Include="UI\Lines.cs" />
     <Compile Include="UI\Rectangles.cs" />
+    <Compile Include="UI\Win32.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
