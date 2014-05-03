@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace HoddiLara.FileCompareUtilities
+namespace HL.FileComparer.Utilities
 {
     /// <summary>
     /// Provides various functions for comparing files:

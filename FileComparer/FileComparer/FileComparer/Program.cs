@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Windows.Forms;
-using FileComparer.Properties;
 
-namespace FileComparer
+namespace HL.FileComparer
 {
     static class Program
     {

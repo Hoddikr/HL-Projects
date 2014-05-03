@@ -7,8 +7,8 @@
     <ProjectGuid>{76A6D011-2714-4ECF-A5C5-8B5D50581B57}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileComparer</RootNamespace>
-    <AssemblyName>FileComparer</AssemblyName>
+    <RootNamespace>HL.FileComparer</RootNamespace>
+    <AssemblyName>File Comparer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

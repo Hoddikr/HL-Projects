@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HoddiLara.FileCompareUtilities
+namespace HL.FileComparer.Utilities
 {
     /// <summary>
     /// Contains a path to a file and the hash value of that file

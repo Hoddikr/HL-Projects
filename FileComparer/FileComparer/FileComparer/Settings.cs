@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using HoddiLara.FileCompareUtilities;
+using HL.FileComparer.Utilities;
 
-namespace FileComparer
+namespace HL.FileComparer
 {
     internal class Settings
     {

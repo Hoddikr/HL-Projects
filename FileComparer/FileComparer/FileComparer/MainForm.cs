@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using FileComparer.Dialogs;
-using HoddiLara.FileCompareUtilities;
+using HL.FileComparer.Dialogs;
+using HL.FileComparer.Utilities;
 
-namespace FileComparer
+namespace HL.FileComparer
 {
     public partial class MainForm : Form
     {

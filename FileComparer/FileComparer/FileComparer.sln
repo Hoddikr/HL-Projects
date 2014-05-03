@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTester", "ConsoleTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileComparer", "FileComparer\FileComparer.csproj", "{76A6D011-2714-4ECF-A5C5-8B5D50581B57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileCompareControls", "FileCompareControls\FileCompareControls.csproj", "{0A634649-2798-4772-BAD7-52460A83E5A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,16 @@ Global
 		{76A6D011-2714-4ECF-A5C5-8B5D50581B57}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{76A6D011-2714-4ECF-A5C5-8B5D50581B57}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{76A6D011-2714-4ECF-A5C5-8B5D50581B57}.Release|x86.ActiveCfg = Release|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0A634649-2798-4772-BAD7-52460A83E5A5}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

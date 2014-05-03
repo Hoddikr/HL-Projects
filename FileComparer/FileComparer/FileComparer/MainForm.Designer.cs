@@ -1,4 +1,4 @@
-﻿namespace FileComparer
+﻿namespace HL.FileComparer
 {
     partial class MainForm
     {

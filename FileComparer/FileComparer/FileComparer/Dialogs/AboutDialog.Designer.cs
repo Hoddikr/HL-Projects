@@ -1,4 +1,4 @@
-﻿namespace FileComparer.Dialogs
+﻿namespace HL.FileComparer.Dialogs
 {
     partial class AboutDialog
     {

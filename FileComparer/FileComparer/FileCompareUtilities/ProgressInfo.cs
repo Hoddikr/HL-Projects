@@ -1,4 +1,4 @@
-﻿namespace HoddiLara.FileCompareUtilities
+﻿namespace HL.FileComparer.Utilities
 {
     /// <summary>
     /// Stores the current progress of the CompareFolders function. This class is sent to the ReportProgress function of a 

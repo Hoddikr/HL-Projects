@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using HoddiLara.FileCompareUtilities;
 using System.Diagnostics;
+using HL.FileComparer.Utilities;
 
 namespace ConsoleTester
 {

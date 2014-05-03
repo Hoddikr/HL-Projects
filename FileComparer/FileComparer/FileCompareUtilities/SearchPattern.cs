@@ -1,4 +1,4 @@
-﻿namespace HoddiLara.FileCompareUtilities
+﻿namespace HL.FileComparer.Utilities
 {
     /// <summary>
     /// Represents a description and value of a search pattern

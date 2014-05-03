@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Linq;
 using System.Windows.Forms;
-using HoddiLara.FileCompareUtilities;
 
 namespace FileCompareTester
 {

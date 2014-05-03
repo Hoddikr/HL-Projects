@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HoddiLara.FileCompareUtilities
+namespace HL.FileComparer.Utilities
 {
     /// <summary>
     /// A simple structure that contains a list of files that are possibly the same

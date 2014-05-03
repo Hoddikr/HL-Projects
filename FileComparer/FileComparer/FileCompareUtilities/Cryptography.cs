@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
 
-namespace HoddiLara.FileCompareUtilities
+namespace HL.FileComparer.Utilities
 {
     public class Cryptography
     {
