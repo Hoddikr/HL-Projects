@@ -42,13 +42,13 @@ namespace ConsoleTester
 
             //List<PossibleMatches> possibleMatches = CompareUtils.GetAllPossibleFileMatches("C:\\Users\\hordur\\Pictures\\Rússland\\2011-08-30", "*.jpg");            
             //CompareUtils.GetAllPossibleFileMatches("C:\\Users\\hordur\\Pictures\\Rússland", "*.jpg");
-            List<PossibleMatches> possibleMatches = CompareUtils.CompareFolders(picPath, picPath2, "*.jpg");
+            Dictionary<string, List<FileHashPair>> possibleMatches = CompareUtils.CompareFolders(picPath, picPath2, "*.jpg");
             watch.Stop();            
             string report = "";
 
-            foreach (PossibleMatches possibleMatch in possibleMatches)
+            foreach (KeyValuePair<string, List<FileHashPair>> possibleMatch in possibleMatches)
             {
-                foreach (FileHashPair pair in possibleMatch.Files)
+                foreach (FileHashPair pair in possibleMatch.Value)
                 {
                     report += pair.FileName + " ";
                 }

@@ -8,11 +8,8 @@ using HL.FileComparer.Utilities;
 namespace HL.FileComparer
 {
     public partial class MainForm : Form
-    {
-        //C:\Users\hordur\Pictures
-        //C:\Users\hordur\Pictures\Rússland\2011-08-30
-              
-        private List<PossibleMatches> possibleMatches;        
+    {                      
+        private Dictionary<string, List<FileHashPair>> possibleMatches;        
         private BackgroundWorker worker;
         private SearchPattern selectedPattern;
         private bool workerWasCancelled;
@@ -21,7 +18,7 @@ namespace HL.FileComparer
         {
             InitializeComponent();
             
-            possibleMatches = new List<PossibleMatches>();
+            possibleMatches = new Dictionary<string, List<FileHashPair>>();
 
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
@@ -76,9 +73,9 @@ namespace HL.FileComparer
             }
             else
             {
-                foreach (PossibleMatches possibleMatch in possibleMatches)
+                foreach (KeyValuePair<string, List<FileHashPair>> possibleMatch in possibleMatches)
                 {
-                    foreach (FileHashPair pair in possibleMatch.Files)
+                    foreach (FileHashPair pair in possibleMatch.Value)
                     {
                         report += pair.FileName + " ";
                     }

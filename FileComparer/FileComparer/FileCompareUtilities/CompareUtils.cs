@@ -32,8 +32,8 @@ namespace HL.FileComparer.Utilities
         /// <param name="pathToFirstFolder">The full path to the first folder to search</param>
         /// <param name="pathToSecondFolder">The full path to the second folder to search</param>
         /// <param name="patternToSearchFor">The file extension to search for</param>
-        /// <returns></returns>
-        public static List<PossibleMatches> CompareFolders(string pathToFirstFolder, string pathToSecondFolder, string patternToSearchFor)
+        /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical</returns>
+        public static Dictionary<string, List<FileHashPair>> CompareFolders(string pathToFirstFolder, string pathToSecondFolder, string patternToSearchFor)
         {
             List<string> allFiles = TraverseTreeByPattern(pathToFirstFolder, patternToSearchFor);
             allFiles.AddRange(TraverseTreeByPattern(pathToSecondFolder, patternToSearchFor));
@@ -50,8 +50,8 @@ namespace HL.FileComparer.Utilities
         /// <param name="pathToSecondFolder">The full path to the second folder to search</param>
         /// <param name="patternToSearchFor">The file extension to search for</param>
         /// <param name="worker">The BackgroundWorker that is running this function</param>
-        /// <returns></returns>
-        public static List<PossibleMatches> CompareFolders(string pathToFirstFolder, string pathToSecondFolder, string patternToSearchFor, BackgroundWorker worker)
+        /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical</returns>
+        public static Dictionary<string, List<FileHashPair>> CompareFolders(string pathToFirstFolder, string pathToSecondFolder, string patternToSearchFor, BackgroundWorker worker)
         {
             progressWorker = worker;
 
@@ -63,8 +63,8 @@ namespace HL.FileComparer.Utilities
         /// </summary>
         /// <param name="pathToFolder">Path to the folder to search</param>
         /// <param name="patternToSearchFor">The pattern to search for</param>
-        /// <returns></returns>
-        public static List<PossibleMatches> GetAllPossibleFileMatches(string pathToFolder, string patternToSearchFor)
+        /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical</returns>
+        public static Dictionary<string, List<FileHashPair>> GetAllPossibleFileMatches(string pathToFolder, string patternToSearchFor)
         {            
             List<string> files = TraverseTreeByPattern(pathToFolder, patternToSearchFor);
 
@@ -79,8 +79,8 @@ namespace HL.FileComparer.Utilities
         /// <param name="pathToFolder">Path to the folder to search</param>
         /// <param name="patternToSearchFor">The pattern to search for</param>
         /// <param name="worker">The BackgroundWorker that is running this function</param>
-        /// <returns></returns>
-        public static List<PossibleMatches> GetAllPossibleFileMatches(string pathToFolder, string patternToSearchFor, BackgroundWorker worker)
+        /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical</returns>
+        public static Dictionary<string, List<FileHashPair>> GetAllPossibleFileMatches(string pathToFolder, string patternToSearchFor, BackgroundWorker worker)
         {
             progressWorker = worker;
 
@@ -91,10 +91,10 @@ namespace HL.FileComparer.Utilities
         /// Returns all possible matches from a given list of files
         /// </summary>
         /// <param name="files">A list containing the full path to files</param>
-        /// <returns></returns>
-        private static List<PossibleMatches> GetMatchesFromFiles(List<string> files)
+        /// <returnsA dictionary where the key is the file hash and the value is the list of files that are identical></returns>
+        private static Dictionary<string, List<FileHashPair>> GetMatchesFromFiles(List<string> files)
         {
-            List<PossibleMatches> possibleMatches = new List<PossibleMatches>();
+            Dictionary<string, List<FileHashPair>> possibleMatches = new Dictionary<string, List<FileHashPair>>();
             List<FileHashPair> fileHashPairs = new List<FileHashPair>();
             ProgressInfo info = new ProgressInfo();
 
@@ -124,42 +124,37 @@ namespace HL.FileComparer.Utilities
                 }
             }
 
-            // Sort the list by alphanumeric order by hash value
-            // This should give us a way to sift through the files that are potentialy identical
-            fileHashPairs.Sort();
-
-            if (fileHashPairs.Count > 1)
+            foreach (FileHashPair fileHashPair in fileHashPairs)
             {
-                PossibleMatches tempPossibleMatches = new PossibleMatches();
-
-                // Once the list is sorted, we can compare each value and find the matches
-                for (int i = 0; i < fileHashPairs.Count; i++)
+                if (possibleMatches.ContainsKey(fileHashPair.FileHash))
                 {
-                    // Check for the last value in the list
-                    if (i == fileHashPairs.Count - 1)
-                    {
-                        // This is kept inside the outer if statement to prevent 
-                        // an index out of range exception occurring in the other if conditions
-                        if (fileHashPairs[i] == fileHashPairs[i - 1])
-                        {
-                            tempPossibleMatches.Files.Add(fileHashPairs[i]);
-                            possibleMatches.Add(tempPossibleMatches);
-                        }
-                    }
-                    else if (fileHashPairs[i] == fileHashPairs[i + 1])
-                    {
-                        tempPossibleMatches.Files.Add(fileHashPairs[i]);
-                    }
-                    else if (i > 0 && fileHashPairs[i] != fileHashPairs[i + 1] && fileHashPairs[i] == fileHashPairs[i - 1])
-                    {
-                        tempPossibleMatches.Files.Add(fileHashPairs[i]);
-                        possibleMatches.Add(tempPossibleMatches);
-                        tempPossibleMatches = new PossibleMatches();
-                    }
+                    (possibleMatches[fileHashPair.FileHash]).Add(fileHashPair);
+                }
+                else
+                {
+                    possibleMatches.Add(fileHashPair.FileHash, new List<FileHashPair>());
+                    possibleMatches[fileHashPair.FileHash].Add(fileHashPair);
                 }
             }
 
+
+            var orphanKeys = new List<string>();
+
+            foreach (var possibleMatch in possibleMatches.Keys)
+            {
+                if (possibleMatches[possibleMatch].Count == 1)
+                {
+                    orphanKeys.Add(possibleMatch);
+                }
+            }
+
+            foreach (var orphanKey in orphanKeys)
+            {
+                possibleMatches.Remove(orphanKey);
+            }
+
             return possibleMatches;
+
         }
 
         // Got this code from somewhere...
@@ -183,6 +178,11 @@ namespace HL.FileComparer.Utilities
 
             while (dirs.Count > 0)
             {
+                if (progressWorker != null && progressWorker.CancellationPending)
+                {
+                    return new List<string>();
+                }
+
                 string currentDir = dirs.Pop();
                 string[] subDirs;
                 try

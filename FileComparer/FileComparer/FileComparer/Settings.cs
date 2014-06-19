@@ -11,7 +11,7 @@ namespace HL.FileComparer
         {
             SearchPatterns = new List<SearchPattern>();
             SearchPatterns.Add(new SearchPattern(){Description = "Images", Pattern =  "*.jpg"});
-            SearchPatterns.Add(new SearchPattern(){Description = "Videos", Pattern =  "*.avi"});
+            SearchPatterns.Add(new SearchPattern(){Description = "Videos", Pattern =  "*.avi;*.mp4;*.mkv"});
             SearchPatterns.Add(new SearchPattern(){Description = "Music", Pattern =  "*.mp3"});
         }
     }
