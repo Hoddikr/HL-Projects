@@ -24,15 +24,12 @@ namespace FileCompareTester
 
         void CompareUtils_HashProgressUpdate(int filesHashed, int totalNumberOfFiles)
         {
-            progressBar1.Value = (filesHashed / totalNumberOfFiles) * 100;
+            //progressBar1.Value = (filesHashed / totalNumberOfFiles) * 100;
         }
 
         private string Pattern
         {
-            get
-            {
-                return tbPattern.Text;
-            }
+            get { return ""; }
         }
 
         private void CheckEnabled(object sender, EventArgs args)
@@ -69,7 +66,7 @@ namespace FileCompareTester
         {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                tbFolder.Text = folderBrowserDialog.SelectedPath;
+                //tbFolder.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
@@ -77,7 +74,7 @@ namespace FileCompareTester
         {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                tbFolder1.Text = folderBrowserDialog.SelectedPath;
+                //tbFolder1.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
@@ -85,7 +82,7 @@ namespace FileCompareTester
         {
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                tbFolder2.Text = folderBrowserDialog.SelectedPath;
+                //tbFolder2.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
@@ -99,13 +96,13 @@ namespace FileCompareTester
         {
             if (comparingSingleFolder)
             {
-                List<PossibleMatches> allPossibleFileMatches = CompareUtils.GetAllPossibleFileMatches(tbFolder.Text, tbPattern.Text);
-                ShowMatchReport(allPossibleFileMatches);
+                //List<PossibleMatches> allPossibleFileMatches = CompareUtils.GetAllPossibleFileMatches(tbFolder.Text, tbPattern.Text);
+                //ShowMatchReport(allPossibleFileMatches);
             }
             else
             {
-                List<PossibleMatches> allPossibleFileMatches = CompareUtils.CompareFolders(tbFolder1.Text, tbFolder2.Text, Pattern);
-                ShowMatchReport(allPossibleFileMatches);
+                //List<PossibleMatches> allPossibleFileMatches = CompareUtils.CompareFolders(tbFolder1.Text, tbFolder2.Text, Pattern);
+                //ShowMatchReport(allPossibleFileMatches);
             }
         }
     }

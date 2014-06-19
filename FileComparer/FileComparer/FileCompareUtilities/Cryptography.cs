@@ -35,32 +35,16 @@ namespace HL.FileComparer.Utilities
                 hashValue = MD5.ComputeHash(stream);
 
                 stream.Close();
+
+                return BitConverter.ToString(hashValue);
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
+                return "";
             }
 
-            return GetByteArrayStringRepresentation(hashValue);            
-        }
-
-        public static string GetByteArrayStringRepresentation(byte[] array)
-        {
-            string byteString = "";
-
-            int i;
-            for (i = 0; i < array.Length; i++)
-            {
-                byteString += String.Format("{0:X2}", array[i]);
-
-                if ((i % 4) == 3)
-                {
-                    //Console.Write(" ");
-                    //byteString += " ";
-                }
-            }
-
-            return byteString;
+            
         }
     }
 }
