@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace HL.FileComparer.Utilities
 {
@@ -213,7 +214,30 @@ namespace HL.FileComparer.Utilities
                 
                 try
                 {
-                    files = System.IO.Directory.GetFiles(currentDir, patternToSearchFor);
+                    // GetFiles does not support multiple patterns, therefore we need to combine the results for each 
+                    // pattern we are looking for
+
+                    string[] patterns = patternToSearchFor.Split(';');
+                    List<string[]> allFiles = new List<string[]>();
+
+                    foreach (var pattern in patterns)
+                    {
+                        allFiles.Add(System.IO.Directory.GetFiles(currentDir, pattern));
+                    }
+
+                    int totalSize = allFiles.Sum(array => array.Length);
+
+                    files = new string[totalSize];
+                    int currentPosition = 0;
+
+                    foreach (var fileCollection in allFiles)
+                    {
+                        foreach (var file in fileCollection)
+                        {
+                            files[currentPosition] = file;
+                            currentPosition++;
+                        }
+                    }
                 }
                 catch (UnauthorizedAccessException e)
                 {
