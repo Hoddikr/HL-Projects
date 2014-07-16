@@ -43,14 +43,6 @@ namespace HL.FileComparer
             }
         }
 
-        private string Path2
-        {
-            get
-            {
-                return tbFolderPath2.Text.Trim();
-            }
-        }
-
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             btnCancel.Enabled = false;
@@ -94,18 +86,11 @@ namespace HL.FileComparer
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
-        {            
+        {
             possibleMatches.Clear();
 
-            if (Path2 != "")
-            {
-                possibleMatches = CompareUtils.CompareFolders(Path1, Path2, selectedPattern.Pattern, worker);
-            }
-            else
-            {
-                possibleMatches = CompareUtils.GetAllPossibleFileMatches(Path1, selectedPattern.Pattern, worker);
-            }            
-        }    
+            possibleMatches = CompareUtils.GetAllPossibleFileMatches(Path1, selectedPattern.Pattern, worker);
+        }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -125,8 +110,7 @@ namespace HL.FileComparer
 
         private void CheckEnabled(object sender, EventArgs e)
         {
-            btnStart.Enabled = Path1 != "" ||
-                            (Path1 != "" && Path2 != "");
+            btnStart.Enabled = Path1 != "";
         }
 
         private void btnSelectFolder1_Click(object sender, EventArgs e)
@@ -142,18 +126,6 @@ namespace HL.FileComparer
             }
         }
 
-        private void btnSelectFolder2_Click(object sender, EventArgs e)
-        {
-            if (Path2 != "")
-            {
-                fdbBrowseFolder.SelectedPath = Path2;
-            }
-
-            if (fdbBrowseFolder.ShowDialog() == DialogResult.OK)
-            {
-                tbFolderPath2.Text = fdbBrowseFolder.SelectedPath;
-            }
-        }
 
         private void cmbFileTypes_SelectedIndexChanged(object sender, EventArgs e)
         {

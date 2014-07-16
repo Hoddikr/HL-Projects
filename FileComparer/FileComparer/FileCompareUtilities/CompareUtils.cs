@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace HL.FileComparer.Utilities
@@ -28,38 +30,6 @@ namespace HL.FileComparer.Utilities
         public static event HashProgressUpdateHandler HashProgressUpdate;
 
         /// <summary>
-        /// Returns a combined list of all possible file matches in two folders
-        /// </summary>
-        /// <param name="pathToFirstFolder">The full path to the first folder to search</param>
-        /// <param name="pathToSecondFolder">The full path to the second folder to search</param>
-        /// <param name="patternToSearchFor">The file extension to search for</param>
-        /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical</returns>
-        public static Dictionary<string, List<FileHashPair>> CompareFolders(string pathToFirstFolder, string pathToSecondFolder, string patternToSearchFor)
-        {
-            List<string> allFiles = TraverseTreeByPattern(pathToFirstFolder, patternToSearchFor);
-            allFiles.AddRange(TraverseTreeByPattern(pathToSecondFolder, patternToSearchFor));
-
-            return GetMatchesFromFiles(allFiles);
-        }
-
-        /// <summary>
-        /// Returns a combined list of all possible file matches in two folders. This function should be used
-        /// when a background worker is used to run the function. While the files are being processed the workers
-        /// ReportProgress function will be called so that a UI element can be updated with the current progress.
-        /// </summary>
-        /// <param name="pathToFirstFolder">The full path to the first folder to search</param>
-        /// <param name="pathToSecondFolder">The full path to the second folder to search</param>
-        /// <param name="patternToSearchFor">The file extension to search for</param>
-        /// <param name="worker">The BackgroundWorker that is running this function</param>
-        /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical</returns>
-        public static Dictionary<string, List<FileHashPair>> CompareFolders(string pathToFirstFolder, string pathToSecondFolder, string patternToSearchFor, BackgroundWorker worker)
-        {
-            progressWorker = worker;
-
-            return CompareFolders(pathToFirstFolder, pathToSecondFolder, patternToSearchFor);
-        }
-
-        /// <summary>
         /// Returns a list of all files in a single folder and all of its subfolders
         /// </summary>
         /// <param name="pathToFolder">Path to the folder to search</param>
@@ -67,7 +37,7 @@ namespace HL.FileComparer.Utilities
         /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical</returns>
         public static Dictionary<string, List<FileHashPair>> GetAllPossibleFileMatches(string pathToFolder, string patternToSearchFor)
         {            
-            List<string> files = TraverseTreeByPattern(pathToFolder, patternToSearchFor);
+            List<FileInfo> files = TraverseTreeByPattern(pathToFolder, patternToSearchFor);
 
             return GetMatchesFromFiles(files);
         }
@@ -91,18 +61,52 @@ namespace HL.FileComparer.Utilities
         /// <summary>
         /// Returns all possible matches from a given list of files
         /// </summary>
-        /// <param name="files">A list containing the full path to files</param>
-        /// <returnsA dictionary where the key is the file hash and the value is the list of files that are identical></returns>
-        private static Dictionary<string, List<FileHashPair>> GetMatchesFromFiles(List<string> files)
+        /// <param name="files">A list containing the information for each file</param>
+        /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical></returns>
+        private static Dictionary<string, List<FileHashPair>> GetMatchesFromFiles(List<FileInfo> files)
         {
             Dictionary<string, List<FileHashPair>> possibleMatches = new Dictionary<string, List<FileHashPair>>();
             List<FileHashPair> fileHashPairs = new List<FileHashPair>();
             ProgressInfo info = new ProgressInfo();
 
-            // Calculate the hash value for each file
-            foreach (string file in files)
+            // We can eliminate a lot of possibilities by comparing file size.
+            // Each file that does not have a matching file with the same size cannot possibly have 
+            // the same file hash as another file and can be safely discarded.
+            if (files.Count > 2)
             {
-                FileHashPair fileHashPair = new FileHashPair(file, Cryptography.GetMD5Hash(file));
+                files = new List<FileInfo>(files.OrderBy(p => p.Length));
+
+                List<int> indexesToRemove = new List<int>();
+
+                for (int i = 0; i < files.Count; i++)
+                {
+                    if (i == 0 && files[i].Length != files[i + 1].Length)
+                    {
+                        indexesToRemove.Add(i);
+                    }
+                    else if (i == files.Count - 1 && files[i].Length != files[i - 1].Length)
+                    {
+                        indexesToRemove.Add(i);
+                    }
+                    else if ((i != 0 && i != files.Count - 1) &&
+                             files[i].Length != files[i - 1].Length && files[i].Length != files[i + 1].Length)
+                    {
+                        indexesToRemove.Add(i);
+                    }
+                }
+
+                int indicesRemoved = 0;
+                foreach (var index in indexesToRemove)
+                {
+                    files.RemoveAt(index - indicesRemoved);
+                    indicesRemoved++;
+                }
+            }
+
+            // Calculate the hash value for each file
+            foreach (FileInfo file in files)
+            {
+                FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5Hash(file.FullName));
 
                 fileHashPairs.Add(fileHashPair);
 
@@ -164,14 +168,14 @@ namespace HL.FileComparer.Utilities
         /// </summary>
         /// <param name="root">The folder to start the search</param>
         /// <param name="patternToSearchFor">A string pattern to match the files to, i.e "*.mp3"</param>
-        private static List<string> TraverseTreeByPattern(string root, string patternToSearchFor)
+        private static List<FileInfo> TraverseTreeByPattern(string root, string patternToSearchFor)
         {
             // Data structure to hold names of subfolders to be
             // examined for files.
             Stack<string> dirs = new Stack<string>(20);
-            List<string> filesFound = new List<string>();
+            List<FileInfo> filesFound = new List<FileInfo>();
 
-            if (!System.IO.Directory.Exists(root))
+            if (!Directory.Exists(root))
             {
                 throw new ArgumentException();
             }
@@ -181,14 +185,14 @@ namespace HL.FileComparer.Utilities
             {
                 if (progressWorker != null && progressWorker.CancellationPending)
                 {
-                    return new List<string>();
+                    return new List<FileInfo>();
                 }
 
                 string currentDir = dirs.Pop();
                 string[] subDirs;
                 try
                 {
-                    subDirs = System.IO.Directory.GetDirectories(currentDir);
+                    subDirs = Directory.GetDirectories(currentDir);                                      
                 }
                 // An UnauthorizedAccessException exception will be thrown if we do not have
                 // discovery permission on a folder or file. It may or may not be acceptable 
@@ -204,7 +208,7 @@ namespace HL.FileComparer.Utilities
                     Console.WriteLine(e.Message);
                     continue;
                 }
-                catch (System.IO.DirectoryNotFoundException e)
+                catch (DirectoryNotFoundException e)
                 {
                     Console.WriteLine(e.Message);
                     continue;
@@ -222,7 +226,7 @@ namespace HL.FileComparer.Utilities
 
                     foreach (var pattern in patterns)
                     {
-                        allFiles.Add(System.IO.Directory.GetFiles(currentDir, pattern));
+                        allFiles.Add(Directory.GetFiles(currentDir, pattern));
                     }
 
                     int totalSize = allFiles.Sum(array => array.Length);
@@ -246,7 +250,7 @@ namespace HL.FileComparer.Utilities
                     continue;
                 }
 
-                catch (System.IO.DirectoryNotFoundException e)
+                catch (DirectoryNotFoundException e)
                 {
                     Console.WriteLine(e.Message);
                     continue;
@@ -258,12 +262,12 @@ namespace HL.FileComparer.Utilities
                     try
                     {
                         // Perform whatever action is required in your scenario.
-                        System.IO.FileInfo fi = new System.IO.FileInfo(file);
-                        filesFound.Add(fi.FullName);
+                        FileInfo fi = new System.IO.FileInfo(file);
+                        filesFound.Add(new FileInfo(fi.FullName));
 
                         //Console.WriteLine("{0}: {1}, {2}", fi.Name, fi.Length, fi.CreationTime);
                     }
-                    catch (System.IO.FileNotFoundException e)
+                    catch (FileNotFoundException e)
                     {
                         // If file was deleted by a separate application
                         //  or thread since the call to TraverseTree()
