@@ -45,6 +45,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutFileComparerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.compareResultsControls1 = new HL.FileComparer.Controls.CompareResultsControls();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,7 +71,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(12, 86);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(982, 426);
+            this.richTextBox1.Size = new System.Drawing.Size(350, 390);
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
             // 
@@ -187,12 +188,20 @@
             this.aboutFileComparerToolStripMenuItem.Text = "About File comparer";
             this.aboutFileComparerToolStripMenuItem.Click += new System.EventHandler(this.aboutFileComparerToolStripMenuItem_Click);
             // 
+            // compareResultsControls1
+            // 
+            this.compareResultsControls1.Location = new System.Drawing.Point(369, 86);
+            this.compareResultsControls1.Name = "compareResultsControls1";
+            this.compareResultsControls1.Size = new System.Drawing.Size(625, 390);
+            this.compareResultsControls1.TabIndex = 18;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1006, 609);
+            this.Controls.Add(this.compareResultsControls1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSelectFolder1);
             this.Controls.Add(this.tbFolderPath1);
@@ -235,6 +244,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutFileComparerToolStripMenuItem;
+        private Controls.CompareResultsControls compareResultsControls1;
     }
 }
 

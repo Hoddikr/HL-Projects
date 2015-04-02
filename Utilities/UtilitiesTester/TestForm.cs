@@ -41,17 +41,19 @@ namespace UtilitiesTester
             {
                 fName = openFileDialog1.FileName;
                 //Use this to get the small Icon
-                hImgSmall = Win32.SHGetFileInfo(fName, 0, ref shinfo, (uint)Marshal.SizeOf(shinfo), Win32.SHGFI_ICON | Win32.SHGFI_SMALLICON);
+                //hImgSmall = Win32.SHGetFileInfo(fName, 0, ref shinfo, (uint)Marshal.SizeOf(shinfo), Win32.SHGFI_ICON | Win32.SHGFI_SMALLICON);
 
                 //Use this to get the large Icon
-                //hImgLarge = SHGetFileInfo(fName, 0, 
-                //	ref shinfo, (uint)Marshal.SizeOf(shinfo), 
-                //	Win32.SHGFI_ICON | Win32.SHGFI_LARGEICON);
+                //hImgLarge = Win32.SHGetFileInfo(fName, 0, 
+                //    ref shinfo, (uint)Marshal.SizeOf(shinfo), 
+                //    Win32.SHGFI_ICON | Win32.SHGFI_LARGEICON);
 
                 //The icon is returned in the hIcon member of the shinfo struct
-                System.Drawing.Icon myIcon = System.Drawing.Icon.FromHandle(shinfo.hIcon);
+                //System.Drawing.Icon myIcon = System.Drawing.Icon.FromHandle(shinfo.hIcon);
 
-                imageList1.Images.Add(myIcon);
+                //imageList1.Images.Add(myIcon);
+                imageList1.Images.Add(Win32.GetFileLargeIcon(fName));
+                //imageList1.Images.Add(Win32.GetFileSmallIcon(fName));
 
                 //Add file name and icon to listview
                 listView1.Items.Add(fName, nIndex++);

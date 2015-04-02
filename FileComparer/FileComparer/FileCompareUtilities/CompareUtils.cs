@@ -106,7 +106,7 @@ namespace HL.FileComparer.Utilities
             // Calculate the hash value for each file
             foreach (FileInfo file in files)
             {
-                FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5Hash(file.FullName));
+                FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5Hash(file));
 
                 fileHashPairs.Add(fileHashPair);
 
@@ -263,7 +263,11 @@ namespace HL.FileComparer.Utilities
                     {
                         // Perform whatever action is required in your scenario.
                         FileInfo fi = new System.IO.FileInfo(file);
-                        filesFound.Add(new FileInfo(fi.FullName));
+
+                        if (fi.Length > 0)
+                        {
+                            filesFound.Add(new FileInfo(fi.FullName));
+                        }
 
                         //Console.WriteLine("{0}: {1}, {2}", fi.Name, fi.Length, fi.CreationTime);
                     }

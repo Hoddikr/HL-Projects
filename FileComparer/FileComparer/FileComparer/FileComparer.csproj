@@ -93,6 +93,10 @@
     <None Include="Resources\folder-search-result.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FileCompareControls\FileCompareControls.csproj">
+      <Project>{0A634649-2798-4772-BAD7-52460A83E5A5}</Project>
+      <Name>FileCompareControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FileCompareUtilities\FileCompareUtilities.csproj">
       <Project>{1012354f-ab55-4489-95bd-241759a215dd}</Project>
       <Name>FileCompareUtilities</Name>

@@ -76,6 +76,7 @@ namespace HL.FileComparer
             }
             
             richTextBox1.Text = report;
+            
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)

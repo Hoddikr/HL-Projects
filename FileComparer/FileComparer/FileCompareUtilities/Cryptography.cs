@@ -20,19 +20,15 @@ namespace HL.FileComparer.Utilities
         /// <summary>
         /// Returns an MD5 hash for a given file
         /// </summary>
-        /// <param name="filePath">The full path to the file to compute the hash for</param>
+        /// <param name="fileInfo">The information about the file to compute the hash for</param>
         /// <returns></returns>
-        public static string GetMD5Hash(string filePath)
+        public static string GetMD5Hash(FileInfo fileInfo)
         {
-            string result = "";
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            //result = GetMD5HashFromWholeFile(filePath);
-            result = GetMD5HashFromPartialFile(filePath);
-
-            watch.Stop();
-            var time = watch.ElapsedMilliseconds;
-            watch.Reset();
+            // Once a file reaches a size larger than 100MB you gain performance by only examining a part of the file.
+            // A file this large is most likely a video file and it is safe to only look at the first few megabytes of the actual file.
+            string result = fileInfo.Length > 100000000
+                ? GetMD5HashFromPartialFile(fileInfo.FullName)
+                : GetMD5HashFromWholeFile(fileInfo.FullName);
 
             return result;
         }
