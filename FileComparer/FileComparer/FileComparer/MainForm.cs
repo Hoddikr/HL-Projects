@@ -91,6 +91,7 @@ namespace HL.FileComparer
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            compareResultsControl1.ClearMatches();
             lblProgress.Text = Properties.Resources.SearchingForFiles;
             pbFilesProcessed.Value = 1;
             btnStart.Enabled = false;

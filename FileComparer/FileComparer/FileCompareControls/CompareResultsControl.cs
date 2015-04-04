@@ -62,31 +62,34 @@ namespace HL.FileComparer.Controls
 
             // Detect if we need to show the last match. This is done because the last result can clip below the 
             // client area when we have reached the end.
-            int testPos = 0;
-            int lastMatchHeight = 0;           
-            bool drawLastMatch = true;
-
-            for (int i = firstMatchIndex; i < matches.Count; i++)
+            if (vScrollBarEnabled && vScrollBar.Value > 0)
             {
-                lastMatchHeight = (int)matches[i].MeasureHeight(e.Graphics, fileFont);
-                
-                if (testPos > Height)
+                int testPos = 0;
+                int lastMatchHeight = 0;
+                bool drawLastMatch = true;
+
+                for (int i = firstMatchIndex; i < matches.Count; i++)
                 {
-                    drawLastMatch = false;                    
-                    break;
+                    lastMatchHeight = (int) matches[i].MeasureHeight(e.Graphics, fileFont);
+
+                    if (testPos > Height)
+                    {
+                        drawLastMatch = false;
+                        break;
+                    }
+
+                    testPos += lastMatchHeight + matchesSpacing;
                 }
 
-                testPos += lastMatchHeight + matchesSpacing;
-            }
+                if (drawLastMatch)
+                {
+                    //Starting posistion of the last match is actually above the "testPos"
+                    int lastMatchStartPos = testPos - lastMatchHeight - matchesSpacing;
+                    int lastMatchDelta = Height - lastMatchStartPos;
+                    int vIndent = lastMatchHeight - lastMatchDelta;
 
-            if (drawLastMatch)
-            {
-                //Starting posistion of the last match is actually above the "testPos"
-                int lastMatchStartPos = testPos - lastMatchHeight - matchesSpacing;
-                int lastMatchDelta = Height - lastMatchStartPos;
-                int vIndent = lastMatchHeight - lastMatchDelta;
-
-                currentPos -= vIndent + matchesSpacing;
+                    currentPos -= vIndent + matchesSpacing;
+                }
             }
 
             for(int i = firstMatchIndex; i < matches.Count; i++)
