@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HL.FileComparer.Utilities
 {
     /// <summary>
     /// A simple structure that contains a list of files that are possibly the same
-    /// </summary>
+    /// </summary>    
     public class PossibleMatches
     {
         public PossibleMatches()

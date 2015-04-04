@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileCompareUtilities", "FileCompareUtilities\FileCompareUtilities.csproj", "{1012354F-AB55-4489-95BD-241759A215DD}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileComparer", "FileComparer\FileComparer.csproj", "{76A6D011-2714-4ECF-A5C5-8B5D50581B57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileCompareControls", "FileCompareControls\FileCompareControls.csproj", "{0A634649-2798-4772-BAD7-52460A83E5A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\..\Utilities\Utilities.csproj", "{F97CF6FE-18F3-420D-8F35-121E38C494DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,16 @@ Global
 		{0A634649-2798-4772-BAD7-52460A83E5A5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0A634649-2798-4772-BAD7-52460A83E5A5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0A634649-2798-4772-BAD7-52460A83E5A5}.Release|x86.ActiveCfg = Release|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

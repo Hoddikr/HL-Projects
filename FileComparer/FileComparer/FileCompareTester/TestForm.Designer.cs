@@ -30,7 +30,7 @@
         {
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.compareResultsControls1 = new HL.FileComparer.Controls.CompareResultsControls();
+            this.compareResultsControls1 = new HL.FileComparer.Controls.CompareResultsControl();
             this.SuspendLayout();
             // 
             // backgroundWorker1
@@ -61,7 +61,7 @@
 
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private HL.FileComparer.Controls.CompareResultsControls compareResultsControls1;
+        private HL.FileComparer.Controls.CompareResultsControl compareResultsControls1;
     }
 }
 

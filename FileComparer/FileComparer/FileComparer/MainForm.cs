@@ -45,6 +45,7 @@ namespace HL.FileComparer
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            List<PossibleMatches> results = new List<PossibleMatches>();
             btnCancel.Enabled = false;
             pbFilesProcessed.Value = 100;
             CheckEnabled(this, EventArgs.Empty);            
@@ -66,17 +67,12 @@ namespace HL.FileComparer
             else
             {
                 foreach (KeyValuePair<string, List<FileHashPair>> possibleMatch in possibleMatches)
-                {
-                    foreach (FileHashPair pair in possibleMatch.Value)
-                    {
-                        report += pair.FileName + " ";
-                    }
-                    report += "\r\n\r\n";
+                {                    
+                    compareResultsControl1.AddMatches(possibleMatch.Value);
                 }
             }
-            
-            richTextBox1.Text = report;
-            
+                        
+            //compareResultsControls1.PossibleMatches = results;
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
