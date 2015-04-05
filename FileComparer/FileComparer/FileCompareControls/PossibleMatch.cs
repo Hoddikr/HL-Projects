@@ -18,17 +18,29 @@ namespace HL.FileComparer.Controls
     {
         private List<FileHashPair> files;
         private const int borderPadding = 5;
-        private const int matchesSpacing = 5;        
+        private const int matchesSpacing = 5;
+        private RectangleF currentBounds;
 
         public PossibleMatch(List<FileHashPair> files)
         {
             this.files = files;
+            
         }
 
         /// <summary>
         /// Gets the height of this match component
         /// </summary>
         public int Height { get; private set; }
+
+        /// <summary>
+        /// Indicates wether this component is currently visible to the user
+        /// </summary>
+        public bool Visible { get; set; }
+
+        /// <summary>
+        /// Gets the list of files beloning to this match component
+        /// </summary>
+        public List<FileHashPair> Files { get { return files; } }
 
         /// <summary>
         /// Returns the projected height of this component when it will be drawn
@@ -50,25 +62,37 @@ namespace HL.FileComparer.Controls
 
             return height;
         }
-        
+
+        /// <summary>
+        /// Indicates wether a point is contained within the current bounds of the component
+        /// </summary>
+        /// <param name="p">The point to test for</param>
+        /// <returns></returns>
+        public bool HitTest(Point p)
+        {
+            return currentBounds.Contains(p);
+        }
+
 
         /// <summary>
         /// Draws this component onto the given graphics context
         /// </summary>
         /// <param name="g">The context to draw on</param>
         /// <param name="font">The font to use when drawing text</param>
+        /// <param name="xIndent">The amount in pixels that this component is indented by on the x-axis</param>
         /// <param name="yPos">The y position where this match will be drawn</param>
         /// <param name="width">The width that this component is allowed to have</param>
-        public void Draw(Graphics g, Font font, int yPos, int width)
+        public void Draw(Graphics g, Font font, int xIndent, int yPos, int width)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
+            Visible = true;
 
             // Calculate the height
             float height = MeasureHeight(g, font);
 
-            RectangleF boundsF = new RectangleF(0f, yPos, width, height);
+            RectangleF boundsF = new RectangleF(xIndent, yPos, width, height);
 
             GraphicsPath borderPath = HL.Utilities.UI.GraphicsPaths.CreateRoundedRectangle(boundsF, 5);
             //Brush brush = new LinearGradientBrush(boundsF, Color.WhiteSmoke, Color.LightGray, 90);
@@ -88,6 +112,7 @@ namespace HL.FileComparer.Controls
             g.DrawPath(borderPen, borderPath);
 
             Height = (int)height;
+            currentBounds = boundsF;
 
             borderPen.Dispose();
             fileTextBrush.Dispose();

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HL.FileComparer.Controls.EventArguments;
 using HL.FileComparer.Utilities;
 
 namespace HL.FileComparer.Controls
@@ -15,9 +16,16 @@ namespace HL.FileComparer.Controls
     {
         private List<PossibleMatch> matches;
         private const int matchesSpacing = 5;       
-        private Font fileFont;
-        private bool vScrollBarEnabled;
+        private Font fileFont;        
+        private bool mouseIsDown;
         private int firstMatchIndex = 0;
+
+        public delegate void MatchClickedHandler(object sender, MatchClickEventArgs args);
+
+        /// <summary>
+        /// Occurs when a match within the component is clicked
+        /// </summary>        
+        public event MatchClickedHandler MatchClicked;
 
         public CompareResultsControl()
         {
@@ -58,68 +66,106 @@ namespace HL.FileComparer.Controls
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;            
 
-            int currentPos = 0;
+            int currentPos = 2;
+            int visibleMatches = 0;
+            bool vScrollBarEnabled = firstMatchIndex > 0;
+            bool lastMatchFullyVisible = false;
 
-            // Detect if we need to show the last match. This is done because the last result can clip below the 
-            // client area when we have reached the end.
-            if (vScrollBarEnabled && vScrollBar.Value > 0)
-            {
-                int testPos = 0;
-                int lastMatchHeight = 0;
-                bool drawLastMatch = true;
-
-                for (int i = firstMatchIndex; i < matches.Count; i++)
-                {
-                    lastMatchHeight = (int) matches[i].MeasureHeight(e.Graphics, fileFont);
-
-                    if (testPos > Height)
-                    {
-                        drawLastMatch = false;
-                        break;
-                    }
-
-                    testPos += lastMatchHeight + matchesSpacing;
-                }
-
-                if (drawLastMatch)
-                {
-                    //Starting posistion of the last match is actually above the "testPos"
-                    int lastMatchStartPos = testPos - lastMatchHeight - matchesSpacing;
-                    int lastMatchDelta = Height - lastMatchStartPos;
-                    int vIndent = lastMatchHeight - lastMatchDelta;
-
-                    currentPos -= vIndent + matchesSpacing;
-                }
-            }
+            // Reset visibility for all matches. This is done so that after drawing each match
+            // we can easily perform actions such as mouse clicks only on currently visible matches
+            matches.ForEach(p => p.Visible = false);
 
             for(int i = firstMatchIndex; i < matches.Count; i++)
             {
                 PossibleMatch match = matches[i];
 
-                match.Draw(e.Graphics, fileFont, currentPos, Width - vScrollBar.Width);
+                match.Draw(e.Graphics, fileFont, 2, currentPos, Width - vScrollBar.Width - 5);
                 currentPos += match.Height + matchesSpacing;
 
-                if (currentPos > Height)
+                if (currentPos > Size.Height)
                 {
-                    vScrollBarEnabled = true;
+                    vScrollBarEnabled = true;                    
                     break;
                 }
-            }
 
+                // Used to stop the "LargeChange" value from decreasing too much
+                lastMatchFullyVisible = i == matches.Count - 1;
+
+                visibleMatches++;
+            }
 
             // Only change the state of the control when needed to reduce unnecessary redrawing
             if (vScrollBar.Enabled != vScrollBarEnabled)
             {
-                vScrollBar.Enabled = true;
+                vScrollBar.Enabled = vScrollBarEnabled;
             }
 
             if (vScrollBarEnabled)
             {
                 vScrollBar.Maximum = matches.Count;
+                vScrollBar.LargeChange = lastMatchFullyVisible ? vScrollBar.LargeChange : visibleMatches;
             }
+
             Rectangle borderRect = new Rectangle(0, 0, Width, Height);
             ControlPaint.DrawBorder3D(e.Graphics, borderRect);
+        }
 
+        protected override void OnResize(EventArgs e)
+        {
+            Invalidate();
+
+            base.OnResize(e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            mouseIsDown = true;
+
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            // Detect mouse click
+            if (mouseIsDown)
+            {
+                for (int i = firstMatchIndex; i < matches.Count; i ++)
+                {
+                    if (!matches[i].Visible)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        if (matches[i].HitTest(e.Location))
+                        {
+                            if (MatchClicked != null)
+                            {
+                                MatchClickEventArgs args = new MatchClickEventArgs(matches[i].Files);
+                                MatchClicked(matches[i], args);
+                            }
+
+                            break;
+                        }
+                    }                       
+                }
+            }
+
+            mouseIsDown = false;
+
+            base.OnMouseUp(e);
+        }
+
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            if (vScrollBar.Enabled)
+            {
+
+                int newValue = vScrollBar.Value - e.Delta/120;
+                vScrollBar.Value = newValue > 0 ? Math.Min(newValue, vScrollBar.Maximum - vScrollBar.LargeChange + 1) : 0;
+            }
+
+            base.OnMouseWheel(e);
         }
 
         private void vScrollBar_ValueChanged(object sender, EventArgs e)
@@ -128,5 +174,6 @@ namespace HL.FileComparer.Controls
 
             Invalidate();
         }
+                
     }
 }

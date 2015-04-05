@@ -44,34 +44,39 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutFileComparerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compareResultsControl1 = new HL.FileComparer.Controls.CompareResultsControl();
+            this.button1 = new System.Windows.Forms.Button();
+            this.compareResultsControl = new HL.FileComparer.Controls.CompareResultsControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbFilesProcessed
             // 
+            this.pbFilesProcessed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pbFilesProcessed.Location = new System.Drawing.Point(12, 541);
             this.pbFilesProcessed.Name = "pbFilesProcessed";
             this.pbFilesProcessed.Size = new System.Drawing.Size(982, 27);
-            this.pbFilesProcessed.TabIndex = 0;
+            this.pbFilesProcessed.TabIndex = 8;
             // 
             // btnStart
             // 
+            this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Enabled = false;
             this.btnStart.Location = new System.Drawing.Point(730, 574);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(129, 29);
-            this.btnStart.TabIndex = 1;
+            this.btnStart.TabIndex = 9;
             this.btnStart.Text = "Start search";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // lblProgress
             // 
+            this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblProgress.Location = new System.Drawing.Point(12, 515);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(167, 23);
-            this.lblProgress.TabIndex = 3;
+            this.lblProgress.TabIndex = 7;
             this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnSelectFolder1
@@ -79,7 +84,7 @@
             this.btnSelectFolder1.Location = new System.Drawing.Point(437, 56);
             this.btnSelectFolder1.Name = "btnSelectFolder1";
             this.btnSelectFolder1.Size = new System.Drawing.Size(27, 23);
-            this.btnSelectFolder1.TabIndex = 12;
+            this.btnSelectFolder1.TabIndex = 5;
             this.btnSelectFolder1.Text = "...";
             this.btnSelectFolder1.UseVisualStyleBackColor = true;
             this.btnSelectFolder1.Click += new System.EventHandler(this.btnSelectFolder1_Click);
@@ -89,7 +94,7 @@
             this.tbFolderPath1.Location = new System.Drawing.Point(92, 58);
             this.tbFolderPath1.Name = "tbFolderPath1";
             this.tbFolderPath1.Size = new System.Drawing.Size(339, 20);
-            this.tbFolderPath1.TabIndex = 11;
+            this.tbFolderPath1.TabIndex = 4;
             this.tbFolderPath1.TextChanged += new System.EventHandler(this.CheckEnabled);
             // 
             // label2
@@ -97,7 +102,7 @@
             this.label2.Location = new System.Drawing.Point(9, 56);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 23);
-            this.label2.TabIndex = 10;
+            this.label2.TabIndex = 3;
             this.label2.Text = "Folder:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -106,7 +111,7 @@
             this.label1.Location = new System.Drawing.Point(-44, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 23);
-            this.label1.TabIndex = 8;
+            this.label1.TabIndex = 1;
             this.label1.Text = "File type:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -117,16 +122,17 @@
             this.cmbFileTypes.Location = new System.Drawing.Point(92, 31);
             this.cmbFileTypes.Name = "cmbFileTypes";
             this.cmbFileTypes.Size = new System.Drawing.Size(235, 21);
-            this.cmbFileTypes.TabIndex = 9;
+            this.cmbFileTypes.TabIndex = 2;
             this.cmbFileTypes.SelectedIndexChanged += new System.EventHandler(this.cmbFileTypes_SelectedIndexChanged);
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.Enabled = false;
             this.btnCancel.Location = new System.Drawing.Point(865, 574);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(129, 29);
-            this.btnCancel.TabIndex = 16;
+            this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -139,7 +145,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1006, 24);
-            this.menuStrip1.TabIndex = 17;
+            this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
@@ -179,12 +185,27 @@
             this.aboutFileComparerToolStripMenuItem.Text = "About File comparer";
             this.aboutFileComparerToolStripMenuItem.Click += new System.EventHandler(this.aboutFileComparerToolStripMenuItem_Click);
             // 
-            // compareResultsControl1
+            // button1
             // 
-            this.compareResultsControl1.Location = new System.Drawing.Point(15, 84);
-            this.compareResultsControl1.Name = "compareResultsControl1";
-            this.compareResultsControl1.Size = new System.Drawing.Size(979, 428);
-            this.compareResultsControl1.TabIndex = 18;
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(649, 580);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // compareResultsControl
+            // 
+            this.compareResultsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.compareResultsControl.Location = new System.Drawing.Point(15, 84);
+            this.compareResultsControl.Name = "compareResultsControl";
+            this.compareResultsControl.Size = new System.Drawing.Size(979, 428);
+            this.compareResultsControl.TabIndex = 6;
+            this.compareResultsControl.MatchClicked += new HL.FileComparer.Controls.CompareResultsControl.MatchClickedHandler(this.compareResultsControl_MatchClicked);
             // 
             // MainForm
             // 
@@ -192,7 +213,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1006, 609);
-            this.Controls.Add(this.compareResultsControl1);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.compareResultsControl);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSelectFolder1);
             this.Controls.Add(this.tbFolderPath1);
@@ -233,7 +255,8 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutFileComparerToolStripMenuItem;
-        private Controls.CompareResultsControl compareResultsControl1;
+        private Controls.CompareResultsControl compareResultsControl;
+        private System.Windows.Forms.Button button1;
     }
 }
 

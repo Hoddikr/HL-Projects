@@ -68,10 +68,11 @@ namespace HL.FileComparer
             {
                 foreach (KeyValuePair<string, List<FileHashPair>> possibleMatch in possibleMatches)
                 {                    
-                    compareResultsControl1.AddMatches(possibleMatch.Value);
+                    compareResultsControl.AddMatches(possibleMatch.Value);
                 }
             }
-                        
+
+            compareResultsControl.Focus();
             //compareResultsControls1.PossibleMatches = results;
         }
 
@@ -91,7 +92,7 @@ namespace HL.FileComparer
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            compareResultsControl1.ClearMatches();
+            compareResultsControl.ClearMatches();
             lblProgress.Text = Properties.Resources.SearchingForFiles;
             pbFilesProcessed.Value = 1;
             btnStart.Enabled = false;
@@ -140,5 +141,21 @@ namespace HL.FileComparer
             var dlg = new AboutDialog();
             dlg.ShowDialog(this);
         }
+
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe",
+                "/select, " + "\"" + @"C:\Users\hordur.LSRETAIL\Pictures\lsretail - Copy\Criminals-Criminal view.PNG" + "\"");
+        }
+
+        private void compareResultsControl_MatchClicked(object sender, Controls.EventArguments.MatchClickEventArgs args)
+        {
+            foreach (FileHashPair file in args.Files)
+            {
+                System.Diagnostics.Process.Start("explorer.exe", "/select, " + "\"" + file.FileName + "\"");
+            }
+        }
+
     }
 }

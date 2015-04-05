@@ -36,9 +36,9 @@
             this.vScrollBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.vScrollBar.Enabled = false;
-            this.vScrollBar.Location = new System.Drawing.Point(230, 0);
+            this.vScrollBar.Location = new System.Drawing.Point(229, 1);
             this.vScrollBar.Name = "vScrollBar";
-            this.vScrollBar.Size = new System.Drawing.Size(17, 150);
+            this.vScrollBar.Size = new System.Drawing.Size(17, 147);
             this.vScrollBar.TabIndex = 0;
             this.vScrollBar.ValueChanged += new System.EventHandler(this.vScrollBar_ValueChanged);
             // 
