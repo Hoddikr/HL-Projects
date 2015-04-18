@@ -28,6 +28,7 @@ namespace HL.Utilities.UI
         public string szTypeName;
     };
 
+    [System.Runtime.InteropServices.GuidAttribute("FFC90EE9-4682-483A-87D4-8A10F8B0DD79")]
     public class Win32
     {
         public const uint SHGFI_ICON = 0x100;
