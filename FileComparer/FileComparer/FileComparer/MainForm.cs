@@ -57,11 +57,9 @@ namespace HL.FileComparer
                 return;
             }
 
-            string report = "";
 
             if (possibleMatches.Count == 0)
             {
-                report = "Nothing found";
                 lblProgress.Text = "";
             }
             else
@@ -73,7 +71,6 @@ namespace HL.FileComparer
             }
 
             compareResultsControl.Focus();
-            //compareResultsControls1.PossibleMatches = results;
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -140,13 +137,6 @@ namespace HL.FileComparer
         {
             var dlg = new AboutDialog();
             dlg.ShowDialog(this);
-        }
-
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("explorer.exe",
-                "/select, " + "\"" + @"C:\Users\hordur.LSRETAIL\Pictures\lsretail - Copy\Criminals-Criminal view.PNG" + "\"");
         }
 
         private void compareResultsControl_MatchClicked(object sender, Controls.EventArguments.MatchClickEventArgs args)

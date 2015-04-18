@@ -28,6 +28,14 @@ namespace HL.FileComparer.Utilities
         }
 
         /// <summary>
+        /// Only the the name of the file itself
+        /// </summary>
+        public string FileShortName
+        {
+            get { return HL.Utilities.File.GetFileShortName(fileName); }
+        }
+
+        /// <summary>
         /// The hash value of the file pointed to by FileName
         /// </summary>
         public string FileHash

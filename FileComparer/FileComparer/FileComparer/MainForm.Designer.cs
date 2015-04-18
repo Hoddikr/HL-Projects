@@ -44,7 +44,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutFileComparerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
             this.compareResultsControl = new HL.FileComparer.Controls.CompareResultsControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -185,17 +184,6 @@
             this.aboutFileComparerToolStripMenuItem.Text = "About File comparer";
             this.aboutFileComparerToolStripMenuItem.Click += new System.EventHandler(this.aboutFileComparerToolStripMenuItem_Click);
             // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(649, 580);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // compareResultsControl
             // 
             this.compareResultsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -213,7 +201,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1006, 609);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.compareResultsControl);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSelectFolder1);
@@ -256,7 +243,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutFileComparerToolStripMenuItem;
         private Controls.CompareResultsControl compareResultsControl;
-        private System.Windows.Forms.Button button1;
     }
 }
 

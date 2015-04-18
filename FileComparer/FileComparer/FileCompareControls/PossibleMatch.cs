@@ -38,6 +38,11 @@ namespace HL.FileComparer.Controls
         public bool Visible { get; set; }
 
         /// <summary>
+        /// Gets or sets wether this component is currently pressed
+        /// </summary>
+        public bool IsPressed { get; set; }
+
+        /// <summary>
         /// Gets the list of files beloning to this match component
         /// </summary>
         public List<FileHashPair> Files { get { return files; } }
@@ -70,7 +75,8 @@ namespace HL.FileComparer.Controls
         /// <returns></returns>
         public bool HitTest(Point p)
         {
-            return currentBounds.Contains(p);
+            IsPressed = currentBounds.Contains(p);            
+            return IsPressed;
         }
 
 
@@ -85,7 +91,7 @@ namespace HL.FileComparer.Controls
         public void Draw(Graphics g, Font font, int xIndent, int yPos, int width)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;            
 
             Visible = true;
 
@@ -95,20 +101,19 @@ namespace HL.FileComparer.Controls
             RectangleF boundsF = new RectangleF(xIndent, yPos, width, height);
 
             GraphicsPath borderPath = HL.Utilities.UI.GraphicsPaths.CreateRoundedRectangle(boundsF, 5);
-            //Brush brush = new LinearGradientBrush(boundsF, Color.WhiteSmoke, Color.LightGray, 90);
-            Brush brush = new LinearGradientBrush(boundsF, Color.White, Color.WhiteSmoke, 90);
+            Brush brush = new LinearGradientBrush(boundsF, Color.White, IsPressed? Color.LightBlue : Color.White /*Color.WhiteSmoke*/, 90);
             Brush fileTextBrush = new SolidBrush(Color.Black);
             g.FillPath(brush, borderPath);
             
             PointF currentFilePosition = new PointF(borderPadding, yPos + borderPadding);
             
             foreach (FileHashPair file in files)
-            {
-                g.DrawString(file.FileName, font, fileTextBrush, currentFilePosition);
+            {                
+                g.DrawString(file.FileName, font, fileTextBrush, currentFilePosition);                
                 currentFilePosition.Y += matchesSpacing + g.MeasureString(file.FileName, font).Height;
             }
 
-            Pen borderPen = new Pen(Color.DarkGray);
+            Pen borderPen = new Pen(IsPressed ? Color.CornflowerBlue : Color.DarkGray);
             g.DrawPath(borderPen, borderPath);
 
             Height = (int)height;

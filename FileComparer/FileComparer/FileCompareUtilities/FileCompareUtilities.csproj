@@ -51,6 +51,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchPattern.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Utilities\Utilities.csproj">
+      <Project>{f97cf6fe-18f3-420d-8f35-121e38c494da}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -103,7 +103,7 @@ namespace HL.FileComparer.Controls
             if (vScrollBarEnabled)
             {
                 vScrollBar.Maximum = matches.Count;
-                vScrollBar.LargeChange = lastMatchFullyVisible ? vScrollBar.LargeChange : visibleMatches;
+                vScrollBar.LargeChange = lastMatchFullyVisible ? visibleMatches + 1 : visibleMatches;
             }
 
             Rectangle borderRect = new Rectangle(0, 0, Width, Height);
@@ -129,6 +129,8 @@ namespace HL.FileComparer.Controls
             // Detect mouse click
             if (mouseIsDown)
             {
+                matches.ForEach(p => p.IsPressed = false);
+
                 for (int i = firstMatchIndex; i < matches.Count; i ++)
                 {
                     if (!matches[i].Visible)
@@ -139,6 +141,8 @@ namespace HL.FileComparer.Controls
                     {
                         if (matches[i].HitTest(e.Location))
                         {
+                            Invalidate();
+
                             if (MatchClicked != null)
                             {
                                 MatchClickEventArgs args = new MatchClickEventArgs(matches[i].Files);
