@@ -17,6 +17,9 @@
             {
                 components.Dispose();
             }
+
+            graphicsImage.Dispose();
+
             base.Dispose(disposing);
         }
 

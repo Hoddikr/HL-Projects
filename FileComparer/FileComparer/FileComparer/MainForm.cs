@@ -70,6 +70,7 @@ namespace HL.FileComparer
                 }
             }
 
+            compareResultsControl.AutosizeMatches();
             compareResultsControl.Focus();
         }
 

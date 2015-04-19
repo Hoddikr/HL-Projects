@@ -69,6 +69,34 @@ namespace HL.FileComparer.Controls
         }
 
         /// <summary>
+        /// Returns the maximum short file name width that this component contains
+        /// </summary>
+        /// <param name="g">The context to draw on</param>
+        /// <param name="font">The font to use when drawing text</param>
+        /// <returns></returns>
+        public float MeasureFileShortWidth(Graphics g, Font font)
+        {
+            float maxWidth = 0f;
+
+            foreach (FileHashPair file in files)
+            {
+                float currentWidth = g.MeasureString(file.FileShortName, font).Width;
+
+                if (currentWidth > maxWidth)
+                {
+                    maxWidth = currentWidth;
+                }
+            }
+
+            return maxWidth;
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum width of the file short section
+        /// </summary>
+        public float MaxFileShortWidth { get; set; }
+
+        /// <summary>
         /// Indicates wether a point is contained within the current bounds of the component
         /// </summary>
         /// <param name="p">The point to test for</param>
@@ -105,13 +133,22 @@ namespace HL.FileComparer.Controls
             Brush fileTextBrush = new SolidBrush(Color.Black);
             g.FillPath(brush, borderPath);
             
-            PointF currentFilePosition = new PointF(borderPadding, yPos + borderPadding);
+            Pen separatorPen = new Pen(Color.DarkGray);
+
+            PointF currentFileShortPosition = new PointF(borderPadding, yPos + borderPadding);
+            PointF currentFilePosistion = new PointF(MaxFileShortWidth + 15, currentFileShortPosition.Y);
             
             foreach (FileHashPair file in files)
             {                
-                g.DrawString(file.FileName, font, fileTextBrush, currentFilePosition);                
-                currentFilePosition.Y += matchesSpacing + g.MeasureString(file.FileName, font).Height;
+                g.DrawString(file.FileShortName, font, fileTextBrush, currentFileShortPosition);
+                g.DrawString(file.FileName, font, fileTextBrush, currentFilePosistion);
+                float lastFileHeight = matchesSpacing + g.MeasureString(file.FileName, font).Height;                
+
+                currentFileShortPosition.Y += lastFileHeight;
+                currentFilePosistion.Y += lastFileHeight;
             }
+
+            g.DrawLine(separatorPen, MaxFileShortWidth + 10, yPos + 3, MaxFileShortWidth + 10, yPos + height - 4);
 
             Pen borderPen = new Pen(IsPressed ? Color.CornflowerBlue : Color.DarkGray);
             g.DrawPath(borderPen, borderPath);
@@ -119,6 +156,7 @@ namespace HL.FileComparer.Controls
             Height = (int)height;
             currentBounds = boundsF;
 
+            separatorPen.Dispose();
             borderPen.Dispose();
             fileTextBrush.Dispose();
             brush.Dispose();

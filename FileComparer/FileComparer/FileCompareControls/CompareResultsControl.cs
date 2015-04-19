@@ -19,6 +19,7 @@ namespace HL.FileComparer.Controls
         private Font fileFont;        
         private bool mouseIsDown;
         private int firstMatchIndex = 0;
+        private Bitmap graphicsImage; // Used to retrieve a graphics object for measuring nested components
 
         public delegate void MatchClickedHandler(object sender, MatchClickEventArgs args);
 
@@ -35,7 +36,9 @@ namespace HL.FileComparer.Controls
             fileFont = new Font(Font.FontFamily, 8f, FontStyle.Regular);
 
             DoubleBuffered = true;
+            graphicsImage = new Bitmap(4, 4);
         }
+        
 
         /// <summary>
         /// Adds a set of possible file matches to the control
@@ -53,6 +56,29 @@ namespace HL.FileComparer.Controls
         public void ClearMatches()
         {
             matches.Clear();
+            Invalidate();
+        }
+
+        /// <summary>
+        /// Autosizes the matches so that the separator respects the widest match
+        /// </summary>
+        public void AutosizeMatches()
+        {
+            float maxWidth = 0f;
+            using (Graphics g = Graphics.FromImage(graphicsImage))
+            {
+                foreach (PossibleMatch match in matches)
+                {
+                    float currentWidth = match.MeasureFileShortWidth(g, fileFont);
+
+                    if (currentWidth > maxWidth)
+                    {
+                        maxWidth = currentWidth;
+                    }
+                }
+            }
+
+            matches.ForEach(p => p.MaxFileShortWidth = maxWidth);
             Invalidate();
         }
 
