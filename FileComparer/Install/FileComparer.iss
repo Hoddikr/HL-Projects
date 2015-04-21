@@ -29,7 +29,7 @@ Source: "{#BUILD}\*.exe"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 [Icons]
 Name: "{group}\File Comparer"; Filename: "{app}\File Comparer.exe"
 Name: "{group}\{cm:UninstallProgram,File Comparer}"; Filename: "{uninstallexe}"
-Name: {commondesktop}\LS One POS; Filename: {app}\LS One POS.exe; Tasks: desktopicon
+Name: {commondesktop}\File Comparer; Filename: {app}\File Comparer.exe; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\File Comparer.exe"; Description: "{cm:LaunchProgram,File Comparer}"; Flags: nowait postinstall skipifsilent unchecked
