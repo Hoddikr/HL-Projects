@@ -38,7 +38,15 @@ namespace HL.FileComparer.Controls
             DoubleBuffered = true;
             graphicsImage = new Bitmap(4, 4);
         }
-        
+
+        /// <summary>
+        /// Returns number of matches
+        /// </summary>
+        [Browsable(false)]
+        public int MatchCount
+        {
+            get { return matches.Count; }
+        }
 
         /// <summary>
         /// Adds a set of possible file matches to the control
@@ -143,6 +151,37 @@ namespace HL.FileComparer.Controls
             base.OnResize(e);
         }
 
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                matches.ForEach(p => p.IsPressed = false);
+
+                for (int i = firstMatchIndex; i < matches.Count; i++)
+                {
+                    if (!matches[i].Visible)
+                    {
+                        break;
+                    }
+                    
+                    if (matches[i].HitTest(e.Location))
+                    {
+                        Invalidate();
+
+                        if (MatchClicked != null)
+                        {
+                            MatchClickEventArgs args = new MatchClickEventArgs(matches[i].Files);
+                            MatchClicked(matches[i], args);
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            base.OnMouseDoubleClick(e);
+        }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
             mouseIsDown = true;
@@ -155,29 +194,22 @@ namespace HL.FileComparer.Controls
             // Detect mouse click
             if (mouseIsDown)
             {
+                // Mark the match as "clicked" so it is rendered to the user. 
                 matches.ForEach(p => p.IsPressed = false);
 
-                for (int i = firstMatchIndex; i < matches.Count; i ++)
+                for (int i = firstMatchIndex; i < matches.Count; i++)
                 {
                     if (!matches[i].Visible)
                     {
                         break;
                     }
-                    else
+                    
+                    if (matches[i].HitTest(e.Location))
                     {
-                        if (matches[i].HitTest(e.Location))
-                        {
-                            Invalidate();
+                        Invalidate();                           
 
-                            if (MatchClicked != null)
-                            {
-                                MatchClickEventArgs args = new MatchClickEventArgs(matches[i].Files);
-                                MatchClicked(matches[i], args);
-                            }
-
-                            break;
-                        }
-                    }                       
+                        break;
+                    }
                 }
             }
 

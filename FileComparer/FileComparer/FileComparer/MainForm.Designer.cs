@@ -45,6 +45,8 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutFileComparerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compareResultsControl = new HL.FileComparer.Controls.CompareResultsControl();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbResultCount = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +57,7 @@
             this.pbFilesProcessed.Location = new System.Drawing.Point(12, 541);
             this.pbFilesProcessed.Name = "pbFilesProcessed";
             this.pbFilesProcessed.Size = new System.Drawing.Size(982, 27);
-            this.pbFilesProcessed.TabIndex = 8;
+            this.pbFilesProcessed.TabIndex = 10;
             // 
             // btnStart
             // 
@@ -64,7 +66,7 @@
             this.btnStart.Location = new System.Drawing.Point(730, 574);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(129, 29);
-            this.btnStart.TabIndex = 9;
+            this.btnStart.TabIndex = 11;
             this.btnStart.Text = "Start search";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
@@ -75,7 +77,7 @@
             this.lblProgress.Location = new System.Drawing.Point(12, 515);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(167, 23);
-            this.lblProgress.TabIndex = 7;
+            this.lblProgress.TabIndex = 9;
             this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnSelectFolder1
@@ -131,7 +133,7 @@
             this.btnCancel.Location = new System.Drawing.Point(865, 574);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(129, 29);
-            this.btnCancel.TabIndex = 10;
+            this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -192,8 +194,24 @@
             this.compareResultsControl.Location = new System.Drawing.Point(15, 84);
             this.compareResultsControl.Name = "compareResultsControl";
             this.compareResultsControl.Size = new System.Drawing.Size(979, 428);
-            this.compareResultsControl.TabIndex = 6;
+            this.compareResultsControl.TabIndex = 8;
             this.compareResultsControl.MatchClicked += new HL.FileComparer.Controls.CompareResultsControl.MatchClickedHandler(this.compareResultsControl_MatchClicked);
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(470, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 23);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Result count:";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbResultCount
+            // 
+            this.tbResultCount.Location = new System.Drawing.Point(576, 58);
+            this.tbResultCount.Name = "tbResultCount";
+            this.tbResultCount.Size = new System.Drawing.Size(100, 20);
+            this.tbResultCount.TabIndex = 7;
             // 
             // MainForm
             // 
@@ -201,6 +219,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1006, 609);
+            this.Controls.Add(this.tbResultCount);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.compareResultsControl);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSelectFolder1);
@@ -243,6 +263,8 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutFileComparerToolStripMenuItem;
         private Controls.CompareResultsControl compareResultsControl;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbResultCount;
     }
 }
 

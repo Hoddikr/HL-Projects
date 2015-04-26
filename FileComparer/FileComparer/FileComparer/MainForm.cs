@@ -45,7 +45,6 @@ namespace HL.FileComparer
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            List<PossibleMatches> results = new List<PossibleMatches>();
             btnCancel.Enabled = false;
             pbFilesProcessed.Value = 100;
             CheckEnabled(this, EventArgs.Empty);            
@@ -72,6 +71,8 @@ namespace HL.FileComparer
 
             compareResultsControl.AutosizeMatches();
             compareResultsControl.Focus();
+
+            tbResultCount.Text = compareResultsControl.MatchCount.ToString("D");
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
