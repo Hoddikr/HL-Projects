@@ -26,7 +26,7 @@ namespace HL.FileComparer.Utilities
         {
             // Once a file reaches a size larger than 100MB you gain performance by only examining a part of the file.
             // A file this large is most likely a video file and it is safe to only look at the first few megabytes of the actual file.
-            string result = fileInfo.Length > 100000000
+            string result = fileInfo.Length > 102400000
                 ? GetMD5HashFromPartialFile(fileInfo.FullName)
                 : GetMD5HashFromWholeFile(fileInfo.FullName);
 
@@ -39,7 +39,7 @@ namespace HL.FileComparer.Utilities
         /// <param name="filePath">The full path to the file to compute the hash for</param>
         /// <param name="peekSize">The maximum number of bytes that will be used from the file to calculate the hash.</param>
         /// <returns>The MD5 hash calculated from the first peekSize number of bytes. Returns an empty string if the hash could not be calculated</returns>
-        private static string GetMD5HashFromPartialFile(string filePath, int peekSize = 10000000)
+        private static string GetMD5HashFromPartialFile(string filePath, int peekSize = 10240000)
         {
             byte[] hashValue = null;
 
@@ -47,18 +47,26 @@ namespace HL.FileComparer.Utilities
             {
                 FileInfo fileInfo = new FileInfo(filePath);
 
+                if (peekSize > fileInfo.Length)
+                {
+                    peekSize = (int)fileInfo.Length;
+                }
+
                 FileStream stream = fileInfo.OpenRead();
                 MemoryStream stream2 = new MemoryStream(peekSize);
                 int readByte = 0;
-                for (int i = 0; i < stream2.Capacity || !stream.CanRead; i++)
+
+                byte[] buffer = new byte[4096];
+
+                for (int i = 0; i < peekSize || !stream.CanRead; i += 4096)
                 {
-                    readByte = stream.ReadByte();
-                    if (readByte == -1)
+                    readByte = stream.Read(buffer, 0, buffer.Length);
+                    if (readByte <= 0)
                     {
                         break;
                     }
 
-                    stream2.WriteByte((byte)readByte);
+                    stream2.Write(buffer, 0, buffer.Length);
                 }
 
                 stream2.Position = 0;
@@ -74,7 +82,7 @@ namespace HL.FileComparer.Utilities
             {
                 Console.WriteLine(e.Message);
                 return "";
-            }            
+            }
         }
 
         /// <summary>
