@@ -86,7 +86,14 @@ namespace HL.FileComparer
         {
             possibleMatches.Clear();
 
-            possibleMatches = CompareUtils.GetAllPossibleFileMatches(Path1, selectedPattern.Pattern, worker);
+            string paths = tbFolderPath1.Text.Trim() + ";" + tbFolderPath2.Text.Trim();
+
+            if (paths.EndsWith(";"))
+            {
+                paths = paths.Substring(0, paths.Length - 1);
+            }
+
+            possibleMatches = CompareUtils.GetAllPossibleFileMatches(paths, selectedPattern.Pattern, worker);
         }
 
         private void btnStart_Click(object sender, EventArgs e)

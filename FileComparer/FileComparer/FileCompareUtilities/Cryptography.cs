@@ -26,7 +26,7 @@ namespace HL.FileComparer.Utilities
         {
             // Once a file reaches a size larger than 100MB you gain performance by only examining a part of the file.
             // A file this large is most likely a video file and it is safe to only look at the first few megabytes of the actual file.
-            string result = fileInfo.Length > 102400000
+            string result = fileInfo.Length > 10240000
                 ? GetMD5HashFromPartialFile(fileInfo.FullName)
                 : GetMD5HashFromWholeFile(fileInfo.FullName);
 

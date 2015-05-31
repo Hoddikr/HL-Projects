@@ -47,6 +47,9 @@
             this.compareResultsControl = new HL.FileComparer.Controls.CompareResultsControl();
             this.label3 = new System.Windows.Forms.Label();
             this.tbResultCount = new System.Windows.Forms.TextBox();
+            this.btnSelectFolder2 = new System.Windows.Forms.Button();
+            this.tbFolderPath2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,7 +107,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 23);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Folder:";
+            this.label2.Text = "Folder 1:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label1
@@ -191,9 +194,9 @@
             this.compareResultsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.compareResultsControl.Location = new System.Drawing.Point(15, 84);
+            this.compareResultsControl.Location = new System.Drawing.Point(15, 111);
             this.compareResultsControl.Name = "compareResultsControl";
-            this.compareResultsControl.Size = new System.Drawing.Size(979, 428);
+            this.compareResultsControl.Size = new System.Drawing.Size(979, 401);
             this.compareResultsControl.TabIndex = 8;
             this.compareResultsControl.MatchClicked += new HL.FileComparer.Controls.CompareResultsControl.MatchClickedHandler(this.compareResultsControl_MatchClicked);
             // 
@@ -213,12 +216,40 @@
             this.tbResultCount.Size = new System.Drawing.Size(100, 20);
             this.tbResultCount.TabIndex = 7;
             // 
+            // btnSelectFolder2
+            // 
+            this.btnSelectFolder2.Location = new System.Drawing.Point(437, 82);
+            this.btnSelectFolder2.Name = "btnSelectFolder2";
+            this.btnSelectFolder2.Size = new System.Drawing.Size(27, 23);
+            this.btnSelectFolder2.TabIndex = 15;
+            this.btnSelectFolder2.Text = "...";
+            this.btnSelectFolder2.UseVisualStyleBackColor = true;
+            // 
+            // tbFolderPath2
+            // 
+            this.tbFolderPath2.Location = new System.Drawing.Point(92, 84);
+            this.tbFolderPath2.Name = "tbFolderPath2";
+            this.tbFolderPath2.Size = new System.Drawing.Size(339, 20);
+            this.tbFolderPath2.TabIndex = 14;
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(9, 82);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(77, 23);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Folder 2:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1006, 609);
+            this.Controls.Add(this.btnSelectFolder2);
+            this.Controls.Add(this.tbFolderPath2);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.tbResultCount);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.compareResultsControl);
@@ -265,6 +296,9 @@
         private Controls.CompareResultsControl compareResultsControl;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbResultCount;
+        private System.Windows.Forms.Button btnSelectFolder2;
+        private System.Windows.Forms.TextBox tbFolderPath2;
+        private System.Windows.Forms.Label label4;
     }
 }
 

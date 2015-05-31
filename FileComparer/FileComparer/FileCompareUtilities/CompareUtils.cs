@@ -30,24 +30,33 @@ namespace HL.FileComparer.Utilities
         public static event HashProgressUpdateHandler HashProgressUpdate;
 
         /// <summary>
-        /// Returns a list of all files in a single folder and all of its subfolders
+        /// Returns a list of all files in a single or multiple folders and all subfolders
         /// </summary>
-        /// <param name="pathToFolder">Path to the folder to search</param>
+        /// <param name="pathToFolder">Path to the folder to search. To search multiple folders, separate each path with a semicolon(;) character</param>
         /// <param name="patternToSearchFor">The pattern to search for</param>
         /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical</returns>
         public static Dictionary<string, List<FileHashPair>> GetAllPossibleFileMatches(string pathToFolder, string patternToSearchFor)
-        {            
-            List<FileInfo> files = TraverseTreeByPattern(pathToFolder, patternToSearchFor);
+        {
+
+            string[] paths = pathToFolder.Split(new[] {';'}, StringSplitOptions.None);
+
+            List<FileInfo> files = new List<FileInfo>();
+
+            foreach (string path in paths)
+            {
+                files.AddRange(TraverseTreeByPattern(path, patternToSearchFor));    
+            }
+            
 
             return GetMatchesFromFiles(files);
-        }
+        }                
 
         /// <summary>
-        /// Returns a list of all files in a single folder and all of its subfolders.This function should be used
+        /// Returns a list of all files in a single or multiple folders and all subfolders.This function should be used
         /// when a background worker is used to run the function. While the files are being processed the workers
         /// ReportProgress function will be called so that a UI element can be updated with the current progress.
         /// </summary>
-        /// <param name="pathToFolder">Path to the folder to search</param>
+        /// <param name="pathToFolder">Path to the folder to search. To search multiple folders, separate each path with a semicolon(;) character</param>
         /// <param name="patternToSearchFor">The pattern to search for</param>
         /// <param name="worker">The BackgroundWorker that is running this function</param>
         /// <returns>A dictionary where the key is the file hash and the value is the list of files that are identical</returns>
@@ -57,6 +66,7 @@ namespace HL.FileComparer.Utilities
 
             return GetAllPossibleFileMatches(pathToFolder, patternToSearchFor);
         }
+
 
         /// <summary>
         /// Returns all possible matches from a given list of files
