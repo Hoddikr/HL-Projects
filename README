@@ -1,4 +1,16 @@
 HL-Projects
 ===========
-
 Programming projects by myself and Lára Rut Davíðsdóttir
+
+
+FileComparer
+============
+A simple utility to search for duplicate files. I intended to use this myself to better organize my family photo backups.
+
+Utilities
+=========
+Various generic utility functions used by other projects.
+
+Controls
+========
+A collection of user control pet projects.
