@@ -106,7 +106,7 @@ namespace HL.FileComparer.Utilities
             // Calculate the hash value for each file
             foreach (FileInfo file in files)
             {
-                FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5Hash(file));
+                FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5Hash(file), file.Length);
 
                 fileHashPairs.Add(fileHashPair);
 
