@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Linq;
 using HL.FileComparer.Dialogs;
 using HL.FileComparer.Utilities;
+using System.IO;
 
 namespace HL.FileComparer
 {
@@ -43,6 +45,14 @@ namespace HL.FileComparer
             }
         }
 
+        private string Path2
+        {
+            get
+            {
+                return tbFolderPath2.Text.Trim();
+            }
+        }
+
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             btnCancel.Enabled = false;
@@ -73,6 +83,7 @@ namespace HL.FileComparer
             compareResultsControl.Focus();
 
             tbResultCount.Text = compareResultsControl.MatchCount.ToString("D");
+            lblSpaceWasted.Text = GetTotalWastedSpaceInMb().ToString("N0") + " MB";
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -116,6 +127,7 @@ namespace HL.FileComparer
         private void CheckEnabled(object sender, EventArgs e)
         {
             btnStart.Enabled = Path1 != "";
+            btnDeleteDuplicates.Enabled = possibleMatches.Count > 0;
         }
 
         private void btnSelectFolder1_Click(object sender, EventArgs e)
@@ -156,5 +168,59 @@ namespace HL.FileComparer
             }
         }
 
+        private void btnDeleteDuplicates_Click(object sender, EventArgs e)
+        {
+            var dlgResult = MessageBox.Show("You are about to delete all duplicates found above. Only one copy in each box will be stored. PLEASE NOTE THAT THIS CAN NOT BE UNDONE.",
+                                            "WARNING!",
+                                            MessageBoxButtons.OKCancel,
+                                            MessageBoxIcon.Warning);
+            if (dlgResult == System.Windows.Forms.DialogResult.OK)
+	        {
+                foreach (var possibleMatchKey in possibleMatches.Keys)
+                {
+                    List<FileHashPair> fileList = possibleMatches[possibleMatchKey];
+                    var filePaths = fileList.Select(x => x.FileName).ToList();
+                    for (int i = 0; i < filePaths.Count - 1; i++)
+                    {
+                        var filePath = filePaths[i];
+                        try
+                        {
+                            File.Delete(filePath);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error deleting file " + filePath + ". Exception: " + ex);
+                        }
+                    }
+                }
+	        }
+        }
+
+        private int GetTotalWastedSpaceInMb()
+        {
+            double totalWastedSpace = 0;
+
+            foreach (var possibleMatchKey in possibleMatches.Keys)
+            {
+                List<FileHashPair> fileList = possibleMatches[possibleMatchKey];
+                double singleFileSize = fileList[0].FileSizeMBytes;
+                totalWastedSpace += singleFileSize * (fileList.Count - 1);
+            }
+
+            return (int)totalWastedSpace;
+        }
+
+        private void btnSelectFolder2_Click(object sender, EventArgs e)
+        {
+            if (Path2 != "")
+            {
+                fdbBrowseFolder.SelectedPath = Path2;
+            }
+
+            if (fdbBrowseFolder.ShowDialog() == DialogResult.OK)
+            {
+                tbFolderPath2.Text = fdbBrowseFolder.SelectedPath;
+            }
+        }
     }
 }

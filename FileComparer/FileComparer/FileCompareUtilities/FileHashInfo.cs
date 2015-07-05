@@ -9,11 +9,13 @@ namespace HL.FileComparer.Utilities
     {
         private string fileName;
         private string fileHash;
+        private double fileSizeMBytes;
 
-        public FileHashPair(string fileName, string fileHash)
+        public FileHashPair(string fileName, string fileHash, long fileSizeBytes)
         {
             this.fileName = fileName;
             this.fileHash = fileHash;
+            this.fileSizeMBytes = (fileSizeBytes / 1024.0) / 1024.0;
         }
 
         /// <summary>
@@ -24,6 +26,25 @@ namespace HL.FileComparer.Utilities
             get
             {
                 return fileName;
+            }
+        }
+
+        /// <summary>
+        /// Gives the size of the file as a string in MB
+        /// </summary>
+        public string FileSizeString
+        {
+            get
+            {
+                return fileSizeMBytes.ToString("N3");
+            }
+        }
+
+        public double FileSizeMBytes
+        {
+            get
+            {
+                return fileSizeMBytes;
             }
         }
 

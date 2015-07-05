@@ -44,12 +44,15 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutFileComparerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compareResultsControl = new HL.FileComparer.Controls.CompareResultsControl();
             this.label3 = new System.Windows.Forms.Label();
             this.tbResultCount = new System.Windows.Forms.TextBox();
             this.btnSelectFolder2 = new System.Windows.Forms.Button();
             this.tbFolderPath2 = new System.Windows.Forms.TextBox();
+            this.lblFolder2 = new System.Windows.Forms.Label();
+            this.btnDeleteDuplicates = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.lblSpaceWasted = new System.Windows.Forms.Label();
+            this.compareResultsControl = new HL.FileComparer.Controls.CompareResultsControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -189,17 +192,6 @@
             this.aboutFileComparerToolStripMenuItem.Text = "About File comparer";
             this.aboutFileComparerToolStripMenuItem.Click += new System.EventHandler(this.aboutFileComparerToolStripMenuItem_Click);
             // 
-            // compareResultsControl
-            // 
-            this.compareResultsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.compareResultsControl.Location = new System.Drawing.Point(15, 111);
-            this.compareResultsControl.Name = "compareResultsControl";
-            this.compareResultsControl.Size = new System.Drawing.Size(979, 401);
-            this.compareResultsControl.TabIndex = 8;
-            this.compareResultsControl.MatchClicked += new HL.FileComparer.Controls.CompareResultsControl.MatchClickedHandler(this.compareResultsControl_MatchClicked);
-            // 
             // label3
             // 
             this.label3.Location = new System.Drawing.Point(470, 56);
@@ -224,6 +216,7 @@
             this.btnSelectFolder2.TabIndex = 15;
             this.btnSelectFolder2.Text = "...";
             this.btnSelectFolder2.UseVisualStyleBackColor = true;
+            this.btnSelectFolder2.Click += new System.EventHandler(this.btnSelectFolder2_Click);
             // 
             // tbFolderPath2
             // 
@@ -232,14 +225,54 @@
             this.tbFolderPath2.Size = new System.Drawing.Size(339, 20);
             this.tbFolderPath2.TabIndex = 14;
             // 
+            // lblFolder2
+            // 
+            this.lblFolder2.Location = new System.Drawing.Point(9, 82);
+            this.lblFolder2.Name = "lblFolder2";
+            this.lblFolder2.Size = new System.Drawing.Size(77, 23);
+            this.lblFolder2.TabIndex = 13;
+            this.lblFolder2.Text = "Folder 2:";
+            this.lblFolder2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnDeleteDuplicates
+            // 
+            this.btnDeleteDuplicates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteDuplicates.Enabled = false;
+            this.btnDeleteDuplicates.Location = new System.Drawing.Point(595, 574);
+            this.btnDeleteDuplicates.Name = "btnDeleteDuplicates";
+            this.btnDeleteDuplicates.Size = new System.Drawing.Size(129, 29);
+            this.btnDeleteDuplicates.TabIndex = 13;
+            this.btnDeleteDuplicates.Text = "Delete duplicates";
+            this.btnDeleteDuplicates.UseVisualStyleBackColor = true;
+            this.btnDeleteDuplicates.Click += new System.EventHandler(this.btnDeleteDuplicates_Click);
+            // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(9, 82);
+            this.label4.Location = new System.Drawing.Point(682, 56);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 23);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "Folder 2:";
+            this.label4.Size = new System.Drawing.Size(100, 23);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Space wasted:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblSpaceWasted
+            // 
+            this.lblSpaceWasted.Location = new System.Drawing.Point(781, 56);
+            this.lblSpaceWasted.Name = "lblSpaceWasted";
+            this.lblSpaceWasted.Size = new System.Drawing.Size(78, 23);
+            this.lblSpaceWasted.TabIndex = 15;
+            this.lblSpaceWasted.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // compareResultsControl
+            // 
+            this.compareResultsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.compareResultsControl.Location = new System.Drawing.Point(15, 111);
+            this.compareResultsControl.Name = "compareResultsControl";
+            this.compareResultsControl.Size = new System.Drawing.Size(979, 401);
+            this.compareResultsControl.TabIndex = 8;
+            this.compareResultsControl.MatchClicked += new HL.FileComparer.Controls.CompareResultsControl.MatchClickedHandler(this.compareResultsControl_MatchClicked);
             // 
             // MainForm
             // 
@@ -249,7 +282,10 @@
             this.ClientSize = new System.Drawing.Size(1006, 609);
             this.Controls.Add(this.btnSelectFolder2);
             this.Controls.Add(this.tbFolderPath2);
+            this.Controls.Add(this.lblFolder2);
+            this.Controls.Add(this.lblSpaceWasted);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.btnDeleteDuplicates);
             this.Controls.Add(this.tbResultCount);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.compareResultsControl);
@@ -298,7 +334,10 @@
         private System.Windows.Forms.TextBox tbResultCount;
         private System.Windows.Forms.Button btnSelectFolder2;
         private System.Windows.Forms.TextBox tbFolderPath2;
+        private System.Windows.Forms.Label lblFolder2;
+        private System.Windows.Forms.Button btnDeleteDuplicates;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblSpaceWasted;
     }
 }
 

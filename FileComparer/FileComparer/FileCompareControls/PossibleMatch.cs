@@ -142,6 +142,11 @@ namespace HL.FileComparer.Controls
             {                
                 g.DrawString(file.FileShortName, font, fileTextBrush, currentFileShortPosition);
                 g.DrawString(file.FileName, font, fileTextBrush, currentFilePosistion);
+
+                // Align size strings to the right
+                float sizeWidth = g.MeasureString(file.FileSizeString + " MB", font).Width;
+                g.DrawString(file.FileSizeString + " MB", font, fileTextBrush, new PointF(boundsF.X + boundsF.Width - sizeWidth - 5, currentFilePosistion.Y));
+
                 float lastFileHeight = matchesSpacing + g.MeasureString(file.FileName, font).Height;                
 
                 currentFileShortPosition.Y += lastFileHeight;
