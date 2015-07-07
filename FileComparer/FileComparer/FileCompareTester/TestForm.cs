@@ -105,5 +105,10 @@ namespace FileCompareTester
                 //ShowMatchReport(allPossibleFileMatches);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(folderBrowser1.SelectedFolders);
+        }
     }
 }
