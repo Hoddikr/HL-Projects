@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.pbFilesProcessed = new System.Windows.Forms.ProgressBar();
             this.btnStart = new System.Windows.Forms.Button();
             this.lblProgress = new System.Windows.Forms.Label();
@@ -210,7 +211,7 @@
             this.folderBrowser.Location = new System.Drawing.Point(11, 55);
             this.folderBrowser.MaximumFolderItems = 4;
             this.folderBrowser.Name = "folderBrowser";
-            this.folderBrowser.Size = new System.Drawing.Size(690, 41);
+            this.folderBrowser.Size = new System.Drawing.Size(690, 35);
             this.folderBrowser.TabIndex = 16;
             this.folderBrowser.FolderSelectionChanged += new System.EventHandler(this.CheckEnabled);
             this.folderBrowser.SizeChanged += new System.EventHandler(this.folderBrowser_SizeChanged);
@@ -247,6 +248,7 @@
             this.Controls.Add(this.pbFilesProcessed);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

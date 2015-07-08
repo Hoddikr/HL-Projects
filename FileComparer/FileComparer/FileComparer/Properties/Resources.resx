@@ -130,4 +130,7 @@
   <data name="SearchingForFiles" xml:space="preserve">
     <value>Searching for files...</value>
   </data>
+  <data name="FileComparer_1_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FileComparer_1_32.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
