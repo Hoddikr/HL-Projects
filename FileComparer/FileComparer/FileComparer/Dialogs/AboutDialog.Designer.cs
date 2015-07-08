@@ -35,7 +35,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(354, 90);
+            this.btnOK.Location = new System.Drawing.Point(304, 111);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
@@ -45,19 +45,19 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(47, 46);
+            this.label1.Location = new System.Drawing.Point(51, 36);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(336, 13);
+            this.label1.Size = new System.Drawing.Size(317, 66);
             this.label1.TabIndex = 1;
-            this.label1.Text = "The awesomest program made by human beings on planet earth ever!";
+            this.label1.Text = "Creative commons components used in this product:\r\n\r\nFugue Icons\r\n(C) 2013 Yusuke" +
+    " Kamiyamane. All rights reserved.";
             // 
             // AboutDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(441, 125);
+            this.ClientSize = new System.Drawing.Size(391, 146);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -65,7 +65,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AboutDialog";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

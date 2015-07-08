@@ -31,13 +31,9 @@
             this.pbFilesProcessed = new System.Windows.Forms.ProgressBar();
             this.btnStart = new System.Windows.Forms.Button();
             this.lblProgress = new System.Windows.Forms.Label();
-            this.btnSelectFolder1 = new System.Windows.Forms.Button();
-            this.tbFolderPath1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbFileTypes = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.fdbBrowseFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageFileTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,12 +42,10 @@
             this.aboutFileComparerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             this.tbResultCount = new System.Windows.Forms.TextBox();
-            this.btnSelectFolder2 = new System.Windows.Forms.Button();
-            this.tbFolderPath2 = new System.Windows.Forms.TextBox();
-            this.lblFolder2 = new System.Windows.Forms.Label();
             this.btnDeleteDuplicates = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.lblSpaceWasted = new System.Windows.Forms.Label();
+            this.folderBrowser = new HL.FileComparer.Controls.FolderBrowser();
             this.compareResultsControl = new HL.FileComparer.Controls.CompareResultsControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -62,14 +56,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbFilesProcessed.Location = new System.Drawing.Point(12, 541);
             this.pbFilesProcessed.Name = "pbFilesProcessed";
-            this.pbFilesProcessed.Size = new System.Drawing.Size(982, 27);
+            this.pbFilesProcessed.Size = new System.Drawing.Size(1008, 27);
             this.pbFilesProcessed.TabIndex = 10;
             // 
             // btnStart
             // 
             this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Enabled = false;
-            this.btnStart.Location = new System.Drawing.Point(730, 574);
+            this.btnStart.Location = new System.Drawing.Point(756, 574);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(129, 29);
             this.btnStart.TabIndex = 11;
@@ -85,33 +79,6 @@
             this.lblProgress.Size = new System.Drawing.Size(167, 23);
             this.lblProgress.TabIndex = 9;
             this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // btnSelectFolder1
-            // 
-            this.btnSelectFolder1.Location = new System.Drawing.Point(437, 56);
-            this.btnSelectFolder1.Name = "btnSelectFolder1";
-            this.btnSelectFolder1.Size = new System.Drawing.Size(27, 23);
-            this.btnSelectFolder1.TabIndex = 5;
-            this.btnSelectFolder1.Text = "...";
-            this.btnSelectFolder1.UseVisualStyleBackColor = true;
-            this.btnSelectFolder1.Click += new System.EventHandler(this.btnSelectFolder1_Click);
-            // 
-            // tbFolderPath1
-            // 
-            this.tbFolderPath1.Location = new System.Drawing.Point(92, 58);
-            this.tbFolderPath1.Name = "tbFolderPath1";
-            this.tbFolderPath1.Size = new System.Drawing.Size(339, 20);
-            this.tbFolderPath1.TabIndex = 4;
-            this.tbFolderPath1.TextChanged += new System.EventHandler(this.CheckEnabled);
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(9, 56);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 23);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Folder 1:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label1
             // 
@@ -136,7 +103,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(865, 574);
+            this.btnCancel.Location = new System.Drawing.Point(891, 574);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(129, 29);
             this.btnCancel.TabIndex = 12;
@@ -151,7 +118,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1006, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1032, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -194,7 +161,7 @@
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(470, 56);
+            this.label3.Location = new System.Drawing.Point(708, 84);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 23);
             this.label3.TabIndex = 6;
@@ -203,42 +170,16 @@
             // 
             // tbResultCount
             // 
-            this.tbResultCount.Location = new System.Drawing.Point(576, 58);
+            this.tbResultCount.Location = new System.Drawing.Point(814, 86);
             this.tbResultCount.Name = "tbResultCount";
             this.tbResultCount.Size = new System.Drawing.Size(100, 20);
             this.tbResultCount.TabIndex = 7;
-            // 
-            // btnSelectFolder2
-            // 
-            this.btnSelectFolder2.Location = new System.Drawing.Point(437, 82);
-            this.btnSelectFolder2.Name = "btnSelectFolder2";
-            this.btnSelectFolder2.Size = new System.Drawing.Size(27, 23);
-            this.btnSelectFolder2.TabIndex = 15;
-            this.btnSelectFolder2.Text = "...";
-            this.btnSelectFolder2.UseVisualStyleBackColor = true;
-            this.btnSelectFolder2.Click += new System.EventHandler(this.btnSelectFolder2_Click);
-            // 
-            // tbFolderPath2
-            // 
-            this.tbFolderPath2.Location = new System.Drawing.Point(92, 84);
-            this.tbFolderPath2.Name = "tbFolderPath2";
-            this.tbFolderPath2.Size = new System.Drawing.Size(339, 20);
-            this.tbFolderPath2.TabIndex = 14;
-            // 
-            // lblFolder2
-            // 
-            this.lblFolder2.Location = new System.Drawing.Point(9, 82);
-            this.lblFolder2.Name = "lblFolder2";
-            this.lblFolder2.Size = new System.Drawing.Size(77, 23);
-            this.lblFolder2.TabIndex = 13;
-            this.lblFolder2.Text = "Folder 2:";
-            this.lblFolder2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnDeleteDuplicates
             // 
             this.btnDeleteDuplicates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDeleteDuplicates.Enabled = false;
-            this.btnDeleteDuplicates.Location = new System.Drawing.Point(595, 574);
+            this.btnDeleteDuplicates.Location = new System.Drawing.Point(621, 574);
             this.btnDeleteDuplicates.Name = "btnDeleteDuplicates";
             this.btnDeleteDuplicates.Size = new System.Drawing.Size(129, 29);
             this.btnDeleteDuplicates.TabIndex = 13;
@@ -248,7 +189,7 @@
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(682, 56);
+            this.label4.Location = new System.Drawing.Point(708, 55);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 23);
             this.label4.TabIndex = 14;
@@ -257,20 +198,31 @@
             // 
             // lblSpaceWasted
             // 
-            this.lblSpaceWasted.Location = new System.Drawing.Point(781, 56);
+            this.lblSpaceWasted.Location = new System.Drawing.Point(811, 55);
             this.lblSpaceWasted.Name = "lblSpaceWasted";
             this.lblSpaceWasted.Size = new System.Drawing.Size(78, 23);
             this.lblSpaceWasted.TabIndex = 15;
             this.lblSpaceWasted.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // folderBrowser
+            // 
+            this.folderBrowser.BackColor = System.Drawing.Color.Transparent;
+            this.folderBrowser.Location = new System.Drawing.Point(15, 55);
+            this.folderBrowser.MaximumFolderItems = 4;
+            this.folderBrowser.Name = "folderBrowser";
+            this.folderBrowser.Size = new System.Drawing.Size(687, 65);
+            this.folderBrowser.TabIndex = 16;
+            this.folderBrowser.FolderSelectionChanged += new System.EventHandler(this.CheckEnabled);
+            this.folderBrowser.SizeChanged += new System.EventHandler(this.folderBrowser_SizeChanged);
             // 
             // compareResultsControl
             // 
             this.compareResultsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.compareResultsControl.Location = new System.Drawing.Point(15, 111);
+            this.compareResultsControl.Location = new System.Drawing.Point(15, 126);
             this.compareResultsControl.Name = "compareResultsControl";
-            this.compareResultsControl.Size = new System.Drawing.Size(979, 401);
+            this.compareResultsControl.Size = new System.Drawing.Size(1005, 386);
             this.compareResultsControl.TabIndex = 8;
             this.compareResultsControl.MatchClicked += new HL.FileComparer.Controls.CompareResultsControl.MatchClickedHandler(this.compareResultsControl_MatchClicked);
             // 
@@ -279,10 +231,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1006, 609);
-            this.Controls.Add(this.btnSelectFolder2);
-            this.Controls.Add(this.tbFolderPath2);
-            this.Controls.Add(this.lblFolder2);
+            this.ClientSize = new System.Drawing.Size(1032, 609);
+            this.Controls.Add(this.folderBrowser);
             this.Controls.Add(this.lblSpaceWasted);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnDeleteDuplicates);
@@ -290,9 +240,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.compareResultsControl);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnSelectFolder1);
-            this.Controls.Add(this.tbFolderPath1);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbFileTypes);
             this.Controls.Add(this.lblProgress);
@@ -316,13 +263,9 @@
         private System.Windows.Forms.ProgressBar pbFilesProcessed;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label lblProgress;
-        private System.Windows.Forms.Button btnSelectFolder1;
-        private System.Windows.Forms.TextBox tbFolderPath1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbFileTypes;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.FolderBrowserDialog fdbBrowseFolder;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageFileTypesToolStripMenuItem;
@@ -332,12 +275,10 @@
         private Controls.CompareResultsControl compareResultsControl;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbResultCount;
-        private System.Windows.Forms.Button btnSelectFolder2;
-        private System.Windows.Forms.TextBox tbFolderPath2;
-        private System.Windows.Forms.Label lblFolder2;
         private System.Windows.Forms.Button btnDeleteDuplicates;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblSpaceWasted;
+        private Controls.FolderBrowser folderBrowser;
     }
 }
 

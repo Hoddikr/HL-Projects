@@ -37,22 +37,6 @@ namespace HL.FileComparer
             cmbFileTypes.SelectedIndex = 0;
         }        
 
-        private string Path1
-        {
-            get
-            {
-                return tbFolderPath1.Text.Trim();
-            }
-        }
-
-        private string Path2
-        {
-            get
-            {
-                return tbFolderPath2.Text.Trim();
-            }
-        }
-
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             btnCancel.Enabled = false;
@@ -97,14 +81,7 @@ namespace HL.FileComparer
         {
             possibleMatches.Clear();
 
-            string paths = tbFolderPath1.Text.Trim() + ";" + tbFolderPath2.Text.Trim();
-
-            if (paths.EndsWith(";"))
-            {
-                paths = paths.Substring(0, paths.Length - 1);
-            }
-
-            possibleMatches = CompareUtils.GetAllPossibleFileMatches(paths, selectedPattern.Pattern, worker);
+            possibleMatches = CompareUtils.GetAllPossibleFileMatches(folderBrowser.SelectedFolders, selectedPattern.Pattern, worker);
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -126,21 +103,8 @@ namespace HL.FileComparer
 
         private void CheckEnabled(object sender, EventArgs e)
         {
-            btnStart.Enabled = Path1 != "";
+            btnStart.Enabled = folderBrowser.SelectedFolders != "";
             btnDeleteDuplicates.Enabled = possibleMatches.Count > 0;
-        }
-
-        private void btnSelectFolder1_Click(object sender, EventArgs e)
-        {
-            if (Path1 != "")
-            {
-                fdbBrowseFolder.SelectedPath = Path1;
-            }
-
-            if (fdbBrowseFolder.ShowDialog() == DialogResult.OK)
-            {
-                tbFolderPath1.Text = fdbBrowseFolder.SelectedPath;
-            }
         }
 
 
@@ -210,17 +174,12 @@ namespace HL.FileComparer
             return (int)totalWastedSpace;
         }
 
-        private void btnSelectFolder2_Click(object sender, EventArgs e)
+        private void folderBrowser_SizeChanged(object sender, EventArgs e)
         {
-            if (Path2 != "")
-            {
-                fdbBrowseFolder.SelectedPath = Path2;
-            }
+            int delta = (folderBrowser.Bottom + 6) - compareResultsControl.Top;
 
-            if (fdbBrowseFolder.ShowDialog() == DialogResult.OK)
-            {
-                tbFolderPath2.Text = fdbBrowseFolder.SelectedPath;
-            }
+            compareResultsControl.Top = compareResultsControl.Top + delta;
+            compareResultsControl.Height = compareResultsControl.Height - delta;
         }
     }
 }

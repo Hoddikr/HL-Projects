@@ -12,9 +12,10 @@ namespace HL.FileComparer.Controls
 {
     public partial class FolderBrowser : UserControl
     {
-        private List<FolderBrowserItem> folderBrowserItems;
-
+        private List<FolderBrowserItem> folderBrowserItems;        
         private const int itemHeight = 30; // each button is 24, add margin of 3 on both sides
+
+        public event EventHandler FolderSelectionChanged;
 
         public FolderBrowser()
         {
@@ -29,7 +30,7 @@ namespace HL.FileComparer.Controls
             AddFolderBrowserItem();
         }
 
-        [Browsable(true), DefaultValue(4)]
+        [Browsable(false)]
         public int MaximumFolderItems { get; set; }
 
         /// <summary>
@@ -61,8 +62,7 @@ namespace HL.FileComparer.Controls
 
         private void AddFolderBrowserItem()
         {
-            FolderBrowserItem item = new FolderBrowserItem();
-            //item.RegisterComponents(this);
+            FolderBrowserItem item = new FolderBrowserItem(this);
             folderBrowserItems.Add(item);
 
             if (folderBrowserItems.Count == MaximumFolderItems)
@@ -73,8 +73,13 @@ namespace HL.FileComparer.Controls
             SetDeleteEnabled();
 
             AdjustSize();
+        }
 
-            //RefreshItems();
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            AdjustSize();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -97,23 +102,26 @@ namespace HL.FileComparer.Controls
         }
 
         private void RefreshItems()
-        {            
-            folderBrowserItems.ForEach(p => p.SetComponentsVisible(false));
+        {
             folderBrowserItems.ForEach(p => p.UnRegisterComponents(this));
 
             for (int i = 0; i < folderBrowserItems.Count; i++)
             {
                 folderBrowserItems[i].SetSizeAndPosition(this, 5 + i * itemHeight);
-
             }
 
             folderBrowserItems.ForEach(p => p.RegisterComponents(this));
-            folderBrowserItems.ForEach(p => p.SetComponentsVisible(true));
+
+            Invalidate();
         }
 
         private void AdjustSize()
         {
+            folderBrowserItems.ForEach(p => p.UnRegisterComponents(this));
+
             Size = new Size(Width, 5 + folderBrowserItems.Count * itemHeight + itemHeight);
+
+            folderBrowserItems.ForEach(p => p.RegisterComponents(this));
         }
 
         private void SetDeleteEnabled()
@@ -132,11 +140,23 @@ namespace HL.FileComparer.Controls
         {
             item.Delete(this);
             folderBrowserItems.Remove(item);
-            btnAdd.Enabled = true;            
+
+            if (folderBrowserItems.Count < MaximumFolderItems)
+            {
+                btnAdd.Enabled = true;
+            }
 
             SetDeleteEnabled();
 
             AdjustSize();
+        }
+
+        internal void ItemTextChangedHandler(object sender, EventArgs args)
+        {
+            if (FolderSelectionChanged != null)
+            {
+                FolderSelectionChanged(this, EventArgs.Empty);
+            }
         }
     }
 }

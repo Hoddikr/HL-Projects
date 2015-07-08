@@ -18,7 +18,7 @@ namespace HL.FileComparer.Controls
         private Button btnRemove;
         private Button btnBrowseFolder;
 
-        public FolderBrowserItem()
+        public FolderBrowserItem(FolderBrowser parent)
         {
             buttonSize = new Size(24, 24);
 
@@ -39,6 +39,7 @@ namespace HL.FileComparer.Controls
             btnBrowseFolder.Click += BtnBrowseFolderOnClick;
             btnRemove.Click += BtnRemoveOnClick;
 
+            tbFolder.TextChanged += parent.ItemTextChangedHandler;
         }
 
         /// <summary>
@@ -106,6 +107,7 @@ namespace HL.FileComparer.Controls
             btnBrowseFolder.Dispose();
             btnBrowseFolder = null;
 
+            tbFolder.TextChanged -= parent.ItemTextChangedHandler;
             tbFolder.Dispose();
             tbFolder = null;
         }
