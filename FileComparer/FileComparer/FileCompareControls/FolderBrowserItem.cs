@@ -17,6 +17,7 @@ namespace HL.FileComparer.Controls
         private TextBox tbFolder;
         private Button btnRemove;
         private Button btnBrowseFolder;
+        private Button btnAdd;
 
         public FolderBrowserItem(FolderBrowser parent)
         {
@@ -30,16 +31,29 @@ namespace HL.FileComparer.Controls
             btnRemove.Image = Resources.minus;
             btnRemove.Anchor = AnchorStyles.Right;
 
+            btnAdd = new Button();
+            btnAdd.Size = new Size(buttonSize.Width, buttonSize.Height);
+            btnAdd.Image = Resources.plus;
+            btnAdd.Anchor = AnchorStyles.Right;
+
             btnBrowseFolder = new Button();
             btnBrowseFolder.Size = new Size(buttonSize.Width, buttonSize.Height);
             //btnBrowseFolder.Text = "...";
             btnBrowseFolder.Image = Resources.folder_horizontal_open;
-            btnRemove.Anchor = AnchorStyles.Right;            
+            btnBrowseFolder.Anchor = AnchorStyles.Right;            
 
             btnBrowseFolder.Click += BtnBrowseFolderOnClick;
             btnRemove.Click += BtnRemoveOnClick;
+            btnAdd.Click += BtnAddOnClick;
+
+
 
             tbFolder.TextChanged += parent.ItemTextChangedHandler;
+        }
+
+        private void BtnAddOnClick(object sender, EventArgs eventArgs)
+        {
+            ((FolderBrowser)btnAdd.Parent).AddFolderBrowserItem();
         }
 
         /// <summary>
@@ -78,6 +92,7 @@ namespace HL.FileComparer.Controls
             parent.Controls.Add(tbFolder);
             parent.Controls.Add(btnBrowseFolder);
             parent.Controls.Add(btnRemove);
+            parent.Controls.Add(btnAdd);
         }
 
         /// <summary>
@@ -89,6 +104,7 @@ namespace HL.FileComparer.Controls
             parent.Controls.Remove(tbFolder);
             parent.Controls.Remove(btnBrowseFolder);
             parent.Controls.Remove(btnRemove);
+            parent.Controls.Remove(btnAdd);
         }
 
         /// <summary>
@@ -102,6 +118,10 @@ namespace HL.FileComparer.Controls
             btnRemove.Click -= BtnRemoveOnClick;
             btnRemove.Dispose();
             btnRemove = null;
+
+            btnAdd.Click -= BtnAddOnClick;
+            btnAdd.Dispose();
+            btnAdd = null;
 
             btnBrowseFolder.Click -= BtnBrowseFolderOnClick;
             btnBrowseFolder.Dispose();
@@ -118,7 +138,7 @@ namespace HL.FileComparer.Controls
         /// <param name="visible"></param>
         public void SetComponentsVisible(bool visible)
         {
-            tbFolder.Visible = btnBrowseFolder.Visible = btnRemove.Visible = visible;
+            tbFolder.Visible = btnBrowseFolder.Visible = btnRemove.Visible = btnAdd.Visible = visible;
         }
 
         /// <summary>
@@ -131,6 +151,15 @@ namespace HL.FileComparer.Controls
         }
 
         /// <summary>
+        /// Sets wether the add button on this item is enabled
+        /// </summary>
+        /// <param name="enabled"></param>
+        public void SetAddEnabled(bool enabled)
+        {
+            btnAdd.Enabled = enabled;
+        }
+
+        /// <summary>
         /// Refreshes the locations and sizes(if needed) for the components of this item based on the parent control
         /// </summary>
         /// <param name="parent">The FolderBrowser control that this item belongs to</param>
@@ -140,13 +169,16 @@ namespace HL.FileComparer.Controls
             int xOffset = 6;
 
             tbFolder.Location = new Point(xOffset, yPosition + 2);
-            tbFolder.Width = parent.Width - 12 - 9 - 2 * buttonSize.Width;
+            tbFolder.Width = parent.Width - 12 - 15 - 3 * buttonSize.Width;
             xOffset = tbFolder.Width + 6 + 6;
 
             btnBrowseFolder.Location = new Point(xOffset, yPosition);
             xOffset += btnBrowseFolder.Width + 6;
 
             btnRemove.Location = new Point(xOffset, yPosition);
+            xOffset += btnRemove.Width + 6;
+
+            btnAdd.Location = new Point(xOffset, yPosition);
         }
 
         public void Draw(Graphics g)

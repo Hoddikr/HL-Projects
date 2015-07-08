@@ -178,8 +178,11 @@ namespace HL.FileComparer
         {
             int delta = (folderBrowser.Bottom + 6) - compareResultsControl.Top;
 
+            // Control is removed to prevent flickering and unnecessary re-drawing
+            Controls.Remove(compareResultsControl);
             compareResultsControl.Top = compareResultsControl.Top + delta;
             compareResultsControl.Height = compareResultsControl.Height - delta;
+            Controls.Add(compareResultsControl);
         }
     }
 }

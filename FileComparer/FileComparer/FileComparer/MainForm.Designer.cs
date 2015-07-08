@@ -161,7 +161,7 @@
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(708, 84);
+            this.label3.Location = new System.Drawing.Point(707, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 23);
             this.label3.TabIndex = 6;
@@ -170,7 +170,7 @@
             // 
             // tbResultCount
             // 
-            this.tbResultCount.Location = new System.Drawing.Point(814, 86);
+            this.tbResultCount.Location = new System.Drawing.Point(813, 63);
             this.tbResultCount.Name = "tbResultCount";
             this.tbResultCount.Size = new System.Drawing.Size(100, 20);
             this.tbResultCount.TabIndex = 7;
@@ -189,7 +189,7 @@
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(708, 55);
+            this.label4.Location = new System.Drawing.Point(707, 32);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 23);
             this.label4.TabIndex = 14;
@@ -198,7 +198,7 @@
             // 
             // lblSpaceWasted
             // 
-            this.lblSpaceWasted.Location = new System.Drawing.Point(811, 55);
+            this.lblSpaceWasted.Location = new System.Drawing.Point(843, 26);
             this.lblSpaceWasted.Name = "lblSpaceWasted";
             this.lblSpaceWasted.Size = new System.Drawing.Size(78, 23);
             this.lblSpaceWasted.TabIndex = 15;
@@ -207,10 +207,10 @@
             // folderBrowser
             // 
             this.folderBrowser.BackColor = System.Drawing.Color.Transparent;
-            this.folderBrowser.Location = new System.Drawing.Point(15, 55);
+            this.folderBrowser.Location = new System.Drawing.Point(11, 55);
             this.folderBrowser.MaximumFolderItems = 4;
             this.folderBrowser.Name = "folderBrowser";
-            this.folderBrowser.Size = new System.Drawing.Size(687, 65);
+            this.folderBrowser.Size = new System.Drawing.Size(690, 41);
             this.folderBrowser.TabIndex = 16;
             this.folderBrowser.FolderSelectionChanged += new System.EventHandler(this.CheckEnabled);
             this.folderBrowser.SizeChanged += new System.EventHandler(this.folderBrowser_SizeChanged);
@@ -220,9 +220,9 @@
             this.compareResultsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.compareResultsControl.Location = new System.Drawing.Point(15, 126);
+            this.compareResultsControl.Location = new System.Drawing.Point(15, 102);
             this.compareResultsControl.Name = "compareResultsControl";
-            this.compareResultsControl.Size = new System.Drawing.Size(1005, 386);
+            this.compareResultsControl.Size = new System.Drawing.Size(1005, 410);
             this.compareResultsControl.TabIndex = 8;
             this.compareResultsControl.MatchClicked += new HL.FileComparer.Controls.CompareResultsControl.MatchClickedHandler(this.compareResultsControl_MatchClicked);
             // 

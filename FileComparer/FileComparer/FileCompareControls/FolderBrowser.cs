@@ -60,14 +60,14 @@ namespace HL.FileComparer.Controls
             AddFolderBrowserItem();
         }
 
-        private void AddFolderBrowserItem()
+        internal void AddFolderBrowserItem()
         {
             FolderBrowserItem item = new FolderBrowserItem(this);
             folderBrowserItems.Add(item);
 
             if (folderBrowserItems.Count == MaximumFolderItems)
-            {
-                btnAdd.Enabled = false;
+            {                
+                folderBrowserItems.ForEach(p => p.SetAddEnabled(false));
             }
 
             SetDeleteEnabled();
@@ -103,7 +103,7 @@ namespace HL.FileComparer.Controls
 
         private void RefreshItems()
         {
-            folderBrowserItems.ForEach(p => p.UnRegisterComponents(this));
+            //folderBrowserItems.ForEach(p => p.UnRegisterComponents(this));
 
             for (int i = 0; i < folderBrowserItems.Count; i++)
             {
@@ -119,9 +119,9 @@ namespace HL.FileComparer.Controls
         {
             folderBrowserItems.ForEach(p => p.UnRegisterComponents(this));
 
-            Size = new Size(Width, 5 + folderBrowserItems.Count * itemHeight + itemHeight);
+            Size = new Size(Width, 5 + folderBrowserItems.Count * itemHeight);
 
-            folderBrowserItems.ForEach(p => p.RegisterComponents(this));
+            //folderBrowserItems.ForEach(p => p.RegisterComponents(this));
         }
 
         private void SetDeleteEnabled()
@@ -143,7 +143,7 @@ namespace HL.FileComparer.Controls
 
             if (folderBrowserItems.Count < MaximumFolderItems)
             {
-                btnAdd.Enabled = true;
+                folderBrowserItems.ForEach(p => p.SetAddEnabled(true));
             }
 
             SetDeleteEnabled();
