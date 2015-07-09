@@ -80,6 +80,16 @@ namespace HL.FileComparer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon FileComparer_2_32 {
+            get {
+                object obj = ResourceManager.GetObject("FileComparer_2_32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap folder_search_result {
@@ -95,6 +105,15 @@ namespace HL.FileComparer.Properties {
         internal static string ProcessingFile {
             get {
                 return ResourceManager.GetString("ProcessingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results: {0}.
+        /// </summary>
+        internal static string Results {
+            get {
+                return ResourceManager.GetString("Results", resourceCulture);
             }
         }
         

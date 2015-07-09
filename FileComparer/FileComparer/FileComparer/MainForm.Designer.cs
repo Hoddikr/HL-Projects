@@ -41,13 +41,12 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutFileComparerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbResultCount = new System.Windows.Forms.TextBox();
             this.btnDeleteDuplicates = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.lblSpaceWasted = new System.Windows.Forms.Label();
             this.folderBrowser = new HL.FileComparer.Controls.FolderBrowser();
             this.compareResultsControl = new HL.FileComparer.Controls.CompareResultsControl();
+            this.lblResultCount = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,7 +82,7 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(-44, 29);
+            this.label1.Location = new System.Drawing.Point(-68, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 23);
             this.label1.TabIndex = 1;
@@ -94,7 +93,7 @@
             // 
             this.cmbFileTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFileTypes.FormattingEnabled = true;
-            this.cmbFileTypes.Location = new System.Drawing.Point(92, 31);
+            this.cmbFileTypes.Location = new System.Drawing.Point(68, 31);
             this.cmbFileTypes.Name = "cmbFileTypes";
             this.cmbFileTypes.Size = new System.Drawing.Size(235, 21);
             this.cmbFileTypes.TabIndex = 2;
@@ -160,22 +159,6 @@
             this.aboutFileComparerToolStripMenuItem.Text = "About File comparer";
             this.aboutFileComparerToolStripMenuItem.Click += new System.EventHandler(this.aboutFileComparerToolStripMenuItem_Click);
             // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(707, 61);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 23);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Result count:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbResultCount
-            // 
-            this.tbResultCount.Location = new System.Drawing.Point(813, 63);
-            this.tbResultCount.Name = "tbResultCount";
-            this.tbResultCount.Size = new System.Drawing.Size(100, 20);
-            this.tbResultCount.TabIndex = 7;
-            // 
             // btnDeleteDuplicates
             // 
             this.btnDeleteDuplicates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -190,7 +173,7 @@
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(707, 32);
+            this.label4.Location = new System.Drawing.Point(726, 60);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 23);
             this.label4.TabIndex = 14;
@@ -199,7 +182,7 @@
             // 
             // lblSpaceWasted
             // 
-            this.lblSpaceWasted.Location = new System.Drawing.Point(843, 26);
+            this.lblSpaceWasted.Location = new System.Drawing.Point(832, 60);
             this.lblSpaceWasted.Name = "lblSpaceWasted";
             this.lblSpaceWasted.Size = new System.Drawing.Size(78, 23);
             this.lblSpaceWasted.TabIndex = 15;
@@ -208,10 +191,10 @@
             // folderBrowser
             // 
             this.folderBrowser.BackColor = System.Drawing.Color.Transparent;
-            this.folderBrowser.Location = new System.Drawing.Point(11, 55);
+            this.folderBrowser.Location = new System.Drawing.Point(9, 55);
             this.folderBrowser.MaximumFolderItems = 4;
             this.folderBrowser.Name = "folderBrowser";
-            this.folderBrowser.Size = new System.Drawing.Size(690, 35);
+            this.folderBrowser.Size = new System.Drawing.Size(711, 41);
             this.folderBrowser.TabIndex = 16;
             this.folderBrowser.FolderSelectionChanged += new System.EventHandler(this.CheckEnabled);
             this.folderBrowser.SizeChanged += new System.EventHandler(this.folderBrowser_SizeChanged);
@@ -227,18 +210,25 @@
             this.compareResultsControl.TabIndex = 8;
             this.compareResultsControl.MatchClicked += new HL.FileComparer.Controls.CompareResultsControl.MatchClickedHandler(this.compareResultsControl_MatchClicked);
             // 
+            // lblResultCount
+            // 
+            this.lblResultCount.Location = new System.Drawing.Point(891, 515);
+            this.lblResultCount.Name = "lblResultCount";
+            this.lblResultCount.Size = new System.Drawing.Size(129, 23);
+            this.lblResultCount.TabIndex = 17;
+            this.lblResultCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1032, 609);
+            this.Controls.Add(this.lblResultCount);
             this.Controls.Add(this.folderBrowser);
             this.Controls.Add(this.lblSpaceWasted);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnDeleteDuplicates);
-            this.Controls.Add(this.tbResultCount);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.compareResultsControl);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.label1);
@@ -275,12 +265,11 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutFileComparerToolStripMenuItem;
         private Controls.CompareResultsControl compareResultsControl;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbResultCount;
         private System.Windows.Forms.Button btnDeleteDuplicates;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblSpaceWasted;
         private Controls.FolderBrowser folderBrowser;
+        private System.Windows.Forms.Label lblResultCount;
     }
 }
 

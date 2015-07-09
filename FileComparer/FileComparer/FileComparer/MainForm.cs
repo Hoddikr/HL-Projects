@@ -65,8 +65,8 @@ namespace HL.FileComparer
 
             compareResultsControl.AutosizeMatches();
             compareResultsControl.Focus();
-
-            tbResultCount.Text = compareResultsControl.MatchCount.ToString("D");
+            
+            lblResultCount.Text = string.Format(Properties.Resources.Results, compareResultsControl.MatchCount.ToString("D"));
             lblSpaceWasted.Text = GetTotalWastedSpaceInMb().ToString("N0") + " MB";
         }
 
@@ -139,7 +139,7 @@ namespace HL.FileComparer
                                             MessageBoxButtons.OKCancel,
                                             MessageBoxIcon.Warning);
             if (dlgResult == System.Windows.Forms.DialogResult.OK)
-	        {
+            {
                 foreach (var possibleMatchKey in possibleMatches.Keys)
                 {
                     List<FileHashPair> fileList = possibleMatches[possibleMatchKey];
@@ -157,7 +157,7 @@ namespace HL.FileComparer
                         }
                     }
                 }
-	        }
+            }
         }
 
         private int GetTotalWastedSpaceInMb()

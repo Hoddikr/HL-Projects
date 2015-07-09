@@ -35,7 +35,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\FileComparer_1_32.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\FileComparer_2_32.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -107,6 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\FileComparer_1_32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FileComparer_2_32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
