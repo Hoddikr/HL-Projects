@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace HL.FileComparer.Controls
@@ -55,11 +52,6 @@ namespace HL.FileComparer.Controls
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            AddFolderBrowserItem();
-        }
-
         internal void AddFolderBrowserItem()
         {
             FolderBrowserItem item = new FolderBrowserItem(this);
@@ -103,25 +95,22 @@ namespace HL.FileComparer.Controls
 
         private void RefreshItems()
         {
-            //folderBrowserItems.ForEach(p => p.UnRegisterComponents(this));
-
             for (int i = 0; i < folderBrowserItems.Count; i++)
             {
                 folderBrowserItems[i].SetSizeAndPosition(this, 5 + i * itemHeight);
             }
 
-            folderBrowserItems.ForEach(p => p.RegisterComponents(this));
+            // Since this function is only called after a resize we can safely assume that the controls were removed there
+            folderBrowserItems.ForEach(p => p.AddControls(this));
 
             Invalidate();
         }
 
         private void AdjustSize()
         {
-            folderBrowserItems.ForEach(p => p.UnRegisterComponents(this));
+            folderBrowserItems.ForEach(p => p.RemoveControls(this));
 
             Size = new Size(Width, 5 + folderBrowserItems.Count * itemHeight);
-
-            //folderBrowserItems.ForEach(p => p.RegisterComponents(this));
         }
 
         private void SetDeleteEnabled()
@@ -149,6 +138,11 @@ namespace HL.FileComparer.Controls
             SetDeleteEnabled();
 
             AdjustSize();
+
+            if (FolderSelectionChanged != null)
+            {
+                FolderSelectionChanged(this, EventArgs.Empty);
+            }
         }
 
         internal void ItemTextChangedHandler(object sender, EventArgs args)
@@ -157,6 +151,20 @@ namespace HL.FileComparer.Controls
             {
                 FolderSelectionChanged(this, EventArgs.Empty);
             }
+        }
+
+
+        /// <summary>
+        /// Validates that the paths entered are valid/exist and displays an error for each item that is invalid
+        /// </summary>
+        /// <returns></returns>
+        public bool ValidateSelectedFolders()
+        {
+            bool result = true;
+
+            folderBrowserItems.ForEach(p => result = result && p.ValidatePath());
+
+            return result;
         }
     }
 }

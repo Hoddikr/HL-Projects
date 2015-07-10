@@ -49,8 +49,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(317, 66);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Creative commons components used in this product:\r\n\r\nFugue Icons\r\n(C) 2013 Yusuke" +
-    " Kamiyamane. All rights reserved.";
+            this.label1.Text = "\r\n\r\nFugue Icons\r\n(C) 2013 Yusuke Kamiyamane. All rights reserved.";
             // 
             // AboutDialog
             // 

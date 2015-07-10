@@ -139,4 +139,9 @@
   <data name="Results" xml:space="preserve">
     <value>Results: {0}</value>
   </data>
+  <data name="AboutText" xml:space="preserve">
+    <value>Licensed work used in this software:
+
+Fugue Icons 3.5.6 (C) 2013 Yusuke Kamiyamane. All rights reserved. Licensed under the Creative Commons Attribution 3.0 License</value>
+  </data>
 </root>

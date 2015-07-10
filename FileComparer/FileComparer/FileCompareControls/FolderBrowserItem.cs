@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using HL.FileComparer.Controls.Properties;
 
@@ -18,10 +15,13 @@ namespace HL.FileComparer.Controls
         private Button btnRemove;
         private Button btnBrowseFolder;
         private Button btnAdd;
+        private ErrorProvider errorProvider;
 
         public FolderBrowserItem(FolderBrowser parent)
         {
             buttonSize = new Size(24, 24);
+
+            errorProvider = new ErrorProvider();
 
             tbFolder = new TextBox();
             tbFolder.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -38,7 +38,6 @@ namespace HL.FileComparer.Controls
 
             btnBrowseFolder = new Button();
             btnBrowseFolder.Size = new Size(buttonSize.Width, buttonSize.Height);
-            //btnBrowseFolder.Text = "...";
             btnBrowseFolder.Image = Resources.folder_horizontal_open;
             btnBrowseFolder.Anchor = AnchorStyles.Right;            
 
@@ -46,9 +45,13 @@ namespace HL.FileComparer.Controls
             btnRemove.Click += BtnRemoveOnClick;
             btnAdd.Click += BtnAddOnClick;
 
-
-
             tbFolder.TextChanged += parent.ItemTextChangedHandler;
+            tbFolder.TextChanged += tbFolderOnTextChanged;
+        }
+
+        private void tbFolderOnTextChanged(object sender, EventArgs eventArgs)
+        {
+            errorProvider.Clear();
         }
 
         private void BtnAddOnClick(object sender, EventArgs eventArgs)
@@ -84,10 +87,10 @@ namespace HL.FileComparer.Controls
         }
 
         /// <summary>
-        /// Registers the embedded controls of this component to the parent control
+        /// Adds the embedded controls of this component to the parent control
         /// </summary>
         /// <param name="parent">The FolderBrowser control that this item belongs to</param>
-        public void RegisterComponents(FolderBrowser parent)
+        public void AddControls(FolderBrowser parent)
         {
             parent.Controls.Add(tbFolder);
             parent.Controls.Add(btnBrowseFolder);
@@ -96,10 +99,10 @@ namespace HL.FileComparer.Controls
         }
 
         /// <summary>
-        /// Unregisters the embedded controls of this component from the parent control
+        /// Removes the embedded controls of this component from the parent control
         /// </summary>
         /// <param name="parent"></param>
-        public void UnRegisterComponents(FolderBrowser parent)
+        public void RemoveControls(FolderBrowser parent)
         {
             parent.Controls.Remove(tbFolder);
             parent.Controls.Remove(btnBrowseFolder);
@@ -113,7 +116,10 @@ namespace HL.FileComparer.Controls
         /// <param name="parent">The FolderBrowser control that this item belongs to</param>
         public void Delete(FolderBrowser parent)
         {
-            UnRegisterComponents(parent);
+            RemoveControls(parent);
+
+            errorProvider.Clear();
+            errorProvider.Dispose();
 
             btnRemove.Click -= BtnRemoveOnClick;
             btnRemove.Dispose();
@@ -128,6 +134,7 @@ namespace HL.FileComparer.Controls
             btnBrowseFolder = null;
 
             tbFolder.TextChanged -= parent.ItemTextChangedHandler;
+            tbFolder.TextChanged -= tbFolderOnTextChanged;
             tbFolder.Dispose();
             tbFolder = null;
         }
@@ -169,7 +176,7 @@ namespace HL.FileComparer.Controls
             int xOffset = 6;
 
             tbFolder.Location = new Point(xOffset, yPosition + 2);
-            tbFolder.Width = parent.Width - 12 - 15 - 3 * buttonSize.Width;
+            tbFolder.Width = parent.Width - 12 - 15 - 3 * buttonSize.Width - 12;
             xOffset = tbFolder.Width + 6 + 6;
 
             btnBrowseFolder.Location = new Point(xOffset, yPosition);
@@ -179,6 +186,21 @@ namespace HL.FileComparer.Controls
             xOffset += btnRemove.Width + 6;
 
             btnAdd.Location = new Point(xOffset, yPosition);
+        }
+
+        /// <summary>
+        /// Checks wether the path in this item is a valid directory path. If the path is empty this will return true
+        /// </summary>
+        /// <returns></returns>
+        public bool ValidatePath()
+        {
+            if(tbFolder.Text.Trim() != "" && !Directory.Exists(tbFolder.Text))
+            {
+                errorProvider.SetError(btnAdd, Properties.Resources.PathInvalidErrorMessage);
+                return false;
+            }
+
+            return true;
         }
 
         public void Draw(Graphics g)

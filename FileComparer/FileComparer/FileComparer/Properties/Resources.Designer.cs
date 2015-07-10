@@ -61,6 +61,17 @@ namespace HL.FileComparer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Licensed work used in this software:
+        ///
+        ///Fugue Icons 3.5.6 (C) 2013 Yusuke Kamiyamane. All rights reserved. Licensed under the Creative Commons Attribution 3.0 License.
+        /// </summary>
+        internal static string AboutText {
+            get {
+                return ResourceManager.GetString("AboutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancelled.
         /// </summary>
         internal static string Cancelled {

@@ -86,6 +86,11 @@ namespace HL.FileComparer
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            if (!folderBrowser.ValidateSelectedFolders())
+            {
+                return;
+            }
+
             compareResultsControl.ClearMatches();
             lblProgress.Text = Properties.Resources.SearchingForFiles;
             pbFilesProcessed.Value = 1;

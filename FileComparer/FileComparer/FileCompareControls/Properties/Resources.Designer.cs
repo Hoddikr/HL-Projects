@@ -91,6 +91,15 @@ namespace HL.FileComparer.Controls.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This path is not valid. Please clear the path or enter a valid one.
+        /// </summary>
+        internal static string PathInvalidErrorMessage {
+            get {
+                return ResourceManager.GetString("PathInvalidErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap plus {

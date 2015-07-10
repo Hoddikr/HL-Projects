@@ -10,6 +10,13 @@ namespace HL.FileComparer.Dialogs
             InitializeComponent();
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            label1.Text = Properties.Resources.AboutText;
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             Close();
