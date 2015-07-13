@@ -67,13 +67,6 @@ namespace HL.FileComparer.Controls
             AdjustSize();
         }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-
-            AdjustSize();
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -84,13 +77,6 @@ namespace HL.FileComparer.Controls
             {
                 item.Draw(g);
             }
-        }
-
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            base.OnSizeChanged(e);
-
-            RefreshItems();
         }
 
         private void RefreshItems()
@@ -111,6 +97,8 @@ namespace HL.FileComparer.Controls
             folderBrowserItems.ForEach(p => p.RemoveControls(this));
 
             Size = new Size(Width, 5 + folderBrowserItems.Count * itemHeight);
+
+            RefreshItems();
         }
 
         private void SetDeleteEnabled()

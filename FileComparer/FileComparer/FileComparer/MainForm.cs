@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Linq;
 using HL.FileComparer.Dialogs;
@@ -15,6 +16,8 @@ namespace HL.FileComparer
         private BackgroundWorker worker;
         private SearchPattern selectedPattern;
         private bool workerWasCancelled;
+        private Stopwatch stopWatch;
+        private Timer stopWatchTimer;
 
         public MainForm()
         {
@@ -35,7 +38,17 @@ namespace HL.FileComparer
             }
 
             cmbFileTypes.SelectedIndex = 0;
-        }        
+
+            stopWatch = new Stopwatch();
+            stopWatchTimer = new Timer();
+            stopWatchTimer.Interval = 500;
+            stopWatchTimer.Tick += StopWatchTimerOnTick;
+        }
+
+        private void StopWatchTimerOnTick(object sender, EventArgs eventArgs)
+        {
+            lblTimeElapsed.Text = (stopWatch.ElapsedMilliseconds/1000).ToString("D");
+        }
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -68,6 +81,8 @@ namespace HL.FileComparer
             
             lblResultCount.Text = string.Format(Properties.Resources.Results, compareResultsControl.MatchCount.ToString("D"));
             lblSpaceWasted.Text = GetTotalWastedSpaceInMb().ToString("N0") + " MB";
+            
+            StopAndResetWatch();
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -78,10 +93,17 @@ namespace HL.FileComparer
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
+        {            
             possibleMatches.Clear();
 
             possibleMatches = CompareUtils.GetAllPossibleFileMatches(folderBrowser.SelectedFolders, selectedPattern.Pattern, worker);
+        }
+
+        private void StopAndResetWatch()
+        {
+            stopWatchTimer.Stop();
+            stopWatch.Stop();
+            stopWatch.Reset();
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -90,6 +112,11 @@ namespace HL.FileComparer
             {
                 return;
             }
+
+            stopWatch.Start();
+            stopWatchTimer.Start();
+
+            lblSpaceWasted.Text = "";
 
             compareResultsControl.ClearMatches();
             lblProgress.Text = Properties.Resources.SearchingForFiles;
@@ -104,6 +131,7 @@ namespace HL.FileComparer
             btnCancel.Enabled = false;
             workerWasCancelled = true;
             worker.CancelAsync();
+            StopAndResetWatch();
         }
 
         private void CheckEnabled(object sender, EventArgs e)
@@ -111,7 +139,6 @@ namespace HL.FileComparer
             btnStart.Enabled = folderBrowser.SelectedFolders != "";
             btnDeleteDuplicates.Enabled = possibleMatches.Count > 0;
         }
-
 
         private void cmbFileTypes_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -47,7 +47,11 @@
             this.folderBrowser = new HL.FileComparer.Controls.FolderBrowser();
             this.compareResultsControl = new HL.FileComparer.Controls.CompareResultsControl();
             this.lblResultCount = new System.Windows.Forms.Label();
+            this.grpStatistics = new System.Windows.Forms.GroupBox();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.lblTimeElapsed = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
+            this.grpStatistics.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbFilesProcessed
@@ -57,7 +61,7 @@
             this.pbFilesProcessed.Location = new System.Drawing.Point(12, 541);
             this.pbFilesProcessed.Name = "pbFilesProcessed";
             this.pbFilesProcessed.Size = new System.Drawing.Size(1008, 27);
-            this.pbFilesProcessed.TabIndex = 10;
+            this.pbFilesProcessed.TabIndex = 9;
             // 
             // btnStart
             // 
@@ -77,12 +81,12 @@
             this.lblProgress.Location = new System.Drawing.Point(12, 515);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(167, 23);
-            this.lblProgress.TabIndex = 9;
+            this.lblProgress.TabIndex = 7;
             this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(-68, 29);
+            this.label1.Location = new System.Drawing.Point(-66, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 23);
             this.label1.TabIndex = 1;
@@ -93,7 +97,7 @@
             // 
             this.cmbFileTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFileTypes.FormattingEnabled = true;
-            this.cmbFileTypes.Location = new System.Drawing.Point(68, 31);
+            this.cmbFileTypes.Location = new System.Drawing.Point(70, 37);
             this.cmbFileTypes.Name = "cmbFileTypes";
             this.cmbFileTypes.Size = new System.Drawing.Size(235, 21);
             this.cmbFileTypes.TabIndex = 2;
@@ -166,36 +170,36 @@
             this.btnDeleteDuplicates.Location = new System.Drawing.Point(621, 574);
             this.btnDeleteDuplicates.Name = "btnDeleteDuplicates";
             this.btnDeleteDuplicates.Size = new System.Drawing.Size(129, 29);
-            this.btnDeleteDuplicates.TabIndex = 13;
+            this.btnDeleteDuplicates.TabIndex = 10;
             this.btnDeleteDuplicates.Text = "Delete duplicates";
             this.btnDeleteDuplicates.UseVisualStyleBackColor = true;
             this.btnDeleteDuplicates.Click += new System.EventHandler(this.btnDeleteDuplicates_Click);
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(726, 60);
+            this.label4.Location = new System.Drawing.Point(6, 16);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 23);
-            this.label4.TabIndex = 14;
+            this.label4.TabIndex = 4;
             this.label4.Text = "Space wasted:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblSpaceWasted
             // 
-            this.lblSpaceWasted.Location = new System.Drawing.Point(832, 60);
+            this.lblSpaceWasted.Location = new System.Drawing.Point(112, 16);
             this.lblSpaceWasted.Name = "lblSpaceWasted";
             this.lblSpaceWasted.Size = new System.Drawing.Size(78, 23);
-            this.lblSpaceWasted.TabIndex = 15;
+            this.lblSpaceWasted.TabIndex = 5;
             this.lblSpaceWasted.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // folderBrowser
             // 
             this.folderBrowser.BackColor = System.Drawing.Color.Transparent;
-            this.folderBrowser.Location = new System.Drawing.Point(9, 55);
+            this.folderBrowser.Location = new System.Drawing.Point(12, 64);
             this.folderBrowser.MaximumFolderItems = 4;
             this.folderBrowser.Name = "folderBrowser";
-            this.folderBrowser.Size = new System.Drawing.Size(711, 41);
-            this.folderBrowser.TabIndex = 16;
+            this.folderBrowser.Size = new System.Drawing.Size(711, 35);
+            this.folderBrowser.TabIndex = 3;
             this.folderBrowser.FolderSelectionChanged += new System.EventHandler(this.CheckEnabled);
             this.folderBrowser.SizeChanged += new System.EventHandler(this.folderBrowser_SizeChanged);
             // 
@@ -204,19 +208,51 @@
             this.compareResultsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.compareResultsControl.Location = new System.Drawing.Point(15, 102);
+            this.compareResultsControl.Location = new System.Drawing.Point(15, 105);
             this.compareResultsControl.Name = "compareResultsControl";
-            this.compareResultsControl.Size = new System.Drawing.Size(1005, 410);
-            this.compareResultsControl.TabIndex = 8;
+            this.compareResultsControl.Size = new System.Drawing.Size(1005, 407);
+            this.compareResultsControl.TabIndex = 6;
             this.compareResultsControl.MatchClicked += new HL.FileComparer.Controls.CompareResultsControl.MatchClickedHandler(this.compareResultsControl_MatchClicked);
             // 
             // lblResultCount
             // 
+            this.lblResultCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblResultCount.Location = new System.Drawing.Point(891, 515);
             this.lblResultCount.Name = "lblResultCount";
             this.lblResultCount.Size = new System.Drawing.Size(129, 23);
-            this.lblResultCount.TabIndex = 17;
+            this.lblResultCount.TabIndex = 8;
             this.lblResultCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // grpStatistics
+            // 
+            this.grpStatistics.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpStatistics.Controls.Add(this.lblTime);
+            this.grpStatistics.Controls.Add(this.label4);
+            this.grpStatistics.Controls.Add(this.lblTimeElapsed);
+            this.grpStatistics.Controls.Add(this.lblSpaceWasted);
+            this.grpStatistics.Location = new System.Drawing.Point(726, 27);
+            this.grpStatistics.Name = "grpStatistics";
+            this.grpStatistics.Size = new System.Drawing.Size(294, 72);
+            this.grpStatistics.TabIndex = 13;
+            this.grpStatistics.TabStop = false;
+            this.grpStatistics.Text = "Statistics";
+            // 
+            // lblTime
+            // 
+            this.lblTime.Location = new System.Drawing.Point(6, 39);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(100, 23);
+            this.lblTime.TabIndex = 6;
+            this.lblTime.Text = "Time elapsed:";
+            this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTimeElapsed
+            // 
+            this.lblTimeElapsed.Location = new System.Drawing.Point(112, 39);
+            this.lblTimeElapsed.Name = "lblTimeElapsed";
+            this.lblTimeElapsed.Size = new System.Drawing.Size(78, 23);
+            this.lblTimeElapsed.TabIndex = 7;
+            this.lblTimeElapsed.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainForm
             // 
@@ -224,10 +260,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1032, 609);
+            this.Controls.Add(this.grpStatistics);
             this.Controls.Add(this.lblResultCount);
             this.Controls.Add(this.folderBrowser);
-            this.Controls.Add(this.lblSpaceWasted);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnDeleteDuplicates);
             this.Controls.Add(this.compareResultsControl);
             this.Controls.Add(this.btnCancel);
@@ -240,11 +275,13 @@
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(1048, 648);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "File comparer";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.grpStatistics.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,6 +307,9 @@
         private System.Windows.Forms.Label lblSpaceWasted;
         private Controls.FolderBrowser folderBrowser;
         private System.Windows.Forms.Label lblResultCount;
+        private System.Windows.Forms.GroupBox grpStatistics;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Label lblTimeElapsed;
     }
 }
 
