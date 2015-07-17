@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -116,7 +117,6 @@ namespace HL.FileComparer.Utilities
             foreach (FileInfo file in files)
             {
                 FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5Hash(file), file.Length);
-
                 fileHashPairs.Add(fileHashPair);
 
                 if (HashProgressUpdate != null)
@@ -136,6 +136,7 @@ namespace HL.FileComparer.Utilities
                     possibleMatches.Clear();                    
                     return possibleMatches;
                 }
+
             }
 
             foreach (FileHashPair fileHashPair in fileHashPairs)
@@ -298,6 +299,40 @@ namespace HL.FileComparer.Utilities
             }
 
             return filesFound;
-        }        
+        }
+
+        /// <summary>
+        /// Logs the given string to the log file with a prefixed timestamp
+        /// </summary>
+        /// <param name="logString"></param>
+        public static void LogString(string logString)
+        {
+
+            try
+            {
+                string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\HL\\File Comparer";
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string path = folderPath + "\\log";
+
+                using (var fs = new FileStream(path, FileMode.Append))
+                {
+                    using (var sw = new StreamWriter(fs))
+                    {
+                        sw.WriteLine(DateTime.Now + "\t" + logString);
+                        sw.Close();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+
+            }
+        }
     }
 }

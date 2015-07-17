@@ -108,7 +108,11 @@ namespace FileCompareTester
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(folderBrowser1.SelectedFolders);
+            int testCount = 2535;
+            string filePath = "";
+
+            CompareUtils.GetAllPossibleFileMatches("C:\\Pictures", "*.jpg;*.bmp;*.png");
+            
         }
     }
 }
