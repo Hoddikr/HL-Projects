@@ -113,15 +113,16 @@ namespace HL.FileComparer.Utilities
                 }
             }
 
-            // Calculate the hash value for each file
+            // 1st hashing pass: Start by hashing only the first few kilobytes to weed out files that are obviously not duplicates of other files
             foreach (FileInfo file in files)
             {
-                FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5Hash(file), file.Length);
+                //FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5Hash(file), file.Length);
+                FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5HashFromPartialFile(file, 4096), file.Length);
                 fileHashPairs.Add(fileHashPair);
 
                 if (HashProgressUpdate != null)
                 {
-                    HashProgressUpdate(fileHashPairs.Count, files.Count);                    
+                    HashProgressUpdate(fileHashPairs.Count, files.Count);
                 }
 
                 if (progressWorker != null && progressWorker.IsBusy && progressWorker.WorkerReportsProgress)
@@ -132,11 +133,79 @@ namespace HL.FileComparer.Utilities
                 }
 
                 if (progressWorker != null && progressWorker.WorkerSupportsCancellation && progressWorker.CancellationPending)
-                {                    
-                    possibleMatches.Clear();                    
+                {
+                    possibleMatches.Clear();
                     return possibleMatches;
                 }
+            }
 
+            Dictionary<string, List<FileHashPair>> tempMatches = new Dictionary<string, List<FileHashPair>>();
+
+            foreach (FileHashPair fileHashPair in fileHashPairs)
+            {
+                if (tempMatches.ContainsKey(fileHashPair.FileHash))
+                {
+                    (tempMatches[fileHashPair.FileHash]).Add(fileHashPair);
+                }
+                else
+                {
+                    tempMatches.Add(fileHashPair.FileHash, new List<FileHashPair>());
+                    tempMatches[fileHashPair.FileHash].Add(fileHashPair);
+                }
+            }
+
+
+            var tempOrphanKeys = new List<string>();
+
+            foreach (var possibleMatch in tempMatches.Keys)
+            {
+                if (tempMatches[possibleMatch].Count == 1)
+                {
+                    tempOrphanKeys.Add(possibleMatch);
+                }
+            }
+
+            foreach (var orphanKey in tempOrphanKeys)
+            {
+                tempMatches.Remove(orphanKey);
+            }
+
+            fileHashPairs.Clear();
+            files.Clear();
+
+            foreach (List<FileHashPair> filehashPairList in tempMatches.Values)
+            {
+                foreach (FileHashPair pair in filehashPairList)
+                {
+                    files.Add(new FileInfo(pair.FileName));
+                }
+            }
+
+            // 2nd hashing pass: 
+
+            // Calculate the hash value for each file
+            foreach (FileInfo file in files)
+            {
+                FileHashPair fileHashPair = new FileHashPair(file.FullName, Cryptography.GetMD5Hash(file), file.Length);
+                fileHashPairs.Add(fileHashPair);
+
+                if (HashProgressUpdate != null)
+                {
+                    HashProgressUpdate(fileHashPairs.Count, files.Count);
+                }
+
+                if (progressWorker != null && progressWorker.IsBusy && progressWorker.WorkerReportsProgress)
+                {
+                    info.FilesProcessed = fileHashPairs.Count;
+                    info.TotalNumberOfFiles = files.Count;
+                    progressWorker.ReportProgress((int)((fileHashPairs.Count / (double)files.Count) * 100), info);
+                }
+
+                if (progressWorker != null && progressWorker.WorkerSupportsCancellation && progressWorker.CancellationPending)
+                {
+                    possibleMatches.Clear();
+                    return possibleMatches;
+                }
             }
 
             foreach (FileHashPair fileHashPair in fileHashPairs)

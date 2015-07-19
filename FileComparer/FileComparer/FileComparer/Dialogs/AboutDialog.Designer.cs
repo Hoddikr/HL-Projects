@@ -60,9 +60,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "AboutDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "AboutDialog";
+            this.Text = "About File Comparer";
             this.ResumeLayout(false);
 
         }
