@@ -45,7 +45,7 @@ namespace HL.FileComparer.Controls
         /// <summary>
         /// Gets the list of files beloning to this match component
         /// </summary>
-        public List<FileHashPair> Files { get { return files; } }
+        public List<FileHashPair> Files => files;
 
         /// <summary>
         /// Returns the projected height of this component when it will be drawn

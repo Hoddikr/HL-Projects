@@ -168,12 +168,8 @@ namespace HL.FileComparer.Controls
                     {
                         Invalidate();
 
-                        if (MatchClicked != null)
-                        {
-                            MatchClickEventArgs args = new MatchClickEventArgs(matches[i].Files);
-                            MatchClicked(matches[i], args);
-                        }
-
+                        MatchClickEventArgs args = new MatchClickEventArgs(matches[i].Files);
+                        MatchClicked?.Invoke(matches[i], args);                        
                         break;
                     }
                 }

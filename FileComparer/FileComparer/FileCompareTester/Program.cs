@@ -13,7 +13,12 @@ namespace FileCompareTester
         /// </summary>
         [STAThread]
         static void Main()
-        {                        
+        {
+            int x = 5;
+            int y = 7;
+
+            string bla = $"{x} is the thing";
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TestForm());

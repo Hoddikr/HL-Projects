@@ -49,6 +49,11 @@ namespace HL.FileComparer.Controls
             tbFolder.TextChanged += tbFolderOnTextChanged;
         }
 
+        /// <summary>
+        /// Returns the folder path from this item
+        /// </summary>        
+        public string SelectedPath => tbFolder.Text.Trim();
+
         private void tbFolderOnTextChanged(object sender, EventArgs eventArgs)
         {
             errorProvider.Clear();
@@ -58,11 +63,6 @@ namespace HL.FileComparer.Controls
         {
             ((FolderBrowser)btnAdd.Parent).AddFolderBrowserItem();
         }
-
-        /// <summary>
-        /// Returns the folder path from this item
-        /// </summary>        
-        public string SelectedPath { get { return tbFolder.Text.Trim(); } }
 
         private void BtnRemoveOnClick(object sender, EventArgs eventArgs)
         {

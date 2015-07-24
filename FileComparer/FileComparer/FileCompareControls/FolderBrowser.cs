@@ -127,18 +127,12 @@ namespace HL.FileComparer.Controls
 
             AdjustSize();
 
-            if (FolderSelectionChanged != null)
-            {
-                FolderSelectionChanged(this, EventArgs.Empty);
-            }
+            FolderSelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         internal void ItemTextChangedHandler(object sender, EventArgs args)
         {
-            if (FolderSelectionChanged != null)
-            {
-                FolderSelectionChanged(this, EventArgs.Empty);
-            }
+            FolderSelectionChanged?.Invoke(this, EventArgs.Empty);            
         }
 
 

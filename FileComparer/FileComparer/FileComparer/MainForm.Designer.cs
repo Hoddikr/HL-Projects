@@ -50,6 +50,7 @@
             this.grpStatistics = new System.Windows.Forms.GroupBox();
             this.lblTime = new System.Windows.Forms.Label();
             this.lblTimeElapsed = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.grpStatistics.SuspendLayout();
             this.SuspendLayout();
@@ -254,12 +255,24 @@
             this.lblTimeElapsed.TabIndex = 7;
             this.lblTimeElapsed.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(423, 574);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(129, 29);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1032, 609);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.grpStatistics);
             this.Controls.Add(this.lblResultCount);
             this.Controls.Add(this.folderBrowser);
@@ -310,6 +323,7 @@
         private System.Windows.Forms.GroupBox grpStatistics;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Label lblTimeElapsed;
+        private System.Windows.Forms.Button button1;
     }
 }
 
