@@ -217,7 +217,7 @@ namespace HL.FileComparer
             Controls.Add(compareResultsControl);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void manageFileTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (FileTypesDialog dlg = new FileTypesDialog())
             {

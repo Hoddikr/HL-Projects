@@ -38,6 +38,10 @@
     <ApplicationIcon>Resources\FileComparer_2_32.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,6 +59,12 @@
     </Compile>
     <Compile Include="Dialogs\AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\FileTypeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FileTypeDialog.Designer.cs">
+      <DependentUpon>FileTypeDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\FileTypesDialog.cs">
       <SubType>Form</SubType>
@@ -74,6 +84,9 @@
     <EmbeddedResource Include="Dialogs\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FileTypeDialog.resx">
+      <DependentUpon>FileTypeDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FileTypesDialog.resx">
       <DependentUpon>FileTypesDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -91,6 +104,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -119,6 +133,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\FileComparer_2_32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\minus.png" />
+    <Content Include="Resources\pencil.png" />
+    <Content Include="Resources\plus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

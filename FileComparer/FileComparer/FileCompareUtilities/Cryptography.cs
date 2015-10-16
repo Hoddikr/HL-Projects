@@ -68,7 +68,7 @@ namespace HL.FileComparer.Utilities
                 }
 
                 stream2.Position = 0;
-
+                
                 using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
                 {
                     hashValue = md5.ComputeHash(stream2);

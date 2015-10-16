@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HL.FileComparer.Utilities;
+using Newtonsoft.Json;
 
 namespace HL.FileComparer.Dialogs
 {
@@ -27,9 +28,7 @@ namespace HL.FileComparer.Dialogs
 
         private void LoadFileTypes()
         {
-            //SearchPatterns.Add(new SearchPattern() { Description = "Images", Pattern = "*.jpg;*.bmp;*.png" });
-            //SearchPatterns.Add(new SearchPattern() { Description = "Videos", Pattern = "*.avi;*.mp4;*.mkv" });
-            //SearchPatterns.Add(new SearchPattern() { Description = "Music", Pattern = "*.mp3" });
+            int selectedIndex = lvFileTypes.SelectedIndices.Count > 0 ? lvFileTypes.SelectedIndices[0] : -1;
             lvFileTypes.Items.Clear();
 
             ListViewItem item;
@@ -38,10 +37,69 @@ namespace HL.FileComparer.Dialogs
                 item = new ListViewItem(pattern.Description);
                 item.SubItems.Add(pattern.Pattern);
 
+                item.Tag = pattern;
                 lvFileTypes.Items.Add(item);
+
+                if (lvFileTypes.Items.Count - 1 == selectedIndex)
+                {
+                    item.Selected = true;
+                }
             }
 
-            lvFileTypes.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            lvFileTypes.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None);
+            BestFitFirstColumn();
+        }
+
+        /// <summary>
+        /// Only resizes the first column to best fit either content or header text.
+        /// </summary>
+        private void BestFitFirstColumn()
+        {
+            int maxWidth = 0;
+
+            foreach (ListViewItem item in lvFileTypes.Items)
+            {
+                int curWidth = TextRenderer.MeasureText(item.Text, item.Font).Width;
+
+                if (curWidth > maxWidth)
+                {
+                    maxWidth = curWidth;
+                }
+            }
+
+            if (lvFileTypes.Columns[0].Width < maxWidth)
+            {
+                lvFileTypes.Columns[0].Width = maxWidth + 1;
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            FileTypeDialog dlg = new FileTypeDialog();
+
+            if (dlg.ShowDialog(this) == DialogResult.OK)
+            {
+                Settings.SaveSettings();
+                LoadFileTypes();
+            }
+        }
+
+        private void lvFileTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemove.Enabled = btnEdit.Enabled = lvFileTypes.SelectedItems.Count > 0;
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            SearchPattern selectedPattern = (SearchPattern)lvFileTypes.SelectedItems[0].Tag;
+
+            FileTypeDialog dlg = new FileTypeDialog(selectedPattern);
+
+            if (dlg.ShowDialog(this) == DialogResult.OK)
+            {
+                Settings.SaveSettings();
+                LoadFileTypes();
+            }
         }
     }
 }

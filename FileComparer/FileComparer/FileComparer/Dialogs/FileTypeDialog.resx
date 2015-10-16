@@ -117,40 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancelled" xml:space="preserve">
-    <value>Cancelled</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="folder_search_result" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\folder-search-result.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ProcessingFile" xml:space="preserve">
-    <value>Processing file {0} / {1}</value>
-  </data>
-  <data name="SearchingForFiles" xml:space="preserve">
-    <value>Searching for files...</value>
-  </data>
-  <data name="FileComparer_1_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FileComparer_1_32.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FileComparer_2_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FileComparer_2_32.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Results" xml:space="preserve">
-    <value>Results: {0}</value>
-  </data>
-  <data name="AboutText" xml:space="preserve">
-    <value>Licensed work used in this software:
-
-Fugue Icons 3.5.6 (C) 2013 Yusuke Kamiyamane. All rights reserved. Licensed under the Creative Commons Attribution 3.0 License</value>
-  </data>
-  <data name="minus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\minus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pencil" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pencil.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

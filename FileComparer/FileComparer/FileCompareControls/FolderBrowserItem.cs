@@ -51,7 +51,7 @@ namespace HL.FileComparer.Controls
 
         /// <summary>
         /// Returns the folder path from this item
-        /// </summary>        
+        /// </summary>                
         public string SelectedPath => tbFolder.Text.Trim();
 
         private void tbFolderOnTextChanged(object sender, EventArgs eventArgs)
