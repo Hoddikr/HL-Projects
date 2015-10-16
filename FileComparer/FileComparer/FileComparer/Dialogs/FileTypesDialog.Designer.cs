@@ -55,6 +55,7 @@
             this.lvFileTypes.UseCompatibleStateImageBehavior = false;
             this.lvFileTypes.View = System.Windows.Forms.View.Details;
             this.lvFileTypes.SelectedIndexChanged += new System.EventHandler(this.lvFileTypes_SelectedIndexChanged);
+            this.lvFileTypes.DoubleClick += new System.EventHandler(this.lvFileTypes_DoubleClick);
             // 
             // columnHeader1
             // 

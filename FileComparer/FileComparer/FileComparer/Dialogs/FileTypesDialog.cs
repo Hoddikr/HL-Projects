@@ -101,5 +101,13 @@ namespace HL.FileComparer.Dialogs
                 LoadFileTypes();
             }
         }
+
+        private void lvFileTypes_DoubleClick(object sender, EventArgs e)
+        {
+            if (lvFileTypes.SelectedItems.Count > 0)
+            {
+                btnEdit_Click(this, EventArgs.Empty);
+            }
+        }
     }
 }
