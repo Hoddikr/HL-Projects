@@ -14,7 +14,7 @@ namespace HL.FileComparer
     {                      
         private Dictionary<string, List<FileHashPair>> possibleMatches;        
         private BackgroundWorker worker;
-        private SearchPattern selectedPattern;
+        private FileType selectedPattern;
         private bool workerWasCancelled;
         private Stopwatch stopWatch;
         private Timer stopWatchTimer;
@@ -32,7 +32,7 @@ namespace HL.FileComparer
             worker.ProgressChanged += worker_ProgressChanged;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
 
-            foreach (var pattern in Settings.SearchPatterns)
+            foreach (var pattern in Settings.FileTypes)
             {
                 cmbFileTypes.Items.Add(pattern.Description + " " + pattern.Pattern);
             }
@@ -142,7 +142,7 @@ namespace HL.FileComparer
 
         private void cmbFileTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedPattern = Settings.SearchPatterns[cmbFileTypes.SelectedIndex];
+            selectedPattern = Settings.FileTypes[cmbFileTypes.SelectedIndex];
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

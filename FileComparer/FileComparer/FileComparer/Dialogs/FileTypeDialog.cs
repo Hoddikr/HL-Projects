@@ -13,20 +13,21 @@ namespace HL.FileComparer.Dialogs
 {
     public partial class FileTypeDialog : Form
     {
-        private SearchPattern pattern;
+        private FileType pattern;
 
         public FileTypeDialog()
         {
             InitializeComponent();
         }
 
-        public FileTypeDialog(SearchPattern pattern)
+        public FileTypeDialog(FileType pattern)
             :this()
         {
             this.pattern = pattern;
 
             tbDescription.Text = pattern.Description;
             tbPattern.Text = pattern.Pattern;
+            ntbMaxMB.Value = pattern.MaxNoOfMBToSearch;
         }
 
         private void CheckEnabled(object sender, EventArgs args)
@@ -37,7 +38,7 @@ namespace HL.FileComparer.Dialogs
             }
             else
             {
-                btnOK.Enabled = pattern.Description != tbDescription.Text || pattern.Pattern != tbPattern.Text;
+                btnOK.Enabled = pattern.Description != tbDescription.Text || pattern.Pattern != tbPattern.Text || Math.Abs(pattern.MaxNoOfMBToSearch - ntbMaxMB.Value) >= 1;
             }
         }
 
@@ -48,15 +49,16 @@ namespace HL.FileComparer.Dialogs
             if (pattern == null)
             {
                 creatingNewPattern = true;
-                pattern = new SearchPattern();
+                pattern = new FileType();
             }
 
             pattern.Description = tbDescription.Text;
             pattern.Pattern = tbPattern.Text;
+            pattern.MaxNoOfMBToSearch = (int)ntbMaxMB.Value;
 
             if (creatingNewPattern)
             {
-                Settings.SearchPatterns.Add(pattern);
+                Settings.FileTypes.Add(pattern);
             }
         }
     }

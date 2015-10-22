@@ -25,6 +25,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "{#BUILD}\*.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 Source: "{#BUILD}\*.xml"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 Source: "{#BUILD}\*.exe"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: "{#BUILD}\*.config"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\File Comparer"; Filename: "{app}\File Comparer.exe"

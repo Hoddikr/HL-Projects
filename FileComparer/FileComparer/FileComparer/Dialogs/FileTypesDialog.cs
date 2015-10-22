@@ -32,10 +32,11 @@ namespace HL.FileComparer.Dialogs
             lvFileTypes.Items.Clear();
 
             ListViewItem item;
-            foreach (SearchPattern pattern in Settings.SearchPatterns)
+            foreach (FileType pattern in Settings.FileTypes)
             {
                 item = new ListViewItem(pattern.Description);
                 item.SubItems.Add(pattern.Pattern);
+                item.SubItems.Add(pattern.MaxNoOfMBToSearch.ToString("N0"));
 
                 item.Tag = pattern;
                 lvFileTypes.Items.Add(item);
@@ -47,7 +48,8 @@ namespace HL.FileComparer.Dialogs
             }
 
             lvFileTypes.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None);
-            BestFitFirstColumn();
+            //BestFitFirstColumn();
+            BestFitAllColumns();
         }
 
         /// <summary>
@@ -73,6 +75,38 @@ namespace HL.FileComparer.Dialogs
             }
         }
 
+        private void BestFitAllColumns()
+        {
+            int maxWidth = 0;
+            int[] columnWidths = new int[lvFileTypes.Columns.Count];
+
+            for (int i = 0; i < lvFileTypes.Columns.Count; i++)
+            {
+                columnWidths[i] = TextRenderer.MeasureText(lvFileTypes.Columns[i].Text, lvFileTypes.Font).Width;
+            }
+
+            foreach (ListViewItem item in lvFileTypes.Items)
+            {
+                for (int i = 0; i < lvFileTypes.Columns.Count; i++)
+                {
+                    int curWidth = TextRenderer.MeasureText(item.SubItems[i].Text, item.Font).Width;
+
+                    if (curWidth > columnWidths[i])
+                    {
+                        columnWidths[i] = curWidth;
+                    }
+                }
+            }
+
+            for (int i = 0; i < lvFileTypes.Columns.Count; i++)
+            {
+                if (lvFileTypes.Columns[i].Width < columnWidths[i])
+                {
+                    lvFileTypes.Columns[i].Width = columnWidths[i] + 5;
+                }
+            }
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
             FileTypeDialog dlg = new FileTypeDialog();
@@ -91,7 +125,7 @@ namespace HL.FileComparer.Dialogs
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            SearchPattern selectedPattern = (SearchPattern)lvFileTypes.SelectedItems[0].Tag;
+            FileType selectedPattern = (FileType)lvFileTypes.SelectedItems[0].Tag;
 
             FileTypeDialog dlg = new FileTypeDialog(selectedPattern);
 
@@ -107,6 +141,17 @@ namespace HL.FileComparer.Dialogs
             if (lvFileTypes.SelectedItems.Count > 0)
             {
                 btnEdit_Click(this, EventArgs.Empty);
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(this, "Are you sure you want to delete the selected file type?", "Delete file type", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                FileType pattern = (FileType)lvFileTypes.SelectedItems[0].Tag;
+                Settings.FileTypes.Remove(pattern);
+                Settings.SaveSettings();
+                LoadFileTypes();
             }
         }
     }

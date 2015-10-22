@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileCompareUtilities", "FileCompareUtilities\FileCompareUtilities.csproj", "{1012354F-AB55-4489-95BD-241759A215DD}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileCompareControls", "FileCompareControls\FileCompareControls.csproj", "{0A634649-2798-4772-BAD7-52460A83E5A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\..\Utilities\Utilities.csproj", "{F97CF6FE-18F3-420D-8F35-121E38C494DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HLControls", "..\..\Controls\HLControls\HLControls.csproj", "{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,18 @@ Global
 		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F97CF6FE-18F3-420D-8F35-121E38C494DA}.Release|x86.ActiveCfg = Release|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Debug|x86.Build.0 = Debug|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Release|x86.ActiveCfg = Release|Any CPU
+		{D7CBF9F0-6E9A-4AFC-AF24-7A9E710F5B04}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

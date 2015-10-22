@@ -34,6 +34,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // lvFileTypes
@@ -43,7 +44,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvFileTypes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2});
+            this.columnHeader2,
+            this.columnHeader3});
             this.lvFileTypes.FullRowSelect = true;
             this.lvFileTypes.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvFileTypes.HideSelection = false;
@@ -65,7 +67,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Pattern";
-            this.columnHeader2.Width = 349;
+            this.columnHeader2.Width = 65;
             // 
             // btnAdd
             // 
@@ -88,6 +90,7 @@
             this.btnRemove.Size = new System.Drawing.Size(23, 23);
             this.btnRemove.TabIndex = 3;
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnEdit
             // 
@@ -100,6 +103,10 @@
             this.btnEdit.TabIndex = 1;
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "MB to process";
             // 
             // FileTypesDialog
             // 
@@ -131,5 +138,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }

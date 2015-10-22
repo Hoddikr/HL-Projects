@@ -50,7 +50,7 @@
     <Compile Include="PossibleMatches.cs" />
     <Compile Include="ProgressInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchPattern.cs" />
+    <Compile Include="FileType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Utilities\Utilities.csproj">

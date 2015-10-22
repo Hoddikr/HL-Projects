@@ -36,7 +36,7 @@ namespace HL.Controls.HLControls
         }
 
         /// <summary>
-        /// Gets the numeric value of the textbox. If no number is entered a value of 0.0 is returned
+        /// Gets or sets the numeric value of the textbox. If no number is entered a value of 0.0 is returned
         /// </summary>
         public double Value
         {
@@ -48,10 +48,12 @@ namespace HL.Controls.HLControls
                 {
                     return returnValue;
                 }
-                else
-                {
-                    return 0.0;
-                }
+
+                return 0.0;
+            }
+            set
+            {
+                Text = value.ToString("N");
             }
         }
 

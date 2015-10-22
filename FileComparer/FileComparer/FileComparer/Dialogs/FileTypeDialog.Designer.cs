@@ -34,6 +34,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.tbPattern = new System.Windows.Forms.TextBox();
+            this.ntbMaxMB = new HL.Controls.HLControls.NumeralTextbox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnOK
@@ -41,7 +43,7 @@
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Enabled = false;
-            this.btnOK.Location = new System.Drawing.Point(272, 109);
+            this.btnOK.Location = new System.Drawing.Point(272, 117);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 4;
@@ -52,7 +54,8 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(353, 109);
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(353, 117);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -70,7 +73,7 @@
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(5, 61);
+            this.label2.Location = new System.Drawing.Point(5, 53);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(136, 23);
             this.label2.TabIndex = 2;
@@ -87,11 +90,30 @@
             // 
             // tbPattern
             // 
-            this.tbPattern.Location = new System.Drawing.Point(147, 64);
+            this.tbPattern.Location = new System.Drawing.Point(147, 56);
             this.tbPattern.Name = "tbPattern";
             this.tbPattern.Size = new System.Drawing.Size(281, 20);
             this.tbPattern.TabIndex = 3;
             this.tbPattern.TextChanged += new System.EventHandler(this.CheckEnabled);
+            // 
+            // ntbMaxMB
+            // 
+            this.ntbMaxMB.Location = new System.Drawing.Point(147, 82);
+            this.ntbMaxMB.Name = "ntbMaxMB";
+            this.ntbMaxMB.Size = new System.Drawing.Size(100, 20);
+            this.ntbMaxMB.TabIndex = 6;
+            this.ntbMaxMB.Text = "0";
+            this.ntbMaxMB.Value = 0D;
+            this.ntbMaxMB.TextChanged += new System.EventHandler(this.CheckEnabled);
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(-172, 80);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(313, 23);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Max no. of MB to process:";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // FileTypeDialog
             // 
@@ -100,7 +122,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(440, 144);
+            this.ClientSize = new System.Drawing.Size(440, 152);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.ntbMaxMB);
             this.Controls.Add(this.tbPattern);
             this.Controls.Add(this.tbDescription);
             this.Controls.Add(this.label2);
@@ -127,5 +151,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.TextBox tbPattern;
+        private HL.Controls.HLControls.NumeralTextbox ntbMaxMB;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -8,7 +8,7 @@ namespace HL.FileComparer
 {
     internal class Settings
     {
-        internal static List<SearchPattern> SearchPatterns;
+        internal static List<FileType> FileTypes;
 
         private static string ApplicationDataPath => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\HL\\File Comparer";
 
@@ -24,10 +24,10 @@ namespace HL.FileComparer
 
             if (!File.Exists(path))
             {
-                SearchPatterns = new List<SearchPattern>();
-                SearchPatterns.Add(new SearchPattern() { Description = "Images", Pattern = "*.jpg;*.bmp;*.png" });
-                SearchPatterns.Add(new SearchPattern() { Description = "Videos", Pattern = "*.avi;*.mp4;*.mkv" });
-                SearchPatterns.Add(new SearchPattern() { Description = "Music", Pattern = "*.mp3" });
+                FileTypes = new List<FileType>();
+                FileTypes.Add(new FileType() { Description = "Images", Pattern = "*.jpg;*.bmp;*.png", MaxNoOfMBToSearch = 10});
+                FileTypes.Add(new FileType() { Description = "Videos", Pattern = "*.avi;*.mp4;*.mkv", MaxNoOfMBToSearch = 10 });
+                FileTypes.Add(new FileType() { Description = "Music", Pattern = "*.mp3", MaxNoOfMBToSearch = 10 });
 
                 SaveSettings();
             }
@@ -40,7 +40,7 @@ namespace HL.FileComparer
                         string serailizedSettings = sr.ReadLine();
                         sr.Close();
 
-                        SearchPatterns = JsonConvert.DeserializeObject<List<SearchPattern>>(serailizedSettings);
+                        FileTypes = JsonConvert.DeserializeObject<List<FileType>>(serailizedSettings);
                     }
                 }
             }
@@ -50,7 +50,7 @@ namespace HL.FileComparer
         {
             string path = ApplicationDataPath + "\\settings";
 
-            string jsonSettings = JsonConvert.SerializeObject(SearchPatterns);
+            string jsonSettings = JsonConvert.SerializeObject(FileTypes);
 
             using (var fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
             {

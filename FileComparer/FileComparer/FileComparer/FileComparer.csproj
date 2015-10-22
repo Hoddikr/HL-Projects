@@ -119,6 +119,10 @@
     <None Include="Resources\folder-search-result.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Controls\HLControls\HLControls.csproj">
+      <Project>{d7cbf9f0-6e9a-4afc-af24-7a9e710f5b04}</Project>
+      <Name>HLControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FileCompareControls\FileCompareControls.csproj">
       <Project>{0A634649-2798-4772-BAD7-52460A83E5A5}</Project>
       <Name>FileCompareControls</Name>
