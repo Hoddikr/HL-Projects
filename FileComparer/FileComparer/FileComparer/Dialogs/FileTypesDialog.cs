@@ -98,13 +98,19 @@ namespace HL.FileComparer.Dialogs
                 }
             }
 
-            for (int i = 0; i < lvFileTypes.Columns.Count; i++)
+
+            int columnWidthSum = 0;
+            for (int i = 0; i < lvFileTypes.Columns.Count - 1; i++)
             {
                 if (lvFileTypes.Columns[i].Width < columnWidths[i])
                 {
-                    lvFileTypes.Columns[i].Width = columnWidths[i] + 5;
+                    lvFileTypes.Columns[i].Width = columnWidths[i] + 5;                    
                 }
+
+                columnWidthSum += lvFileTypes.Columns[i].Width;
             }
+
+            lvFileTypes.Columns[lvFileTypes.Columns.Count - 1].Width = lvFileTypes.Width - columnWidthSum - 5;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
