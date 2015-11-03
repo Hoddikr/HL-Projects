@@ -160,5 +160,10 @@ namespace HL.FileComparer.Dialogs
                 LoadFileTypes();
             }
         }
+
+        private void FileTypesDialog_SizeChanged(object sender, EventArgs e)
+        {
+            BestFitAllColumns();
+        }
     }
 }

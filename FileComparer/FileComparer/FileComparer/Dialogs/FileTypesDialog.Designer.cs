@@ -31,10 +31,10 @@
             this.lvFileTypes = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // lvFileTypes
@@ -68,6 +68,10 @@
             // 
             this.columnHeader2.Text = "Pattern";
             this.columnHeader2.Width = 65;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "MB to process";
             // 
             // btnAdd
             // 
@@ -104,10 +108,6 @@
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "MB to process";
-            // 
             // FileTypesDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -126,6 +126,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "File types";
+            this.SizeChanged += new System.EventHandler(this.FileTypesDialog_SizeChanged);
             this.ResumeLayout(false);
 
         }
