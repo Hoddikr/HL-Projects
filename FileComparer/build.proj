@@ -3,13 +3,18 @@
 
   <Import Project="Common.props" />
   
+  <!-- Rebuilds the solution and creates an installer -->
   <Target Name="BuildInstall" DependsOnTargets="Build;CreateInstall" />
   
   <Target Name="Build">
-    <MSBuild Projects=".\FileComparer\FileComparer.sln" Properties="Configuration=Release" Targets="Rebuild"/>     
+    <MSBuild Projects=".\FileComparer\FileComparer.sln" Properties="Configuration=Release" Targets="Rebuild" ToolsVersion="14.0"/>     
   </Target>
-
+  
   <Target Name="CreateInstall">
     <Exec Command='$(Inno) $(InnoScript)'/>
+  </Target>
+  
+  <Target Name="Test">
+    
   </Target>
 </Project>
