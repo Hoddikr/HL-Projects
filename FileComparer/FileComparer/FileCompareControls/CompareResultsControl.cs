@@ -32,8 +32,8 @@ namespace HL.FileComparer.Controls
         {
             InitializeComponent();
             
-            matches = new List<PossibleMatch>();
-            fileFont = new Font(Font.FontFamily, 8f, FontStyle.Regular);
+            matches = new List<PossibleMatch>();            
+            //fileFont = new Font(new FontFamily("Segoe UI"), 8f, FontStyle.Regular);
 
             DoubleBuffered = true;
             graphicsImage = new Bitmap(4, 4);
@@ -93,6 +93,13 @@ namespace HL.FileComparer.Controls
         private RectangleF BoundsF
         {
             get { return new RectangleF(0, 0, Width, Height); }
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            fileFont = new Font(this.Font.FontFamily, 8f, FontStyle.Regular);
+
+            base.OnLoad(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)

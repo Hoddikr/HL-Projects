@@ -138,14 +138,14 @@
             // manageFileTypesToolStripMenuItem
             // 
             this.manageFileTypesToolStripMenuItem.Name = "manageFileTypesToolStripMenuItem";
-            this.manageFileTypesToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.manageFileTypesToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.manageFileTypesToolStripMenuItem.Text = "Manage File Types";
             this.manageFileTypesToolStripMenuItem.Click += new System.EventHandler(this.manageFileTypesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -274,6 +274,7 @@
             this.Controls.Add(this.pbFilesProcessed);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(1048, 648);
