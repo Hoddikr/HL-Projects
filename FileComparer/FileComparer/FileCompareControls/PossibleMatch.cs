@@ -128,11 +128,10 @@ namespace HL.FileComparer.Controls
 
             RectangleF boundsF = new RectangleF(xIndent, yPos, width, height);
 
-            GraphicsPath borderPath = HL.Utilities.UI.GraphicsPaths.CreateRoundedRectangle(boundsF, 5);
-            Brush brush = new LinearGradientBrush(boundsF, Color.White, IsPressed? Color.LightBlue : Color.White /*Color.WhiteSmoke*/, 90);
+            Brush brush = new SolidBrush(IsPressed ? ColorTranslator.FromHtml("#cfd8dc") : Color.White);
             Brush fileTextBrush = new SolidBrush(Color.Black);
-            g.FillPath(brush, borderPath);
-            
+            g.FillRectangle(brush, boundsF.X, boundsF.Y, boundsF.Width, boundsF.Height);
+
             Pen separatorPen = new Pen(Color.DarkGray);
 
             PointF currentFileShortPosition = new PointF(borderPadding, yPos + borderPadding);
@@ -155,8 +154,8 @@ namespace HL.FileComparer.Controls
 
             g.DrawLine(separatorPen, MaxFileShortWidth + 10, yPos + 3, MaxFileShortWidth + 10, yPos + height - 4);
 
-            Pen borderPen = new Pen(IsPressed ? Color.CornflowerBlue : Color.DarkGray);
-            g.DrawPath(borderPen, borderPath);
+            Pen borderPen = new Pen(Color.DarkGray);
+            g.DrawRectangle(borderPen, boundsF.X, boundsF.Y, boundsF.Width, boundsF.Height);
 
             Height = (int)height;
             currentBounds = boundsF;
@@ -165,7 +164,6 @@ namespace HL.FileComparer.Controls
             borderPen.Dispose();
             fileTextBrush.Dispose();
             brush.Dispose();
-            borderPath.Dispose();
         }
     }
 }
