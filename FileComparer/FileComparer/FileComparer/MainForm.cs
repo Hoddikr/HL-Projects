@@ -7,6 +7,7 @@ using System.Linq;
 using HL.FileComparer.Dialogs;
 using HL.FileComparer.Utilities;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace HL.FileComparer
 {
@@ -18,6 +19,7 @@ namespace HL.FileComparer
         private bool workerWasCancelled;
         private Stopwatch stopWatch;
         private Timer stopWatchTimer;
+        private string dataFolder;
 
         public MainForm()
         {
@@ -43,6 +45,8 @@ namespace HL.FileComparer
             stopWatchTimer = new Timer();
             stopWatchTimer.Interval = 500;
             stopWatchTimer.Tick += StopWatchTimerOnTick;
+
+            dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\HL\\File Comparer";
         }
 
         private void StopWatchTimerOnTick(object sender, EventArgs eventArgs)
@@ -54,7 +58,7 @@ namespace HL.FileComparer
         {
             btnCancel.Enabled = false;
             pbFilesProcessed.Value = 100;
-            CheckEnabled(this, EventArgs.Empty);            
+            CheckEnabled(this, EventArgs.Empty);
 
             if (workerWasCancelled)
             {
@@ -63,26 +67,32 @@ namespace HL.FileComparer
                 return;
             }
 
-
             if (possibleMatches.Count == 0)
             {
                 lblProgress.Text = "";
             }
-            else
-            {
-                foreach (KeyValuePair<string, List<FileHashPair>> possibleMatch in possibleMatches)
-                {                    
-                    compareResultsControl.AddMatches(possibleMatch.Value);
-                }
-            }
 
-            compareResultsControl.AutosizeMatches();
-            compareResultsControl.Focus();
-            
+            PopulateCompareResultsControl();
+
             lblResultCount.Text = string.Format(Properties.Resources.Results, compareResultsControl.MatchCount.ToString("D"));
             lblSpaceWasted.Text = GetTotalWastedSpaceInMb().ToString("N0") + " MB";
-            
+
             StopAndResetWatch();
+        }
+
+        private void PopulateCompareResultsControl()
+        {
+            
+            if(possibleMatches.Count > 0)
+            {
+                foreach (KeyValuePair<string, List<FileHashPair>> possibleMatch in possibleMatches)
+                {
+                    compareResultsControl.AddMatches(possibleMatch.Value);
+                }
+
+                compareResultsControl.AutosizeMatches();
+                compareResultsControl.Focus();
+            }
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -222,6 +232,61 @@ namespace HL.FileComparer
             using (FileTypesDialog dlg = new FileTypesDialog())
             {
                 dlg.ShowDialog(this);
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Directory.CreateDirectory(dataFolder);
+
+            using (var dlg = new SaveFileDialog())
+            {
+                dlg.InitialDirectory = dataFolder;
+                dlg.OverwritePrompt = true;
+                dlg.RestoreDirectory = true;
+                dlg.DefaultExt = "state";
+                dlg.Filter = "State file (*.state)|*.state";
+                dlg.AddExtension = true;
+
+
+                if (dlg.ShowDialog(this) == DialogResult.OK)
+                {
+                    State currentState = new State();
+                    currentState.PossibleMatches = possibleMatches;
+                    currentState.SelectedFolders = folderBrowser.SelectedFolders;
+                    
+                    string searchResultsFile = JsonConvert.SerializeObject(currentState);
+                    File.WriteAllText(dlg.FileName, searchResultsFile);
+
+                }
+            }
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Directory.CreateDirectory(dataFolder);
+
+            using (var dlg = new OpenFileDialog())
+            {
+                dlg.InitialDirectory = dataFolder;
+                dlg.RestoreDirectory = true;
+                dlg.Multiselect = false;
+                dlg.DefaultExt = "state";
+                dlg.Filter = "State file (*.state)|*.state";
+
+                if (dlg.ShowDialog(this) == DialogResult.OK)
+                {
+                    string searchResultsFile = File.ReadAllText(dlg.FileName);
+                    State loadedState = JsonConvert.DeserializeObject<State>(searchResultsFile);
+
+                    possibleMatches = loadedState.PossibleMatches;
+                    folderBrowser.SetSelectedFolders(loadedState.SelectedFolders);
+
+                    compareResultsControl.ClearMatches();
+
+                    PopulateCompareResultsControl();
+
+                }
             }
         }
     }

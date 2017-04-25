@@ -50,9 +50,14 @@ namespace HL.FileComparer.Controls
         }
 
         /// <summary>
-        /// Returns the folder path from this item
+        /// Gets or sets the current folder path
         /// </summary>                
-        public string SelectedPath => tbFolder.Text.Trim();
+        public string SelectedPath
+        {
+
+            get { return tbFolder.Text.Trim(); }
+            set { tbFolder.Text = value; }
+        }
 
         private void tbFolderOnTextChanged(object sender, EventArgs eventArgs)
         {

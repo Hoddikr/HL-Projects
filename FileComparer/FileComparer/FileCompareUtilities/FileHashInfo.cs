@@ -46,6 +46,10 @@ namespace HL.FileComparer.Utilities
             {
                 return fileSizeMBytes;
             }
+            set
+            {
+                fileSizeMBytes = value;
+            }
         }
 
         /// <summary>

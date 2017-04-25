@@ -52,6 +52,40 @@ namespace HL.FileComparer.Controls
             }
         }
 
+        /// <summary>
+        /// Clears the currently selected folders and populates new <see cref="FolderBrowserItem"/> components based on the given folder list
+        /// </summary>
+        /// <param name="selectedFolders">A semi-comma (;) delimited string containing all of the paths</param>
+        public void SetSelectedFolders(string selectedFolders)
+        {
+            foreach(FolderBrowserItem currentItem in folderBrowserItems)
+            {
+                currentItem.Delete(this);
+            }
+
+            folderBrowserItems.Clear();
+
+            string[] paths = selectedFolders.Split(';');
+
+            foreach(string path in paths)
+            {
+                FolderBrowserItem item = new FolderBrowserItem(this);
+                item.SelectedPath = path;
+                folderBrowserItems.Add(item);
+            }
+
+            if (folderBrowserItems.Count == MaximumFolderItems)
+            {
+                folderBrowserItems.ForEach(p => p.SetAddEnabled(false));
+            }
+
+            SetDeleteEnabled();
+
+            AdjustSize();
+
+            FolderSelectionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         internal void AddFolderBrowserItem()
         {
             FolderBrowserItem item = new FolderBrowserItem(this);
