@@ -20,11 +20,13 @@ namespace HL.FileComparer.Controls
         private const int borderPadding = 5;
         private const int matchesSpacing = 5;
         private RectangleF currentBounds;
+        private bool mouseMoving = false;
+        private Point mousePosition;
 
         public PossibleMatch(List<FileHashPair> files)
         {
             this.files = files;
-            
+            mousePosition = Point.Empty;
         }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace HL.FileComparer.Controls
         /// <summary>
         /// Gets the list of files beloning to this match component
         /// </summary>
-        public List<FileHashPair> Files => files;
+        public List<FileHashPair> Files => files;        
 
         /// <summary>
         /// Returns the projected height of this component when it will be drawn
@@ -106,6 +108,18 @@ namespace HL.FileComparer.Controls
             IsPressed = currentBounds.Contains(p);            
             return IsPressed;
         }
+        
+        /// <summary>
+        /// Indicates wether the current mouse position triggers a change in the components visual state. This will require an re-draw,
+        /// </summary>
+        /// <param name="p">The current position of the mouse cursor</param>
+        /// <returns>True if the parent control should invalidate it's client area</returns>
+        public bool MouseMoveHitTest(Point p)
+        {
+            mouseMoving = currentBounds.Contains(p);
+            mousePosition = p;
+            return mouseMoving;
+        }
 
 
         /// <summary>
@@ -138,15 +152,30 @@ namespace HL.FileComparer.Controls
             PointF currentFilePosistion = new PointF(MaxFileShortWidth + 15, currentFileShortPosition.Y);
             
             foreach (FileHashPair file in files)
-            {                
+            {
+                SizeF currentFileSize = g.MeasureString(file.FileSizeString + " MB", font);
+
+                if (mouseMoving)
+                {
+                    RectangleF currentFileBounds = new RectangleF(boundsF.X, currentFileShortPosition.Y, boundsF.Width, currentFileSize.Height);
+
+                    if (currentFileBounds.Contains(mousePosition))
+                    {
+                        Pen dottedPen = new Pen(Color.Black, 1.5f);
+                        dottedPen.DashStyle = DashStyle.Dot;                        
+                        g.DrawRectangle(dottedPen, currentFileBounds.X, currentFileBounds.Y - 1, currentFileBounds.Width, currentFileBounds.Height + 1);
+                        dottedPen.Dispose();
+                    }
+                }
+
                 g.DrawString(file.FileShortName, font, fileTextBrush, currentFileShortPosition);
-                g.DrawString(file.FileName, font, fileTextBrush, currentFilePosistion);
+                g.DrawString(file.FileName, font, fileTextBrush, currentFilePosistion);                
 
                 // Align size strings to the right
-                float sizeWidth = g.MeasureString(file.FileSizeString + " MB", font).Width;
+                float sizeWidth = currentFileSize.Width;                
                 g.DrawString(file.FileSizeString + " MB", font, fileTextBrush, new PointF(boundsF.X + boundsF.Width - sizeWidth - 5, currentFilePosistion.Y));
 
-                float lastFileHeight = matchesSpacing + g.MeasureString(file.FileName, font).Height;                
+                float lastFileHeight = matchesSpacing + currentFileSize.Height;                
 
                 currentFileShortPosition.Y += lastFileHeight;
                 currentFilePosistion.Y += lastFileHeight;

@@ -97,7 +97,7 @@ namespace HL.FileComparer.Controls
 
         protected override void OnLoad(EventArgs e)
         {
-            fileFont = new Font(this.Font.FontFamily, 8f, FontStyle.Regular);
+            fileFont = new Font(this.Font.FontFamily, 9f, FontStyle.Regular);
 
             base.OnLoad(e);
         }
@@ -239,6 +239,30 @@ namespace HL.FileComparer.Controls
 
             Invalidate();
         }
-                
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            bool invalidateRequired = false;
+            for (int i = firstMatchIndex; i < matches.Count; i++)
+            {
+                if (!matches[i].Visible)
+                {
+                    break;
+                }
+
+                if (matches[i].MouseMoveHitTest(e.Location))
+                {
+                    invalidateRequired = true;                    
+                }
+            }
+
+            if(invalidateRequired)
+            {
+                Invalidate();
+            }
+
+            base.OnMouseMove(e);
+        }
+
     }
 }
