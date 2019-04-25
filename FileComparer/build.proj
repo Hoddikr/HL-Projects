@@ -7,7 +7,7 @@
   <Target Name="BuildInstall" DependsOnTargets="Build;CreateInstall" />
   
   <Target Name="Build">
-    <MSBuild Projects=".\FileComparer\FileComparer.sln" Properties="Configuration=Release" Targets="Rebuild" ToolsVersion="14.0"/>     
+    <MSBuild Projects=".\FileComparer\FileComparer.sln" Properties="Configuration=Release" Targets="Rebuild" ToolsVersion="Current"/>     
   </Target>
   
   <Target Name="CreateInstall">
